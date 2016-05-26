@@ -5,7 +5,7 @@
   * `ubuntu@ubuntu:~$` `ip netns list`
   * `ubutnu@ubuntu:~$` `ls /var/run/netns`
 
-0. Create virtual Ethernet pair
+0. Create a virtual Ethernet pair
 
   * `ubuntu@ubuntu:~$` `sudo ip link add veth0 type veth peer name veth1`
   * `ubuntu@ubuntu:~$` `ip link list`
@@ -15,8 +15,8 @@
   * `ubuntu@ubuntu:~$` `sudo ip link set veth1 netns mario`
   * `ubutnu@ubuntu:~$` `ip link list`
 
-  Where did the veth1 go?
-  What namespace are we displaying with the `ip link list` command?
+> Where did the veth1 go?
+> What namespace are we displaying with the `ip link list` command?
 
 0. Display the links inside the namespace
 
