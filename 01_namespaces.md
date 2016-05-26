@@ -29,13 +29,27 @@
   * `ubutnu@ubuntu:~$` `ip link list`
   * `ubutnu@ubuntu:~$` `exit # or press Ctl^D` 
 
+0. Fix the link state of our veth inside the namespacep
+  
+  _You can also "enter" into the namespace instead of running `sudo ip netns exec mario` every time._
+  
+  > What is the state of the link?
+
+  * `ubutnu@ubuntu:~$` `sudo ip netns exec ip link list`
+  * `ubutnu@ubuntu:~$` `sudo ip netns exec ip link set dev veth1 up`
+  * `ubutnu@ubuntu:~$` `sudo ip netns exec ip link list`
+  
+  > What is the state of the link now?
+
 0. From inside the namespace, use `ip` to add `10.0.0.1` ip address `veth1`
 
-Use the help command in order to determine the correct command syntax.
-If you have issues the solution is in a comment of the HTML of this page.
+  _You can also "enter" into the namespace instead of running `sudo ip netns exec mario` every time._
+  Use the help command in order to determine the correct command syntax.  
+  If you have issues the solution is in a comment of the HTML of this page.  
 
   * `ubutnu@ubuntu:~$` `sudo ip netns exec ip addr help`
   * `ubutnu@ubuntu:~$` `sudo ip netns exec ip addr [finish the command here]`
+  * `ubutnu@ubuntu:~$` `sudo ip netns exec ip addr 10.0.0.1 dev veth1` TODO: Hide this?
 
   <!-- ubuntu@ubuntu:~$ ip addr add 10.0.0.1 dev veth1 -->
 
@@ -45,19 +59,19 @@ Lets add some helpers to bash so we can work with network name spaces even more 
 
 0. Open `/home/ubuntu/.bashrc` in your favorite editor and edit the seciton around `"$color_prompt" = yes` to look like below:
 
-``` bash
-namespace=`ip netns identify $$`
-if [ "$color_prompt" = yes ]; then
-    if [[ -z "${namespace}" ]]; then
-        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-    else
-        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] ($namespace) \$ '
-    fi
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
-```
+  ``` bash
+  namespace=`ip netns identify $$`
+  if [ "$color_prompt" = yes ]; then
+      if [[ -z "${namespace}" ]]; then
+          PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+      else
+          PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] ($namespace) \$ '
+      fi
+  else
+      PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+  fi
+  unset color_prompt force_color_prompt
+  ```
 
 0. Now re-source the bashrc and re-enter the namespace to see the difference in your prompt.
   
@@ -69,5 +83,12 @@ unset color_prompt force_color_prompt
   * `ubutnu@ubuntu:~$` `alias nse='sudo ip netns exec'`
   * `ubutnu@ubuntu:~$` `nse mario ip link list`
 
-You can add the alias to your .bashrc file if you want it to persist across sessions
+  You can add the alias to your .bashrc file if you want it to persist across sessions
+
+
+#### Resources
+
+  * [LWN.net - Namespaces in operaton](https://lwn.net/Articles/531114/#series_index)
+  * [Scott Lowe - Introducing Linux Network Namespaces](http://blog.scottlowe.org/2013/09/04/introducing-linux-network-namespaces/) 
+
 
