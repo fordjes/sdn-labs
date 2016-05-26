@@ -29,6 +29,15 @@
   * `ubutnu@ubuntu:~$` `ip link list`
   * `ubutnu@ubuntu:~$` `exit # or press Ctl^D` 
 
+0. From inside the namespace, use `ip` to add `10.0.0.1` ip address `veth1`
+
+Use the help command in order to determine the correct command syntax.
+If you have issues the solution is in a comment of the HTML of this page.
+
+  * `ubutnu@ubuntu:~$` `sudo ip netns exec ip addr help`
+  * `ubutnu@ubuntu:~$` `sudo ip netns exec ip addr [finish the command here]`
+
+  <!-- ubuntu@ubuntu:~$ ip addr add 10.0.0.1 dev veth1 -->
 
 #### Rocket Scientist lab:
 
