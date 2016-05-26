@@ -15,7 +15,7 @@
   * `ubuntu@ubuntu:~$` `sudo ip link set veth1 netns mario`
   * `ubutnu@ubuntu:~$` `ip link list`
 
-> Where did the veth1 go?
+> Where did the veth1 go?  
 > What namespace are we displaying with the `ip link list` command?
 
 0. Display the links inside the namespace
