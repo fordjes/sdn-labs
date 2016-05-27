@@ -5,20 +5,16 @@
 iproute2 is the collection of command-line tools used for interfacing with various networking components in the Linux kernel.
 These commands provide a full feature set compatibility with the legacy commands (net-tools) that many linux users may be familar with.
 
-Legacy | Obsoleted by | Use case
--|-|-
-ifconfig | ip addr, ip link, ip -s | Address and link config
-route | ip route | Routing tables
-arp | ip neigh | Neighbors
-iptunnel | ip tunnel | Tunnels
-nameif | ifrename | Renamen network interfaces
-ipmaddr | ip maddr | Multicast
-netstat | ip -s, ss, ip route | Network statistics
+| Legacy | Obsoleted by | Use case |
+|-|-|-|
+|ifconfig | ip addr, ip link, ip -s | Address and link config|
+|route | ip route | Routing tables|
+|arp | ip neigh | Neighbors|
+|iptunnel | ip tunnel | Tunnels|
+|nameif | ifrename | Renamen network interfaces|
+|ipmaddr | ip maddr | Multicast|
+|netstat | ip -s, ss, ip route | Network statistics|
 
-#### Resources
-
-* https://en.wikipedia.org/wiki/Iproute2
-* https://lists.debian.org/debian-devel/2009/03/msg00780.html
 
 ### 1. Using iproute2 commands
 
@@ -27,7 +23,7 @@ The goal is to see that all the commmand we are familar with are represented in 
 
 All of the future labs will use iproute2 commands.
 
-0. `ifconfig` and `ip addr`
+0. `ifconfig` and `ip address`
 
   * What is interface names are connected to your instance?
   * What is the ip address of your instance?
@@ -69,3 +65,8 @@ EC2 actually still clout-init's to eth0 so this section might be useful, or not.
 #### Exploring new interface names
 
 
+#### Resources
+
+* [iproute2 wiki](https://en.wikipedia.org/wiki/Iproute2)
+* [net-tools deprecated - mailing list](https://lists.debian.org/debian-devel/2009/03/msg00780.html)
+* [iproute2 cheatsheet](http://baturin.org/docs/iproute2/)
