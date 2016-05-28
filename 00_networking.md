@@ -70,3 +70,4 @@ EC2 actually still clout-init's to eth0 so this section might be useful, or not.
 * [iproute2 wiki](https://en.wikipedia.org/wiki/Iproute2)
 * [net-tools deprecated - mailing list](https://lists.debian.org/debian-devel/2009/03/msg00780.html)
 * [iproute2 cheatsheet](http://baturin.org/docs/iproute2/)
+* [ip route management](http://linux-ip.net/html/tools-ip-route.html)

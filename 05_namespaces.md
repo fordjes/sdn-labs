@@ -5,7 +5,7 @@
   * `ubuntu@ubuntu:~$` `ip netns list`
   * `ubutnu@ubuntu:~$` `ls /var/run/netns`
 
-0. Create a virtual Ethernet pair
+0. Create a virtual ethernet pair
 
   * `ubuntu@ubuntu:~$` `sudo ip link add veth0 type veth peer name veth1`
   * `ubuntu@ubuntu:~$` `ip link list`
@@ -34,23 +34,22 @@
   _You may also "enter" into the namespace instead of running `sudo ip netns exec mario` every time._  
   
   > What is the state of the link?
+  > What is the state of the link after these commands?
 
   * `ubutnu@ubuntu:~$` `sudo ip netns exec mario ip link list`
   * `ubutnu@ubuntu:~$` `sudo ip netns exec mario ip link set dev veth1 up`
   * `ubutnu@ubuntu:~$` `sudo ip netns exec mario ip link list`
-  
-
-  > What is the state of the link now?
 
 0. From inside the namespace, use `ip` to add `10.0.0.1` ip address `veth1`
 
   _You may also "enter" into the namespace instead of running `sudo ip netns exec mario` every time._  
+
   Use the help command in order to determine the correct command syntax.  
   If you have issues the solution is in a comment of the HTML of this page.  
 
   * `ubutnu@ubuntu:~$` `sudo ip netns exec mario ip addr help`
   * `ubutnu@ubuntu:~$` `sudo ip netns exec mario ip addr add [finish the command here]`
-  * `ubutnu@ubuntu:~$` `sudo ip netns exec mario ip addr 10.0.0.1 dev veth1` TODO: Hide this?
+  * `ubutnu@ubuntu:~$` `sudo ip netns exec mario ip addr 10.0.0.1 dev veth1` *TODO: Hide this?*
 
   <!-- ubuntu@ubuntu:~$ ip addr add 10.0.0.1 dev veth1 -->
 
@@ -61,12 +60,12 @@
   Use the help command in order to determine the correct command syntax.  
   If you have issues the solution is in a comment of the HTML of this page.  
 
-  * `ubutnu@ubuntu:~$` `sudo ip netns exec ip route help`
-  * `ubutnu@ubuntu:~$` `sudo ip netns exec ip route add [finish the command here]`
-  * `ubutnu@ubuntu:~$` `sudo ip netns exec ip addr 10.0.0.1 dev veth1` TODO: Hide this?
+  * `ubutnu@ubuntu:~$` `sudo ip netns exec mario ip route help`
+  * `ubutnu@ubuntu:~$` `sudo ip netns exec mario ip route add [finish the command here]`
+  * `ubutnu@ubuntu:~$` `sudo ip netns exec mario ip addr 10.0.0.1 dev veth1` *TODO: Hide this?*
 
   <!-- ubuntu@ubuntu:~$ ip route add default via 10.0.0.1 -->
-#### Rocket Scientist lab:
+## Rocket Scientist lab:
 
 Lets add some helpers to bash so we can work with network name spaces even more intuitively.
 
@@ -103,5 +102,7 @@ Lets add some helpers to bash so we can work with network name spaces even more 
 
   * [LWN.net - Namespaces in operaton](https://lwn.net/Articles/531114/#series_index)
   * [Scott Lowe - Introducing Linux Network Namespaces](http://blog.scottlowe.org/2013/09/04/introducing-linux-network-namespaces/) 
+  * [Interconnecting Namespaces](http://www.opencloudblog.com/?p=66)
+  * [Which interfaces are connected by a veth pair?](http://blog.abhijeetr.com/2014/06/veth-pair-how-to-know-what-interfaces.html)
 
 
