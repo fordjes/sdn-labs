@@ -9,8 +9,10 @@
 
   * `ubuntu@ubuntu:~$` `sudo ip link set dev veth0 up`
   * `ubuntu@ubuntu:~$` `sudo ip link set dev veth1 up`
+  * `ubuntu@ubuntu:~$` `ip link list`
   * `ubuntu@ubuntu:~$` `sudo ip addr add 10.0.0.1/24 dev veth0`
   * `ubuntu@ubuntu:~$` `sudo ip addr add 10.0.0.2/24 dev veth1`
+  * `ubuntu@ubuntu:~$` `ip link list`
 
 0. Examine the results
   
