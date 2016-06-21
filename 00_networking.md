@@ -81,7 +81,7 @@ The goal is to see that all the commmand we are familar with are represented in 
    `$ sudo ip -6 addr add 2002:0db5:0:f102::1/64 dev eth1`  
    `$ sudo ip -6 addr add 2003:0db5:0:f102::1/64 dev eth1`  
 
-### 8. Show IPv6 address(es) of a Network Interface
+#### 8. Show IPv6 address(es) of a Network Interface
 
 **net-tools:**  
    `$ ifconfig eth1`  
@@ -89,14 +89,14 @@ The goal is to see that all the commmand we are familar with are represented in 
 **iproute2:** 
    `$ ip -6 addr show dev eth1`  
 
-### 9. Remove an IPv6 address from a Network Interface
+#### 9. Remove an IPv6 address from a Network Interface
 **net-tools:**  
    `$ sudo ifconfig eth1 inet6 del 2002:0db5:0:f102::1/64`  
 
 **iproute2:** 
    `$ sudo ip -6 addr del 2002:0db5:0:f102::1/64 dev eth1`  
 
-### 10. Change the MAC Address of a Network Interface
+#### 10. Change the MAC Address of a Network Interface
 
 **net-tools:** deactivate the interface first!  
    `$ sudo ifconfig eth1 hw ether 08:00:27:75:2a:66`  
@@ -104,7 +104,7 @@ The goal is to see that all the commmand we are familar with are represented in 
 **iproute2:**  deactivate the interface first!  
    `$ sudo ip link set dev eth1 address 08:00:27:75:2a:67`
 
-### 11. View the IP Routing Table
+#### 11. View the IP Routing Table
 
 **net-tools:**  
    `$ route -n`  
@@ -113,7 +113,7 @@ The goal is to see that all the commmand we are familar with are represented in 
 **iproute2:**  
    `$ ip route show`  
 
-### 12. Add or Modify a Default Route
+#### 12. Add or Modify a Default Route
 
 **net-tools:**  
    `$ sudo route add default gw 192.168.1.2 eth0`  
@@ -123,7 +123,7 @@ The goal is to see that all the commmand we are familar with are represented in 
    `$ sudo ip route add default via 192.168.1.2 dev eth0`  
    `$ sudo ip route replace default via 192.168.1.2 dev eth0`
 
-### 13. Add or Remove a Static Route
+#### 13. Add or Remove a Static Route
 **With net-tools:**  
    `$ sudo route add -net 172.16.32.0/24 gw 192.168.1.1 dev eth0`  
    `$ sudo route del -net 172.16.32.0/24`  
@@ -132,7 +132,7 @@ The goal is to see that all the commmand we are familar with are represented in 
    `$ sudo ip route add 172.16.32.0/24 via 192.168.1.1 dev eth0`  
    `$ sudo ip route del 172.16.32.0/24`
 
-### 14. View Socket Statistics (active/listening TCP/UDP sockets)
+#### 14. View Socket Statistics (active/listening TCP/UDP sockets)
 
 **net-tools:**  
    `$ netstat`  
@@ -142,7 +142,7 @@ The goal is to see that all the commmand we are familar with are represented in 
    `$ ss`  
    `$ ss -l`  
 
-### 15. View the ARP Table
+#### 15. View the ARP Table
 
 **net-tools:**  
    `$ arp -an`  
@@ -150,7 +150,7 @@ The goal is to see that all the commmand we are familar with are represented in 
 **iproute2:**  
    `$ ip neigh`  
 
-### 16. Add or Remove a Static ARP Entry
+#### 16. Add or Remove a Static ARP Entry
 
 **net-tools:**  
    `$ sudo arp -s 192.168.1.100 00:0c:29:c0:5a:ef`  
