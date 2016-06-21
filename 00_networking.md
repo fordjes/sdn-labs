@@ -16,7 +16,7 @@ These commands provide a full feature set compatibility with the legacy commands
 |netstat | ip -s, ss, ip route | Network statistics|  
 
 
-### 1. Using iproute2 commands
+### Using iproute2 commands
 
 Run the both commands and find the desired information.
 The goal is to see that all the commmand we are familar with are represented in the new iproute2 commands.
