@@ -32,8 +32,8 @@ The goal is to see that all the commmand we are familar with are represented in 
 #### 2. Activate or Deactivate a Network Interface
 
 **net-tools:**  
-  `$ sudo ifconfig eth1 up`  
-  `$ sudo ifconfig eth1 down`
+      `$ sudo ifconfig eth1 up`  
+      `$ sudo ifconfig eth1 down`
 
 **iproute2:**  
    `$ sudo ip link set down eth1`  
