@@ -5,15 +5,15 @@
 iproute2 is the collection of command-line tools used for interfacing with various networking components in the Linux kernel.
 These commands provide a full feature set compatibility with the legacy commands (net-tools) that many linux users may be familar with.
 
-| Legacy | Obsoleted by | Use case |
-|-|-|-|
-|ifconfig | ip addr, ip link, ip -s | Address and link config|
-|route | ip route | Routing tables|
-|arp | ip neigh | Neighbors|
-|iptunnel | ip tunnel | Tunnels|
-|nameif | ifrename | Renamen network interfaces|
-|ipmaddr | ip maddr | Multicast|
-|netstat | ip -s, ss, ip route | Network statistics|
+| Legacy | Obsoleted by | Use case |  
+|-|-|-|  
+|ifconfig | ip addr, ip link, ip -s | Address and link config|  
+|route | ip route | Routing tables|  
+|arp | ip neigh | Neighbors|  
+|iptunnel | ip tunnel | Tunnels|  
+|nameif | ifrename | Renamen network interfaces|  
+|ipmaddr | ip maddr | Multicast|  
+|netstat | ip -s, ss, ip route | Network statistics|  
 
 
 ### 1. Using iproute2 commands
