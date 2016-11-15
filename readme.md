@@ -15,6 +15,7 @@
 | 00     | mininet #1         | 0%         |        |
 | 01     | mininet #2         | 0%         |        |
 | 02     | wireshark openflow | 0%         |        |
+   > Convert this to labs: http://mininet.org/walkthrough/
 
 ### Ryu
 | Number | Title           | % Complete | Tested |
