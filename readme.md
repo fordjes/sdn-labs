@@ -1,14 +1,13 @@
 ## Labs List
 
 ### Linux networking primer
-
-| Number | Title          | % Complete | Tested |
-|--------|----------------|------------|--------|
-| 00     | iproute2       | 100%       |        |
-| 01     | veth           | 100%       |        |
-| 02     | bridges        | 90%        |        |
-| 03     | ovs switch     | 0%         |        |
-| 0X     | ns helper (RS) | 100%       |        |
+| Number | Title              | % Complete | Tested |
+|--------|--------------------|------------|--------|
+| 00     | iproute2           | 100%       |        |
+| 01     | veth               | 100%       |        |
+| 02     | bridges            | 90%        |        |
+| 03     | ovs switch         | 0%         |        |
+| 0X     | ns helper (Rocket) | 100%       |        |
 
 ### Mininet
 | Number | Title              | % Complete | Tested |
@@ -18,20 +17,26 @@
 | 02     | wireshark openflow | 0%         |        |
 
 ### Ryu
-0. Hub 0%
-0. Switch 0%
-0. Learning Switch 0%
-0. Ryu REST Client 60%
+| Number | Title           | % Complete | Tested |
+|--------|-----------------|------------|--------|
+| 00     | hub             | 0%         |        |
+| 01     | switch          | 0%         |        |
+| 02     | learning switch | 0%         |        |
+| 03     | ryu REST        | 60%        |        |
 
 ### Zodiac 
-0. Admin Networking Config 100%
-0. Controller Config 20%
-0. L2 connectivity 0%
-0. L3 connectivity 0%
+| Number | Title               | % Complete | Tested |
+|--------|---------------------|------------|--------|
+| 00     | mgmt network config | 100%       |        |
+| 01     | controller confi    | 20%        |        |
+| 02     | L2 connectivity     | 0%         |        |
+| 03     | L3 connectivity     | 60%        |        |
 
 ### Neutron
-0. [Lab 0]  
-0. [Lab 0]  
-0. [Lab 0]  
-0. [Lab 0]  
-0. [Lab 0]  
+| Number | Title | % Complete | Tested |
+|--------|-------|------------|--------|
+| 00     | Lab X | ?%         |        |
+| 00     | Lab X | ?%         |        |
+| 00     | Lab X | ?%         |        |
+| 00     | Lab X | ?%         |        |
+| 00     | Lab X | ?%         |        |
