@@ -44,8 +44,6 @@
   * `ubuntu@ubuntu:~$` `ip route del 10.0.0.0/24 dev veth1`
   * `ubuntu@ubuntu:~$` `ip route add 10.0.0.0/24 via 10.0.0.1 dev veth0`
   * `ubuntu@ubuntu:~$` `ip route`
-  * `ubuntu@ubuntu:~$` `ip route`
-
 
 0. Remove all the virtual interfaces (back to scratch)
 

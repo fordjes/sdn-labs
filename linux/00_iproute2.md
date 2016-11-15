@@ -5,16 +5,15 @@
 iproute2 is the collection of command-line tools used for interfacing with various networking components in the Linux kernel.
 These commands provide a full feature set compatibility with the legacy commands (net-tools) that many linux users may be familar with.
 
-| Legacy | Obsoleted by | Use case |  
-|---|---|---|  
-|ifconfig | ip addr, ip link, ip -s | Address and link config|  
-|route | ip route | Routing tables|  
-|arp | ip neigh | Neighbors|  
-|iptunnel | ip tunnel | Tunnels|  
-|nameif | ifrename | Renamen network interfaces|  
-|ipmaddr | ip maddr | Multicast|  
-|netstat | ip -s, ss, ip route | Network statistics|  
-
+| Legacy   | Obsoleted by            | Use case                   |
+|----------|-------------------------|----------------------------|
+| ifconfig | ip addr, ip link, ip -s | Address and link config    |
+| route    | ip route                | Routing tables             |
+| arp      | ip neigh                | Neighbors                  |
+| iptunnel | ip tunnel               | Tunnels                    |
+| nameif   | ifrename                | Renamen network interfaces |
+| ipmaddr  | ip maddr                | Multicast                  |
+| netstat  | ip -s, ss, ip route     | Network statistics         |
 
 ### Using iproute2 commands
 
@@ -197,12 +196,6 @@ The reason for this change was that systems with multiple interfaces were not ga
 > The classic naming scheme for network interfaces applied by the kernel is to simply assign names beginning with "eth0", "eth1", ... to all interfaces as they are probed by the drivers. As the driver probing is generally not predictable for modern technology this means that as soon as multiple network interfaces are available the assignment of the names "eth0", "eth1" and so on is generally not fixed anymore and it might very well happen that "eth0" on one boot ends up being "eth1" on the next. This can have serious security implications, for example in firewall rules which are coded for certain naming schemes, and which are hence very sensitive to unpredictable changing names.
 
 [Read more](https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/)
-
-#### EC2
-EC2 actually still clout-init's to eth0 so this section might be useful, or not.
-
-#### Exploring new interface names
-
 
 #### Resources
 
