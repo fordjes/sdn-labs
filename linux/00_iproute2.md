@@ -1,5 +1,8 @@
 # Linux Networking 
 
+## TODO:
+add prompts
+
 ## iproute2 vs net-tools
 
 iproute2 is the collection of command-line tools used for interfacing with various networking components in the Linux kernel.
@@ -11,19 +14,47 @@ These commands provide a full feature set compatibility with the legacy commands
 | route    | ip route                | Routing tables             |
 | arp      | ip neigh                | Neighbors                  |
 | iptunnel | ip tunnel               | Tunnels                    |
-| nameif   | ifrename                | Renamen network interfaces |
+| nameif   | ifrename                | Rename network interfaces |
 | ipmaddr  | ip maddr                | Multicast                  |
 | netstat  | ip -s, ss, ip route     | Network statistics         |
 
 ### Using iproute2 commands
 
 Run the both commands and find the desired information.
-The goal is to see that all the commmand we are familar with are represented in the new iproute2 commands.
+The goal is to see that all the command we are familar with are represented in the new iproute2 commands.
 
 #### 1. Show All Connected Network Interfaces
 
 **net-tools:**  
    `$ ifconfig -a`
+
+```
+ens3      Link encap:Ethernet  HWaddr fa:16:3e:6f:47:52  
+          inet addr:172.16.1.4  Bcast:172.16.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::f816:3eff:fe6f:4752/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1450  Metric:1
+          RX packets:196654 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:144021 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:539590824 (539.5 MB)  TX bytes:11101898 (11.1 MB)
+
+ens4      Link encap:Ethernet  HWaddr fa:16:3e:2b:a7:95  
+          BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:174 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:174 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:12904 (12.9 KB)  TX bytes:12904 (12.9 KB)
+```
+
 
 **iproute2:**  
    `$ ip link show`
