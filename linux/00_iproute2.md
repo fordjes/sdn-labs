@@ -1,7 +1,9 @@
 # Linux Networking 
 
 ## TODO:
-add prompts
+- add prompts
+- fix sudo 
+
 
 ## iproute2 vs net-tools
 
