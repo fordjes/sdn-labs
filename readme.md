@@ -3,8 +3,8 @@
 ### Linux networking primer
 | Number | Title              | % Complete | Tested |
 |--------|--------------------|------------|--------|
-| 00     | iproute2           | 100%       |        |
-| 01     | veth               | 100%       |        |
+| 00     | iproute2           | 50%        | hilary: needs fixed for beachhead       |
+| 01     | veth               | 100%       | hilary: needs IP updates |
 | 02     | bridges            | 90%        |        |
 | 03     | ovs switch         | 0%         |        |
 | 0X     | ns helper (Rocket) | 100%       |        |
