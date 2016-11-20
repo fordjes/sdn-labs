@@ -16,17 +16,16 @@ We will also demonstrate some of the commands in a diffrent order.
 
 ## Create a OVS Bridge with virtual interfaces
 
-
 0. Collect information about your initial configuration
 
   * `student@beachhead:~$` `ip link list`
   * `student@beachhead:~$` `ip addr show`
-  * `student@beachhead:~$` `ip rotute show`
+  * `student@beachhead:~$` `ip route show`
   * `student@beachhead:~$` `sudo ovs-vsctl show`
 
   * `student@beachhead:~$` `ip link list > /tmp/ovs-link-init`
   * `student@beachhead:~$` `ip addr show > /tmp/ovs-addr-init`
-  * `student@beachhead:~$` `ip rotute show > /tmp/ovs-route-init`
+  * `student@beachhead:~$` `ip route show > /tmp/ovs-route-init`
   * `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs-show-init`
 
 0. Create network namespaces
@@ -63,7 +62,7 @@ We will also demonstrate some of the commands in a diffrent order.
 0. Add the virtual ethernet interfaces into the network namespaces 
 
   * `student@beachhead:~$` `sudo ip link set eth0-luigi netns luigi`
-  * `student@beachhead:~$` `sudo ip link add eth0-toad netns toad`
+  * `student@beachhead:~$` `sudo ip link set eth0-toad netns toad`
   * `student@beachhead:~$` `ip link show > /tmp/ovs-link-vethmove`
   * `student@beachhead:~$` `a3diff /tmp/ovs-link-veths /tmp/ovs-link-vethmove`
   
@@ -106,7 +105,6 @@ We will also demonstrate some of the commands in a diffrent order.
   * `student@beachhead:~$` `sudo ip netns exec toad ip addr > /tmp/ovs-t-addr-ip`
   * `student@beachhead:~$` `a3diff /tmp/ovs-l-addr-init /tmp/ovs-link-l-addr-ip`
   * `student@beachhead:~$` `a3diff /tmp/ovs-t-addr-init /tmp/ovs-link-t-addr-ip`
-  * `student@beachhead:~$` ``
 
 0. Why can't we reach the new addressess?
 
@@ -122,28 +120,17 @@ We will also demonstrate some of the commands in a diffrent order.
 0. Change the vlan tags for the two interfaces and show they can no loger connect with each other
 
   * `student@beachhead:~$` `sudo ovs-vsctl set port veth-luigi tag=100`
-  * `student@beachhead:~$` `sudo ovs-vsctl set port veth-luigi tag=101`
+  * `student@beachhead:~$` `sudo ovs-vsctl set port veth-toad tag=101`
   * `student@beachhead:~$` `sudo ip netns exec luigi ping 172.16.2.101`
   * `student@beachhead:~$` `sudo ip netns exec toad ping 172.16.2.100`
   * `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs-show-tags`
   * `student@beachhead:~$` `a3diff /tmp/ovs-show-veth /tmp/ovs-show-tags`
-  * `student@beachhead:~$` ``
-  * `student@beachhead:~$` ``
 
+0. Cleanup 
 
+  * `student@beachhead:~$` `sudo ip netns del luigi`
+  * `student@beachhead:~$` `sudo ip netns del toad`
+  * `student@beachhead:~$` `sudo ip link del veth-luigi`
+  * `student@beachhead:~$` `sudo ip link del veth-toad`
+  * `student@beachhead:~$` `ovs-vsctl del-br yoshis-island`
 
-### Rocket Scientist Portion 
-
-Let's setup dhcp for these two interfaces
-
-0. Remve the current ip address configurations
-
-  * `student@beachhead:~$` `sudo ip netns exec luigi ip addr del 172.16.2.100/24 dev eth0-luigi`
-  * `student@beachhead:~$` `sudo ip netns exec toad ip addr del 172.16.2.101/24 dev eth0-toad`
-
-0. Create new dhcp namespaces (for the dhcp servers)
-
-  * `student@beachhead:~$` `ip netns add dhcp-luigi`
-  * `student@beachhead:~$` `ip netns add dhcp-toad`
-
-0. 
