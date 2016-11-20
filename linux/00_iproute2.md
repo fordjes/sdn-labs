@@ -1,9 +1,10 @@
 # Linux Networking 
 
-## TODO:
+## TODO: This lab is BROKEN
 - add prompts
-- fix sudo 
-
+- remove/edit sudo ifconfig eth1 up/down
+- this lab doesn't work on beachhead
+- (took Hilary about 20 minutes; I got mostly errors)
 
 ## iproute2 vs net-tools
 
