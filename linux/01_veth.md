@@ -8,7 +8,6 @@
 
   * `student@beachhead:~$` `sudo ip link add veth0 type veth peer name veth1`
   * `student@beachhead:~$` `ip link list`
-  
     ```
     1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
       link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -27,7 +26,6 @@
   * `student@beachhead:~$` `sudo ip link set dev veth0 up`
   * `student@beachhead:~$` `sudo ip link set dev veth1 up`
   * `student@beachhead:~$` `ip link list`
-  
     ```
     1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
       link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
