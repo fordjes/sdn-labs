@@ -1,13 +1,13 @@
 ## Labs List
 
 ### Linux networking primer
-| Number | Title              | % Complete | Tested |
-|--------|--------------------|------------|--------|
-| 00     | iproute2           | 50%        | hilary: needs fixed for beachhead       |
-| 01     | veth               | 100%       | hilary: needs IP updates |
-| 02     | bridges            | 90%        |        |
-| 03     | ovs switch         | 0%         |        |
-| 0X     | ns helper (Rocket) | 100%       |        |
+| Number | Title              | Est. Length | % Complete | Tested / Notes |
+|--------|--------------------|-------------|------------|--------|
+| 00     | iproute2           | 20 mins     | 50%        | hilary: needs fixed for beachhead       |
+| 01     | veth               | 10 mins     | 100%       | hilary: needs IP updates |
+| 02     | bridges            |             | 90%        |        |
+| 03     | ovs switch         |             | 90%        |        |
+| 0X     | ns helper (Rocket) |             | 100%       |        |
 
 ### Mininet
 | Number | Title              | % Complete | Tested |

@@ -24,6 +24,15 @@ We are saving ourselves some keystrokes in order to accomplish two things:
 
 ## Create a traditional Linux bridge with virtual interfaces
 
+0. Collect information about your initial configuration
+
+  * `student@beachhead:~$` `ip link list`
+  * `student@beachhead:~$` `ip addr show`
+  * `student@beachhead:~$` `ip route show`
+  * `student@beachhead:~$` `ip link list > /tmp/ip-link-list-init`
+  * `student@beachhead:~$` `ip addr show > /tmp/ip-addr`
+  * `student@beachhead:~$` `ip route show > /tmp/ip-route`
+
 0. Create a pair of virtual ethernet interfaces 
 
   * `student@beachhead:~$` `ip link list`
@@ -49,18 +58,14 @@ We are saving ourselves some keystrokes in order to accomplish two things:
 
 0. Add an ip address to the bridge interface
 
-  * `student@beachhead:~$` `ip address show` 
-  * `student@beachhead:~$` `ip route show` 
-  * `student@beachhead:~$` `ip address show > /tmp/ip-addr-bridge` _save for comparison_
-  * `student@beachhead:~$` `ip route show > /tmp/ip-route-bridge` _save for comparison_
   * `student@beachhead:~$` `sudo ip address add 172.16.2.100/24 dev br0`
   * `student@beachhead:~$` `sudo ip link set dev br0 up`
   * `student@beachhead:~$` `ip address show > /tmp/ip-addr-bridge` _save for comparison_
   * `student@beachhead:~$` `ip route show > /tmp/ip-route-bridge` _save for comparison_
-  * `student@beachhead:~$` `ip link show > /tmp/ip-link-bridge-addr` _save for comparison_
+  * `student@beachhead:~$` `ip link show > /tmp/ip-link-list-bridge` _save for comparison_
   * `student@beachhead:~$` `a3diff /tmp/ip-route /tmp/ip-route-bridge `
   * `student@beachhead:~$` `a3diff /tmp/ip-addr /tmp/ip-addr-bridge `
-  * `student@beachhead:~$` `a3diff /tmp/ip-link-bridge /tmp/ip-link-list-bridge `
+  * `student@beachhead:~$` `a3diff /tmp/ip-link-init /tmp/ip-link-list-bridge `
   * `student@beachhead:~$` `bridge link show br0`
 
 ## Use the Linux Brige to access a network namespace 
