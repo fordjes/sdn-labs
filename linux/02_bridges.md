@@ -34,9 +34,12 @@ The objective of this lab is to explore briding interfaces.
     }
     ```
 
-    > If you're not a programmer, no big deal. All you have to know is that this little code snippit will save us some keystrokes, and allow us to do two (2) things:
-    > 1) look for within-line differences (`wdiff`)
-    > 2) display the results in color (`colordiff`)
+    >
+    If you're not a programmer, no big deal. All you have to know is that this little code snippit will save us some keystrokes, and allow us to do two (2) things:
+    >
+    1) look for within-line differences (`wdiff`)   
+    >
+    2) display the results in color (`colordiff`)
 
 ## Create a traditional Linux bridge with virtual interfaces
 
