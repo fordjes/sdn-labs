@@ -10,7 +10,7 @@ title: "Lab 02 - Virtual Interfaces"
 
 ### Lab Objective
 
-The objective of this lab is to explore virtual interfaces within Linux.
+The objective of this lab is to explore virtual interfaces (veth) within Linux. Virtual interfaces are typically used when you are trying to connect two entities via an interface to forward/receive frames. These entities could be containers/bridges/ovs-switch etc. Say you want to connect a docker/lxc container to OVS. You can create a veth pair and push the first interface to the docker/lxc (say, as a phys interface) and push the other interface to OVS. Linux interfaces created with *ip tuntap* (tap) cannot be used to attach to network namespaces, so we are dependent on veth pairs.
 
 ### Procedure
 
@@ -124,23 +124,28 @@ The objective of this lab is to explore virtual interfaces within Linux.
            valid_lft forever preferred_lft forever
     ```
 
-0. Examine the results
-  
-  > What are the mac addresses of our new interfaces?  
-  > Where did these mac addresses come from?
-  > How can we set these addresses if we wanted to ?
+0. Time to examine the results of our work. Issue the following commands, and answer the assocaited questions along the way.
 
-  * `student@beachhead:~$` `ip addr show veth0`
+    `student@beachhead:~$` `ip addr show veth0`
   
     ```
-    7: veth0@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    4: veth0@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
       link/ether 76:83:83:20:f1:4b brd ff:ff:ff:ff:ff:ff
       inet 10.0.0.1/24 scope global veth0
          valid_lft forever preferred_lft forever
       inet6 fe80::7483:83ff:fe20:f14b/64 scope link 
          valid_lft forever preferred_lft forever
     ```
-  
+    
+0. Answer the following questions:
+
+    - **Q1: Wwhat is the MAC address of the veth0 interface?**
+      
+    > What are the mac addresses of our new interfaces?  
+    > Where did these mac addresses come from?
+    > How can we set these addresses if we wanted to ?
+
+    
   * `student@beachhead:~$` `ip addr show veth1`
   
     ```
