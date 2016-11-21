@@ -8,6 +8,12 @@ title: "Lab 01 - Linux Networking"
 
 ### MONDAY - &#x2B50;REQUIRED&#x2B50;
 
+## TODO: This lab is BROKEN
+- add prompts
+- remove/edit sudo ifconfig eth1 up/down
+- this lab doesn't work on beachhead
+- (took Hilary about 20 minutes; I got mostly errors)
+
 ### Lab Objective
 The objective of this lab is to learn how to interface with various networking componets in the Linux kernel. Casual Linux users are likely to recognize many legacy net-tool commands (ifconfig, route, arp, iptunnel, nameif, ipmaddr, netstat). These commands have been obsoleted by the collection of command-line tools known as iproute2.
 
@@ -17,38 +23,21 @@ The objective of this lab is to learn how to interface with various networking c
 | route                | ip route                | Routing tables             |
 | arp                  | ip neigh                | Neighbors                  |
 | iptunnel             | ip tunnel               | Tunnels                    |
-| nameif               | ifrename                | Rename network interfaces |
+| nameif               | ifrename                | Rename network interfaces  |
 | ipmaddr              | ip maddr                | Multicast                  |
 | netstat              | ip -s, ss, ip route     | Network statistics         |
 
 ### Procedure
 
-## TODO: This lab is BROKEN
-- add prompts
-- remove/edit sudo ifconfig eth1 up/down
-- this lab doesn't work on beachhead
-- (took Hilary about 20 minutes; I got mostly errors)
-
-## iproute2 vs net-tools
-
-
-
-### Using iproute2 commands
-
-Run the both commands and find the desired information.
-The goal is to see that all the command we are familar with are represented in the new iproute2 commands.
-
-#### 1. Show All Connected Network Interfaces
-
 0. From your remote desktop, open a terminal session, and move to the student home directory.
 
     `student@beachhead:/$` `cd`
 
-0. Let's begin by exploring some basic legacy commands that were used with **net-tools**
+0. Let's begin with a basic legacy command used with **net-tools**. The *ifconfig* command will display all conected network interfaces.
 
     `student@beachhead:~$` `ifconfig -a`
 
-```
+    ```
 ens3      Link encap:Ethernet  HWaddr fa:16:3e:6f:47:52  
           inet addr:172.16.1.4  Bcast:172.16.1.255  Mask:255.255.255.0
           inet6 addr: fe80::f816:3eff:fe6f:4752/64 Scope:Link
@@ -73,11 +62,20 @@ lo        Link encap:Local Loopback
           TX packets:174 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1 
           RX bytes:12904 (12.9 KB)  TX bytes:12904 (12.9 KB)
-```
+    ```
 
+0. Now let's check out the display returned with an updated **iproute2** command. The *ip link show* command will display all connected network interfaces. The *ip link show* command obsoletes the *ifconfig* command.
 
-**iproute2:**  
-   `$ ip link show`
+    `student@beachhead:~$` `ip link show`
+
+    ```
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether fa:16:3e:59:a0:b8 brd ff:ff:ff:ff:ff:ff
+3: ens4: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
+    ```
 
 #### 2. Activate or Deactivate a Network Interface
 
