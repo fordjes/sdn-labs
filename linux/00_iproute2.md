@@ -38,7 +38,7 @@ The objective of this lab is to learn how to interface with various networking c
     `student@beachhead:~$` `ifconfig -a`
 
     ```
-ens3      Link encap:Ethernet  HWaddr fa:16:3e:6f:47:52  
+    ens3  Link encap:Ethernet  HWaddr fa:16:3e:6f:47:52  
           inet addr:172.16.1.4  Bcast:172.16.1.255  Mask:255.255.255.0
           inet6 addr: fe80::f816:3eff:fe6f:4752/64 Scope:Link
           UP BROADCAST RUNNING MULTICAST  MTU:1450  Metric:1
@@ -47,14 +47,14 @@ ens3      Link encap:Ethernet  HWaddr fa:16:3e:6f:47:52
           collisions:0 txqueuelen:1000 
           RX bytes:539590824 (539.5 MB)  TX bytes:11101898 (11.1 MB)
 
-ens4      Link encap:Ethernet  HWaddr fa:16:3e:2b:a7:95  
+    ens4  Link encap:Ethernet  HWaddr fa:16:3e:2b:a7:95  
           BROADCAST MULTICAST  MTU:1500  Metric:1
           RX packets:0 errors:0 dropped:0 overruns:0 frame:0
           TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1000 
           RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
 
-lo        Link encap:Local Loopback  
+    lo    Link encap:Local Loopback  
           inet addr:127.0.0.1  Mask:255.0.0.0
           inet6 addr: ::1/128 Scope:Host
           UP LOOPBACK RUNNING  MTU:65536  Metric:1
@@ -77,16 +77,9 @@ lo        Link encap:Local Loopback
     link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
     ```
 
-#### 2. Activate or Deactivate a Network Interface
+0. So both of those commands gave 
 
-**net-tools:**  
-      `$ sudo ifconfig eth1 up`  
-      `$ sudo ifconfig eth1 down`
-
-**iproute2:**  
-   `$ sudo ip link set down eth1`  
-   `$ sudo ip link set up eth1`  
-
+0. 
 #### 3. Assign IPv4 address to a Network Interface
 
 **net-tools:**  
