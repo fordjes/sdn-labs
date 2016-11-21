@@ -33,6 +33,8 @@ The objective of this lab is to learn how to interface with various networking c
 
     `student@beachhead:/$` `cd`
 
+#### Display connected network interfaces - ifconfig vs ip link show
+
 0. Let's begin with a basic legacy command used with **net-tools**. The *ifconfig* command will display all conected network interfaces.
 
     `student@beachhead:~$` `ifconfig -a`
@@ -77,10 +79,7 @@ The objective of this lab is to learn how to interface with various networking c
     link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
     ```
 
-0. So both of those commands gave 
-
-0. 
-#### 3. Assign IPv4 address to a Network Interface
+#### Assign IPv4 address to a Network Interface - ifconfig vs ip addr
 
 **net-tools:**  
    `$ sudo ifconfig eth1 10.0.0.1/24`
