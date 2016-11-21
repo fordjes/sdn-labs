@@ -139,7 +139,8 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
     
 0. Answer the following questions:
 
-    - **Q1: Wwhat is the MAC address of the veth0 interface?**
+    - **Q1: What is the MAC address assigned to the veth0 interface?**
+      - A1: The one applied in the example is 76:83:83:20:f1:4b
       
     > What are the mac addresses of our new interfaces?  
     > Where did these mac addresses come from?
