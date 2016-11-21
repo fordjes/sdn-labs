@@ -64,17 +64,17 @@ The objective of this lab is to learn how to interface with various networking c
           RX bytes:12904 (12.9 KB)  TX bytes:12904 (12.9 KB)
     ```
 
-0. Now let's check out the display returned with an updated **iproute2** command. The *ip link show* command will display all connected network interfaces. The *ip link show* command obsoletes the *ifconfig* command.
+0. Now let's check out the display returned with an updated **iproute2** command. The *ip link* command will display all connected network interfaces. The *ip link show* command will fetch characteristics regarding the link layer devices currently available. It is immaterial to *ip link* whether the device is in use by any other higher layer protocols (L3 - IP). The *ip link* tool provides two verbs: *show* and *set*. The *ip link set* command might be used to: de/activate an interface, change link layer state flags, change the MTU, the name of the interface, and even manipulate the Ethernet broadcast address.
 
     `student@beachhead:~$` `ip link show`
 
     ```
-1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-    link/ether fa:16:3e:59:a0:b8 brd ff:ff:ff:ff:ff:ff
-3: ens4: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-    link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+        link/ether fa:16:3e:59:a0:b8 brd ff:ff:ff:ff:ff:ff
+    3: ens4: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+        link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
     ```
     
 0. So both commands worked, but to practice good habits, we should use *ip link show*.
