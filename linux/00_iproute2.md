@@ -79,7 +79,7 @@ The objective of this lab is to learn how to interface with various networking c
     
 0. So both commands worked, but to practice good habits, we should use *ip link show*.
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxx  BROKEN here down xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 0. Now let's try to assign an IPv4 address to a network interface. To start, we'll use the legacy (net-tools) command *ifconfig*.
 
@@ -110,7 +110,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 **iproute2:**  
    `$ sudo ip addr del 10.0.0.1/24 dev eth1`  
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxx  BROKEN HERE UP xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 #### 6. Show IPv4 Address(es) of a Network Interface
 
