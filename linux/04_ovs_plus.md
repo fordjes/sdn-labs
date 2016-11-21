@@ -94,9 +94,8 @@
 0. OVS additional commands
 
   * `student@beachhead:~$` `sudo ovs-appctl show-commands`
-  * `student@beachhead:~$` ``
-  * `student@beachhead:~$` ``
-  * `student@beachhead:~$` ``
+  * `student@beachhead:~$` `sudo ovs-appctl fdb/show donut-plains`
+  * `student@beachhead:~$` `sudo ovs-vsctl dump flows donut-plains`
 
 0. Cleanup 
 

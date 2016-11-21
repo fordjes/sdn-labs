@@ -1,7 +1,5 @@
 
 
-
-
 Make student users on beachhead able to run sudo commands:
 * ip *
 * tcpdump
@@ -9,8 +7,6 @@ Make student users on beachhead able to run sudo commands:
 * wireshark
 * ifconfig
 * route
-
-
 
 add to bashrc:
   function a3diff(){
@@ -26,6 +22,7 @@ raspberrypi:
 beachhead:
 * Deb: insomnia REST client
 * pip: ryu 
-* Apt: mininet
+Apt:
+* mininet
 * wdiff
 * colordiff
