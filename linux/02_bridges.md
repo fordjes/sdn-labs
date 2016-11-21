@@ -22,197 +22,211 @@ The objective of this lab is to explore briding interfaces.
 
 0. From your remote desktop, open a new terminal session, and move to the student home directory.
 
-    `student@beachhead:/$` `cd`
+  `student@beachhead:/$` `cd`
 
 0. The Alta3 Research Labratories has created an piece of invaluable coding called the *a3diff function*. If you tail the .bashrc file, you'll see it at the end. Just something we want you to be aware of, as we'll be using it in this lab to compare the output of some iproute2 commands.
 
-    `student@beachhead:~$` `tail .bashrc`
+  `student@beachhead:~$` `tail .bashrc`
 
-    ```
-    function a3diff {
-        wdiff -n $1 $2 | colordiff
-    }
-    ```
-
-    >
-    If you're not a programmer, no big deal. All you have to know is that this little code snippit will save us some keystrokes, and allow us to do two (2) things:
-    >
-    1) Look for within-line differences (`wdiff`)   
-    >
-    2) Display the results in color (`colordiff`)
+  ```
+  function a3diff {
+      wdiff -n $1 $2 | colordiff
+  }
+  ```
+  >
+  If you're not a programmer, no big deal. All you have to know is that this little code snippit will save us some keystrokes, and allow us to do two (2) things:
+  >
+  1) Look for within-line differences (`wdiff`)   
+  >
+  2) Display the results in color (`colordiff`)
 
 0. While we eventually want to create a traditional Linux bridge with virtual interfaces, let's first collect information about our current configuration.
 
-    `student@beachhead:~$` `ip link list`
+  `student@beachhead:~$` `ip link list`
   
-    ```
-    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
-      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-      link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
-    3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-      link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-    ```
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
+  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
+  ```
 
 0. Display link layer information.
 
-    `student@beachhead:~$` `ip addr show`
+  `student@beachhead:~$` `ip addr show`
   
-    ```
-    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
-      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-      inet 127.0.0.1/8 scope host lo
-         valid_lft forever preferred_lft forever
-      inet6 ::1/128 scope host 
-         valid_lft forever preferred_lft forever
-    2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP group default qlen 1000
-      link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
-      inet 172.16.1.4/24 brd 172.16.1.255 scope global ens3
-         valid_lft forever preferred_lft forever
-      inet6 fe80::f816:3eff:fe6f:4752/64 scope link 
-         valid_lft forever preferred_lft forever
-    3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
-      link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-      inet6 2003:db5:0:f102::1/64 scope global 
-         valid_lft forever preferred_lft forever
-      inet6 fe80::f816:3eff:fe2b:a795/64 scope link 
-         valid_lft forever preferred_lft forever
-    ```
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
+    inet 172.16.1.4/24 brd 172.16.1.255 scope global ens3
+       valid_lft forever preferred_lft forever
+    inet6 fe80::f816:3eff:fe6f:4752/64 scope link 
+       valid_lft forever preferred_lft forever
+  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
+    inet6 2003:db5:0:f102::1/64 scope global 
+       valid_lft forever preferred_lft forever
+    inet6 fe80::f816:3eff:fe2b:a795/64 scope link 
+       valid_lft forever preferred_lft forever
+  ```
 
 0. Exmaine the current IP routing table.
 
-    `student@beachhead:~$` `ip route show`
+  `student@beachhead:~$` `ip route show`
   
-    ```
-    default via 172.16.1.1 dev ens3 
-    169.254.169.254 via 172.16.1.1 dev ens3 
-    172.16.1.0/24 dev ens3  proto kernel  scope link  src 172.16.1.4 
-    ```
+  ```
+  default via 172.16.1.1 dev ens3 
+  169.254.169.254 via 172.16.1.1 dev ens3 
+  172.16.1.0/24 dev ens3  proto kernel  scope link  src 172.16.1.4 
+  ```
+
 0. The next three steps we run will create three files; (1) *ip-link-list-init*, (2) *ip-addr*, and (3) *ip-route*. Each of these files will be a copy of the current configuation of our machine. First we will write the output of *ip link list* to a file called *ip-link-list-init*.
 
-    `student@beachhead:~$` `ip link list > /tmp/ip-link-init`  
+  `student@beachhead:~$` `ip link list > /tmp/ip-link-init`  
 
 0. Now write the output of the command *ip addr show* to a file we create called *ip-addr-init*.
 
-    `student@beachhead:~$` `ip addr show > /tmp/ip-addr-init`
-
+  `student@beachhead:~$` `ip addr show > /tmp/ip-addr-init`
 
 0. Finally, write the output of *ip route show* to a file we create called *ip-route-init*. 
     
-    `student@beachhead:~$` `ip route show > /tmp/ip-route-init`
+  `student@beachhead:~$` `ip route show > /tmp/ip-route-init`
 
 0. Now create a veth pair, veth1 and veth2 
 
-    `student@beachhead:~$` `sudo ip link add veth1 type veth peer name veth2`
+  `student@beachhead:~$` `sudo ip link add veth1 type veth peer name veth2`
   
 0. Now write the output of *ip link show* to a new file called *ip-link-veth1*
 
-    `student@beachhead:~$` `ip link list > /tmp/ip-link-veth1`
+  `student@beachhead:~$` `ip link list > /tmp/ip-link-veth1`
 
 0. We can now demo how the Alta3 Research *a3diff* fuction behaves. Try using it to compare *ip-link-init* and *ip-link-veth1*. Any of the green text represents additions. These changes will also be surrounded by "**{+**" and "**+}**" symbols.
 
-    `student@beachhead:~$` `a3diff /tmp/ip-link-init /tmp/ip-link-veth1`
+  `student@beachhead:~$` `a3diff /tmp/ip-link-init /tmp/ip-link-veth1`
   
-    ```
-    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
-      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-      link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
-    3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-      link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-    {+6: veth2@veth1: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000+}
-    {+    link/ether 66:22:9b:e1:f4:9b brd ff:ff:ff:ff:ff:ff+}
-    {+7: veth1@veth2: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000+}
-    {+    link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff+}
-    ```
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+   link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
+  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
+  {+6: veth2@veth1: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000+}
+  {+    link/ether 66:22:9b:e1:f4:9b brd ff:ff:ff:ff:ff:ff+}
+  {+7: veth1@veth2: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000+}
+  {+    link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff+}
+  ```
 
 0. Ok, let's bring up the first virtual ethernet interface we created (veth1)
 
-    `student@beachhead:~$` `sudo ip link set dev veth1 up`
+  `student@beachhead:~$` `sudo ip link set dev veth1 up`
 
 0. Run the command *ip link list*, and output the contents to a few file, *ip-link-veth1up*. 
 
-    `student@beachhead:~$` `ip link list > /tmp/ip-link-veth1up`
+  `student@beachhead:~$` `ip link list > /tmp/ip-link-veth1up`
 
 0. Examine the changes that occured by turning up the *veth1* interface. Any of the red text represents deletions. These changes will also be surrounded by "**[-**" and "**-]**" symbols.
 
-    `student@beachhead:~$` `a3diff /tmp/ip-link-veth1 /tmp/ip-link-veth1up`
+  `student@beachhead:~$` `a3diff /tmp/ip-link-veth1 /tmp/ip-link-veth1up`
   
-    ```
-    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
-      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-      link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
-    3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-      link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-    6: veth2@veth1: [-<BROADCAST,MULTICAST,M-DOWN>-] {+<BROADCAST,MULTICAST>+} mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-      link/ether 66:22:9b:e1:f4:9b brd ff:ff:ff:ff:ff:ff
-    7: veth1@veth2: [-<BROADCAST,MULTICAST,M-DOWN>-] {+<NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN>+} mtu 1500 qdisc [-noop-] {+noqueue+}       state [-DOWN-] {+LOWERLAYERDOWN+} mode DEFAULT group default qlen 1000
-      link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff
-    ```
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
+  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
+  6: veth2@veth1: [-<BROADCAST,MULTICAST,M-DOWN>-] {+<BROADCAST,MULTICAST>+} mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 66:22:9b:e1:f4:9b brd ff:ff:ff:ff:ff:ff
+  7: veth1@veth2: [-<BROADCAST,MULTICAST,M-DOWN>-] {+<NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN>+} mtu 1500 qdisc [-noop-] {+noqueue+}     state [-DOWN-] {+LOWERLAYERDOWN+} mode DEFAULT group default qlen 1000
+    link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff
+  ```
 
 0. Now let's create a bridge interface.
 
-    `student@beachhead:~$` `sudo ip link add name br0 type bridge`
+  `student@beachhead:~$` `sudo ip link add name br0 type bridge`
 
 0. Make a copy of the current link layer with the *ip link list* command, and write the output to the file *ip-link-bridge*
 
-    `student@beachhead:~$` `ip link list > /tmp/ip-link-bridge`
+  `student@beachhead:~$` `ip link list > /tmp/ip-link-bridge`
 
 0. Examine the changes that occured by creating a bridge interface.
 
-    `student@beachhead:~$` `a3diff /tmp/ip-link-veth1up /tmp/ip-link-bridge`
-  
-    ```
-    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
-      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-      link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
-    3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-    link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-    6: veth2@veth1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-      link/ether 66:22:9b:e1:f4:9b brd ff:ff:ff:ff:ff:ff
-    7: veth1@veth2: <NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN> mtu 1500 qdisc noqueue state LOWERLAYERDOWN mode DEFAULT group default         qlen 1000
-      link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff
-      {+8: br0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000+}
-      {+    link/ether 06:37:83:bf:f2:f1 brd ff:ff:ff:ff:ff:ff+}
-    ```
+  `student@beachhead:~$` `a3diff /tmp/ip-link-veth1up /tmp/ip-link-bridge`
+ 
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
+  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+  link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
+  6: veth2@veth1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 66:22:9b:e1:f4:9b brd ff:ff:ff:ff:ff:ff
+  7: veth1@veth2: <NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN> mtu 1500 qdisc noqueue state LOWERLAYERDOWN mode DEFAULT group default       qlen 1000
+    link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff
+    {+8: br0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000+}
+    {+    link/ether 06:37:83:bf:f2:f1 brd ff:ff:ff:ff:ff:ff+}
+  ```
 
 0. Add the veth1 interface to the bridging interface.
  
-    `student@beachhead:~$` `sudo ip link set dev veth1 master br0 `
+  `student@beachhead:~$` `sudo ip link set dev veth1 master br0 `
 
 0. Make a copy of the current link layer with the *ip link list* command, and write the output to the file *ip-link-bridge-veth1*
 
-    `student@beachhead:~$` `ip link list > /tmp/ip-link-bridge-veth1`
+  `student@beachhead:~$` `ip link list > /tmp/ip-link-bridge-veth1`
 
 0. Examine the changes that occured by adding veth1 to the bridge interface.
 
-    `student@beachhead:~$` `a3diff /tmp/ip-link-bridge /tmp/ip-link-bridge-veth1`
+  `student@beachhead:~$` `a3diff /tmp/ip-link-bridge /tmp/ip-link-bridge-veth1`
   
-    ```
-    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
-      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-      link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
-    3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-      link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-    6: veth2@veth1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-    link/ether 66:22:9b:e1:f4:9b brd ff:ff:ff:ff:ff:ff
-    7: veth1@veth2: <NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN> mtu 1500 qdisc noqueue state LOWERLAYERDOWN mode DEFAULT group default         qlen 1000
-      link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff
-      {+8: br0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000+}
-      {+    link/ether 06:37:83:bf:f2:f1 brd ff:ff:ff:ff:ff:ff+}
-    ```
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
+  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
+  6: veth2@veth1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+  link/ether 66:22:9b:e1:f4:9b brd ff:ff:ff:ff:ff:ff
+  7: veth1@veth2: <NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN> mtu 1500 qdisc noqueue state LOWERLAYERDOWN mode DEFAULT group default       qlen 1000
+    link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff
+    {+8: br0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000+}
+    {+    link/ether 06:37:83:bf:f2:f1 brd ff:ff:ff:ff:ff:ff+}
+  ```
 
 0. Add an ip address to the bridge interface
 
-  * `student@beachhead:~$` `sudo ip address add 172.16.2.100/24 dev br0`
-  * `student@beachhead:~$` `sudo ip link set dev br0 up`
-  * `student@beachhead:~$` `ip address show > /tmp/ip-addr-bridge` _save for comparison_
-  * `student@beachhead:~$` `ip route show > /tmp/ip-route-bridge` _save for comparison_
-  * `student@beachhead:~$` `ip link show > /tmp/ip-link-list-bridge` _save for comparison_
-  * `student@beachhead:~$` `a3diff /tmp/ip-route /tmp/ip-route-bridge `
+  `student@beachhead:~$` `sudo ip address add 172.16.2.100/24 dev br0`
+  
+0. Change the state of the new bridge interface to UP.
+
+  `student@beachhead:~$` `sudo ip link set dev br0 up`
+
+0. Just as before, write the link layer information to a new file, *ip-link-list-bridge*.
+    
+  `student@beachhead:~$` `ip link show > /tmp/ip-link-list-bridge` _save for comparison_
+
+0. Since we also applied an IP address, let's also check out the L3 information with the *ip address show* command. Write the output to a file called, *ip-addr-bridge*.
+
+  `student@beachhead:~$` `ip address show > /tmp/ip-addr-bridge`
+
+0. Write the current routing information to a file called, *ip-route-bridge*.
+
+  `student@beachhead:~$` `ip route show > /tmp/ip-route-bridge` _save for comparison_
+
+0. Examine the changes that occured by applying an IP address to the bridge interface (br0).
+
+  `student@beachhead:~$` `a3diff /tmp/ip-route /tmp/ip-route-bridge `
   
   ```
   default via 172.16.1.1 dev ens3 
