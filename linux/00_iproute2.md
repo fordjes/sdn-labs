@@ -6,7 +6,7 @@ title: "Lab 01 - Linux Networking"
 ---
 [Click here to find out more about Alta3 Research's Openstack Training](https://alta3.com/courses/openstack)
 
-### MONDAY - &#x1F528;REQUIRED&#x1F528;
+### MONDAY - &#x2B50;REQUIRED&#x2B50;
 
 ### Lab Objective
 The objective of this lab is to learn how to interface with various networking componets in the Linux kernel. Casual Linux users are likely to recognize many legacy net-tool commands (ifconfig, route, arp, iptunnel, nameif, ipmaddr, netstat). These commands have been obsoleted by the collection of command-line tools known as iproute2.
