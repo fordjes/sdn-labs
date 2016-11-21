@@ -87,7 +87,7 @@ xxxxxxxxxxxxxx  BROKEN here down xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 0. There won't be any special output if it worked, so run legacy *ifconfig* to confirm that the IP address was applied to the ens4 interface.
 
-    `student@beachhead:~$` `ifconfig ens4 add 10.0.0.1`
+    `student@beachhead:~$` `ifconfig`
 
 0. 
 
@@ -112,15 +112,17 @@ xxxxxxxxxxxxxx  BROKEN here down xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 xxxxxxxxxxxxxx  BROKEN HERE UP xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-#### 6. Show IPv4 Address(es) of a Network Interface
+0. Now use a legacy net-tools *ifconfig* command to display the primary address. Unfortunately *ifconfig* will not show the secondary IP addresses.  
 
-**net-tools:** Shows only the primary address, not secondary IP addresses.  
-   `$ ifconfig eth1`  
+    `student@beachhead:~$` `ifconfig ens4`  
 
-**iproute2:**  Shows all IP addresses, primary and secondary.  
-   `$ ip addr show dev eth1`  
+0. Here is the analagous command from the iproute2 suite, *ip addr*. The *ip addr show* command will show all IP addresses, primary and secondary, not just the primary address as was the case with *ifconfig*.  
 
-#### 7. Assign an IPv6 address to a Network Interface
+    `student@beachhead:~$` `ip addr show dev ens4`  
+
+xxxxxxxxxxxxxx  BROKEN HERE Down xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+0. Assign an IPv6 address to a Network Interface
 
 **net-tools:**  
    `$ sudo ifconfig eth1 inet6 add 2002:0db5:0:f102::1/64`  
@@ -153,11 +155,31 @@ xxxxxxxxxxxxxx  BROKEN HERE UP xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 **iproute2:**  deactivate the interface first!  
    `$ sudo ip link set dev eth1 address 08:00:27:75:2a:67`
 
-#### 11. View the IP Routing Table
+XXXXXXXXXXXXXXXXXXX BROKEN HERE UP XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
-**net-tools:**  
-   `$ route -n`  
-   `$ netstat -rn`  
+0. So now that we've brought manipulation of interfaces a bit more into focus, let's focus on the IP routing table. This next command, which is legacy net-tools, will allow us to view the table.
+
+    `student@beachhead:~$` `route -n`  
+
+    ```
+    Kernel IP routing table
+    Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+    0.0.0.0         172.16.1.1      0.0.0.0         UG    0      0        0 ens3
+    169.254.169.254 172.16.1.1      255.255.255.255 UGH   0      0        0 ens3
+    172.16.1.0      0.0.0.0         255.255.255.0   U     0      0        0 ens3
+    ```
+
+0. Network statistics are also available via the legacy net-tools command *netstat*. The following command is popular legacy for returning routing information.
+
+    `student@beachhead:~$` `netstat -rn`  
+
+    ```
+    Kernel IP routing table
+    Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+    0.0.0.0         172.16.1.1      0.0.0.0         UG        0 0          0 ens3
+    169.254.169.254 172.16.1.1      255.255.255.255 UGH       0 0          0 ens3
+    172.16.1.0      0.0.0.0         255.255.255.0   U         0 0          0 ens3
+    ```
 
 **iproute2:**  
    `$ ip route show`  
