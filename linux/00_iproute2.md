@@ -79,9 +79,17 @@ The objective of this lab is to learn how to interface with various networking c
     
 0. So both commands worked, but to practice good habits, we should use *ip link show*.
 
+----------------------------------------------------------------
+
 0. Now let's try to assign an IPv4 address to a network interface. To start, we'll use the legacy (net-tools) command *ifconfig*.
 
-    `student@beachhead:~$` `sudo ifconfig eth1 10.0.0.1/24`
+    `student@beachhead:~$` `ifconfig ens4 add 10.0.0.1`
+
+0. There won't be any special output if it worked, so run legacy *ifconfig* to confirm that the IP address was applied to the ens4 interface.
+
+    `student@beachhead:~$` `ifconfig ens4 add 10.0.0.1`
+
+0. 
 
 **iproute2:**  
    `$ sudo ip addr add 10.0.0.1/24 dev eth1`  
@@ -101,6 +109,8 @@ The objective of this lab is to learn how to interface with various networking c
 
 **iproute2:**  
    `$ sudo ip addr del 10.0.0.1/24 dev eth1`  
+
+--------------------------------------------------------------------------
 
 #### 6. Show IPv4 Address(es) of a Network Interface
 
