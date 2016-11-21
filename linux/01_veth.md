@@ -178,12 +178,15 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
 
 0. Examine the routing table and run tcpdump whit the previous commands
 
-  > When we force the ICMP packet destine for 10.0.0.2 on veth0 
+    > When we force the ICMP packet destine for 10.0.0.2 on veth0 
 
-  * `student@beachhead:~$` `ping -I veth1 10.0.0.1 > /dev/null &` _ping in the background_
-  * `student@beachhead:~$` `sudo tcpdump -i veth1` _Ctrl^C to exit_
-  * `student@beachhead:~$` `fg` _bring the ping back into the foreground and press Ctrl^C to quit_
-  * `student@beachhead:~$` `ip route`
+    `student@beachhead:~$` `ping -I veth1 10.0.0.1 > /dev/null &` _ping in the background_
+  
+    `student@beachhead:~$` `sudo tcpdump -i veth1` _Ctrl^C to exit_
+    
+    `student@beachhead:~$` `fg` _bring the ping back into the foreground and press Ctrl^C to quit_
+
+    `student@beachhead:~$` `ip route`
   
     ```
     default via 172.16.1.1 dev ens3 
