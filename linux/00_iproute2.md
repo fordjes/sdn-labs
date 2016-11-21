@@ -81,6 +81,8 @@ The objective of this lab is to learn how to interface with various networking c
 
 #### Assign IPv4 address to a Network Interface - ifconfig vs ip addr
 
+0. 
+
 **net-tools:**  
    `$ sudo ifconfig eth1 10.0.0.1/24`
 
