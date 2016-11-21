@@ -177,16 +177,16 @@ The objective of this lab is to explore briding interfaces.
       {+8: br0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000+}
       {+    link/ether 06:37:83:bf:f2:f1 brd ff:ff:ff:ff:ff:ff+}
     ```
- 
+
 0. Add the veth1 interface to the bridging interface.
  
     `student@beachhead:~$` `sudo ip link set dev veth1 master br0 `
 
-0. 
+0. Make a copy of the current link layer with the *ip link list* command, and write the output to the file *ip-link-bridge-veth1*
 
-    `student@beachhead:~$` `ip link list > /tmp/ip-link-bridge-veth1` _save for comparison_
+    `student@beachhead:~$` `ip link list > /tmp/ip-link-bridge-veth1`
 
-0.
+0. Examine the changes that occured by adding veth1 to the bridge interface.
 
     `student@beachhead:~$` `a3diff /tmp/ip-link-bridge /tmp/ip-link-bridge-veth1`
   
