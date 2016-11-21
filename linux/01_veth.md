@@ -62,7 +62,7 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
 
 0. The state LOWERLAYERDOWN can be resolved to the more desireable state of UP by turning up the interface peered with veth0, veth1. Let's do that now. 
 
-    `student@beachhead:~$` `sudo ip link set dev veth1 up`
+    `student@beachhead:~$` `ip link set dev veth1 up`
 
 0. Check out your work. Both interfaces should be displaying a state of UP.
 
@@ -159,12 +159,22 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
          valid_lft forever preferred_lft forever
     ``` 
 
-0. Ping from one veth interface to the other
+0. Let's try using a ping command to create traffic between the two interfaces. Let's first examine the usage of the ping command.
 
-  > Why wont this work?
+    `student@beachhead:~$` `ping -help`
 
-  * `student@beachhead:~$` `ping -I veth1 10.0.0.1`
-  * `student@beachhead:~$` `ping -I veth0 10.0.0.2`
+0. So the following command should ask veth1 to ping 10.0.0.1. However, initally, this command will **not** work. Nevertheless, try it to confirm.
+
+    `student@beachhead:~$` `ping -I veth1 10.0.0.1`
+
+0. Now confirm that we cannot ping in either direction.
+
+    `student@beachhead:~$` `ping -I veth0 10.0.0.2`
+
+0. Answer the following question:
+
+    - **Q1: So why didn't the ping command work between the two interfaces?**
+      - A1:
 
 0. Examine the routing table and run tcpdump whit the previous commands
 
