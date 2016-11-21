@@ -89,7 +89,7 @@ xxxxxxxxxxxxxx  BROKEN here down xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
     `student@beachhead:~$` `ifconfig`
 
-0. 
+0. free
 
 **iproute2:**  
    `$ sudo ip addr add 10.0.0.1/24 dev eth1`  
@@ -181,14 +181,24 @@ XXXXXXXXXXXXXXXXXXX BROKEN HERE UP XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     172.16.1.0      0.0.0.0         255.255.255.0   U         0 0          0 ens3
     ```
 
-**iproute2:**  
-   `$ ip route show`  
+0. Now examine the information returned by the updated iproute2 *ip route* command.
+
+    `student@beachhead:~$` `ip route show`
+    
+    ```
+    default via 172.16.1.1 dev ens3 onlink
+    172.16.1.0/24 dev ens3  proto kernel  scope link  src 172.16.1.5
+    ```
 
 #### 12. Add or Modify a Default Route
 
-**net-tools:**  
-   `$ sudo route add default gw 192.168.1.2 eth0`  
-   `$ sudo route del default gw 192.168.1.1 eth0`  
+0. Legacy manipulation of this table was done with the net-tools command *route*. Try adding a new default route for traffic on the 192.168.1.0/24 network.
+
+    `student@beachhead:~$` `sudo route add -net 192.168.1.0 netmask 255.255.255.0 dev ens4`
+
+0. 
+
+    `$ sudo route del default gw 192.168.1.1 eth0`  
 
 **iproute2:**  
    `$ sudo ip route add default via 192.168.1.2 dev eth0`  
