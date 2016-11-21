@@ -79,7 +79,7 @@ The objective of this lab is to explore briding interfaces.
          valid_lft forever preferred_lft forever
     ```
 
-0. Exmaine the current routing table.
+0. Exmaine the current IP routing table.
 
     `student@beachhead:~$` `ip route show`
   
