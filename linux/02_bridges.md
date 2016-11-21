@@ -88,13 +88,20 @@ The objective of this lab is to explore briding interfaces.
     169.254.169.254 via 172.16.1.1 dev ens3 
     172.16.1.0/24 dev ens3  proto kernel  scope link  src 172.16.1.4 
     ```
-0. 
+0. The next three steps we run will create three files; (1) *ip-link-list-init*, (2) *ip-addr*, and (3) *ip-route*. Each of these files will be a copy of the current configuation of our machine. First we will write the output of *ip link list* to a file called *ip-link-list-init*.
 
-  * `student@beachhead:~$` `ip link list > /tmp/ip-link-list-init`  
-  * `student@beachhead:~$` `ip addr show > /tmp/ip-addr`
-  * `student@beachhead:~$` `ip route show > /tmp/ip-route`
+    `student@beachhead:~$` `ip link list > /tmp/ip-link-list-init`  
 
-0. Create a pair of virtual ethernet interfaces 
+0. Now write the output of the command *ip addr show* to a file we create called *ip-addr*.
+
+    `student@beachhead:~$` `ip addr show > /tmp/ip-addr`
+
+
+0. Finally, write the output of *ip route show* to a file we create called *ip-route*. 
+    
+    `student@beachhead:~$` `ip route show > /tmp/ip-route`
+
+0. To demo Create a pair of virtual ethernet interfaces 
 
   * `student@beachhead:~$` `ip link list`
     
