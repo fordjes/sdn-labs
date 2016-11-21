@@ -1,4 +1,27 @@
-# Linux Networking 
+---
+date: "2016-11-27"
+draft: false
+weight: 10
+title: "Lab 01 - Linux Networking"
+---
+[Click here to find out more about Alta3 Research's Openstack Training](https://alta3.com/courses/openstack)
+
+### MONDAY - &#x1F528;REQUIRED&#x1F528;
+
+### Lab Objective
+The objective of this lab is to learn how to interface with various networking componets in the Linux kernel. Casual Linux users are likely to recognize many legacy net-tool commands (ifconfig, route, arp, iptunnel, nameif, ipmaddr, netstat). These commands have been obsoleted by the collection of command-line tools known as iproute2.
+
+| Legacy (net-tools)   | Obsoleted by (iproute2) | Use case                   |
+|----------------------|-------------------------|----------------------------|
+| ifconfig             | ip addr, ip link, ip -s | Address and link config    |
+| route                | ip route                | Routing tables             |
+| arp                  | ip neigh                | Neighbors                  |
+| iptunnel             | ip tunnel               | Tunnels                    |
+| nameif               | ifrename                | Rename network interfaces |
+| ipmaddr              | ip maddr                | Multicast                  |
+| netstat              | ip -s, ss, ip route     | Network statistics         |
+
+### Procedure
 
 ## TODO: This lab is BROKEN
 - add prompts
@@ -8,18 +31,7 @@
 
 ## iproute2 vs net-tools
 
-iproute2 is the collection of command-line tools used for interfacing with various networking components in the Linux kernel.
-These commands provide a full feature set compatibility with the legacy commands (net-tools) that many linux users may be familar with.
 
-| Legacy   | Obsoleted by            | Use case                   |
-|----------|-------------------------|----------------------------|
-| ifconfig | ip addr, ip link, ip -s | Address and link config    |
-| route    | ip route                | Routing tables             |
-| arp      | ip neigh                | Neighbors                  |
-| iptunnel | ip tunnel               | Tunnels                    |
-| nameif   | ifrename                | Rename network interfaces |
-| ipmaddr  | ip maddr                | Multicast                  |
-| netstat  | ip -s, ss, ip route     | Network statistics         |
 
 ### Using iproute2 commands
 
@@ -28,8 +40,13 @@ The goal is to see that all the command we are familar with are represented in t
 
 #### 1. Show All Connected Network Interfaces
 
-**net-tools:**  
-   `$ ifconfig -a`
+0. From your remote desktop, open a terminal session, and move to the student home directory.
+
+    `student@beachhead:/$` `cd`
+
+0. Let's begin by exploring some basic legacy commands that were used with **net-tools**
+
+    `student@beachhead:~$` `ifconfig -a`
 
 ```
 ens3      Link encap:Ethernet  HWaddr fa:16:3e:6f:47:52  
