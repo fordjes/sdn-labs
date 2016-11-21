@@ -283,8 +283,6 @@ The reason for this change was that systems with multiple interfaces were not ga
 
 The following is a list of pages we thought might be helpful for our students to know about:
 
-* [Glance bugs](https://bugs.launchpad.net/glance)
-
 * [iproute2 wiki](https://en.wikipedia.org/wiki/Iproute2)
 
 * [net-tools deprecated - mailing list](https://lists.debian.org/debian-devel/2009/03/msg00780.html)
