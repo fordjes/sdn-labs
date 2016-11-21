@@ -126,24 +126,30 @@ The objective of this lab is to explore briding interfaces.
     {+    link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff+}
     ```
 
-0. Bring up the first virtual ethernet interfaces we created
+0. Ok, let's bring up the first virtual ethernet interface we created (veth1)
 
-  * `student@beachhead:~$` `sudo ip link set dev veth1 up`
-  * `student@beachhead:~$` `ip link list > /tmp/ip-link-veth1up` _save for comparison_
-  * `student@beachhead:~$` `a3diff /tmp/ip-link-veth1 /tmp/ip-link-veth1up `
+    `student@beachhead:~$` `sudo ip link set dev veth1 up`
+
+0. Run the command *ip link list*, and output the contents to a few file, *ip-link-veth1up*. 
+
+    `student@beachhead:~$` `ip link list > /tmp/ip-link-veth1up` _save for comparison_
+
+0. Examine the changes that occured by turning up the *veth1* interface. 
+
+    `student@beachhead:~$` `a3diff /tmp/ip-link-veth1 /tmp/ip-link-veth1up `
   
-  ```
-  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-    link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
-  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-    link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-  16: veth2@veth1: [-<BROADCAST,MULTICAST,M-DOWN>-] {+<BROADCAST,MULTICAST>+} mtu 1500 qdisc noop state DOWN mode DEFAULT group default     qlen 1000
-    link/ether 66:22:9b:e1:f4:9b brd ff:ff:ff:ff:ff:ff
-  17: veth1@veth2: [-<BROADCAST,MULTICAST,M-DOWN>-] {+<NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN>+} mtu 1500 qdisc [-noop-] {+noqueue+}       state [-DOWN-] {+LOWERLAYERDOWN+} mode DEFAULT group default qlen 1000
-    link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff
-  ```
+    ```
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+      link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
+    3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+      link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
+    16: veth2@veth1: [-<BROADCAST,MULTICAST,M-DOWN>-] {+<BROADCAST,MULTICAST>+} mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+      link/ether 66:22:9b:e1:f4:9b brd ff:ff:ff:ff:ff:ff
+    17: veth1@veth2: [-<BROADCAST,MULTICAST,M-DOWN>-] {+<NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN>+} mtu 1500 qdisc [-noop-] {+noqueue+}       state [-DOWN-] {+LOWERLAYERDOWN+} mode DEFAULT group default qlen 1000
+      link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff
+    ```
 
 0. Create a bridge and add the virtual interfaces to it
 
