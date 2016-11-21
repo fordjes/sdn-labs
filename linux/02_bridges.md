@@ -37,13 +37,11 @@ The objective of this lab is to explore briding interfaces.
     >
     If you're not a programmer, no big deal. All you have to know is that this little code snippit will save us some keystrokes, and allow us to do two (2) things:
     >
-    1) look for within-line differences (`wdiff`)   
+    1) Look for within-line differences (`wdiff`)   
     >
-    2) display the results in color (`colordiff`)
+    2) Display the results in color (`colordiff`)
 
-## Create a traditional Linux bridge with virtual interfaces
-
-0. Collect information about your initial configuration
+0. While we eventually want to create a traditional Linux bridge with virtual interfaces, let's first collect information about our current configuration.
 
     `student@beachhead:~$` `ip link list`
   
@@ -55,7 +53,9 @@ The objective of this lab is to explore briding interfaces.
     3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
       link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
     ```
-  
+
+0. Display link layer information.
+
     `student@beachhead:~$` `ip addr show`
   
     ```
@@ -78,6 +78,7 @@ The objective of this lab is to explore briding interfaces.
       inet6 fe80::f816:3eff:fe2b:a795/64 scope link 
          valid_lft forever preferred_lft forever
     ```
+
 0. Exmaine the current routing table.
 
     `student@beachhead:~$` `ip route show`
