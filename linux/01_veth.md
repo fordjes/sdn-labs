@@ -4,7 +4,7 @@ draft: false
 weight: 20
 title: "Lab 02 - Virtual Interfaces"
 ---
-[Click here to find out more about Alta3 Research's Openstack Training](https://alta3.com/courses/openstack)
+[Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
 
 ### MONDAY - &#x2B50;REQUIRED&#x2B50;
 
