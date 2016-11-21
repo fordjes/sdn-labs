@@ -1,10 +1,10 @@
 ---
-date: "2016-11-27"
+date: "2016-11-20"
 draft: false
 weight: 10
 title: "Lab 01 - Linux Networking"
 ---
-[Click here to find out more about Alta3 Research's Openstack Training](https://alta3.com/courses/openstack)
+[Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
 
 ### MONDAY - &#x2B50;REQUIRED&#x2B50;
 
