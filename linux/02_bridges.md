@@ -90,47 +90,41 @@ The objective of this lab is to explore briding interfaces.
     ```
 0. The next three steps we run will create three files; (1) *ip-link-list-init*, (2) *ip-addr*, and (3) *ip-route*. Each of these files will be a copy of the current configuation of our machine. First we will write the output of *ip link list* to a file called *ip-link-list-init*.
 
-    `student@beachhead:~$` `ip link list > /tmp/ip-link-list-init`  
+    `student@beachhead:~$` `ip link list > /tmp/ip-link-init`  
 
-0. Now write the output of the command *ip addr show* to a file we create called *ip-addr*.
+0. Now write the output of the command *ip addr show* to a file we create called *ip-addr-init*.
 
-    `student@beachhead:~$` `ip addr show > /tmp/ip-addr`
+    `student@beachhead:~$` `ip addr show > /tmp/ip-addr-init`
 
 
-0. Finally, write the output of *ip route show* to a file we create called *ip-route*. 
+0. Finally, write the output of *ip route show* to a file we create called *ip-route-init*. 
     
-    `student@beachhead:~$` `ip route show > /tmp/ip-route`
+    `student@beachhead:~$` `ip route show > /tmp/ip-route-init`
 
-0. To demo Create a pair of virtual ethernet interfaces 
+0. Now create a veth pair, veth1 and veth2 
 
-  * `student@beachhead:~$` `ip link list`
-    
-  ```
-  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-    link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
-  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-    link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-  ```
+    `student@beachhead:~$` `sudo ip link add veth1 type veth peer name veth2`
   
-  * `student@beachhead:~$` `ip link list > /tmp/ip-link-init` _save for comparison_
-  * `student@beachhead:~$` `sudo ip link add veth1 type veth peer name veth2`ip 
-  * `student@beachhead:~$` `ip link list > /tmp/ip-link-veth1` _save for comparison_
-  * `student@beachhead:~$` `a3diff /tmp/ip-link-list-init /tmp/ip-link-veth1 `
+0. Now write the output of *ip link show* to a new file called *ip-link-veth1*
+
+    `student@beachhead:~$` `ip link list > /tmp/ip-link-veth1`
+
+0. We can now demo how the Alta3 Research *a3diff* fuction behaves. Try using it to compare *ip-link-init* and *ip-link-veth1*. Any of the colorized text represents deltas (changes). These changes will also be surrounded by "**{+**" and "**+}**" symbols.
+
+    `student@beachhead:~$` `a3diff /tmp/ip-link-init /tmp/ip-link-veth1`
   
-  ```
-  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-    link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
-  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-    link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-    {+16: veth2@veth1: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000+}
+    ```
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+      link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
+    3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+      link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
+    {+6: veth2@veth1: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000+}
     {+    link/ether 66:22:9b:e1:f4:9b brd ff:ff:ff:ff:ff:ff+}
-    {+17: veth1@veth2: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000+}
+    {+7: veth1@veth2: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000+}
     {+    link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff+}
-  ```
+    ```
 
 0. Bring up the first virtual ethernet interfaces we created
 
