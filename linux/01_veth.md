@@ -140,17 +140,18 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
 0. Answer the following questions:
 
     - **Q1: What is the MAC address assigned to the veth0 interface?**
-      - A1: The one applied in the example is 76:83:83:20:f1:4b
-      
-    > What are the mac addresses of our new interfaces?  
-    > Where did these mac addresses come from?
-    > How can we set these addresses if we wanted to ?
-
+      - A1: The one applied in the example is 76:83:83:20:f1:4b, however yours will be different (MACs are unique)
+    - **Q2: Where did this MAC address come from?**
+      - A2: 
+    - **Q3: Is it possible to change this MAC address if we wanted to?**
+      - A3: Certainly it is. A command like *ip link set dev veth0 addr 00:01:02:aa:bb:cc* would set the MAC associated with veth0 to 00:01:02:aa:bb:cc.
     
-  * `student@beachhead:~$` `ip addr show veth1`
+0. Let's not neglect the other half of our hard work. Use the *ip addr* command to display information regarding the veth1 interface.
+
+    `student@beachhead:~$` `ip addr show veth1`
   
     ```
-    6: veth1@veth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    5: veth1@veth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
       link/ether 7a:a9:ff:dd:05:96 brd ff:ff:ff:ff:ff:ff
       inet 10.0.0.2/24 scope global veth1
          valid_lft forever preferred_lft forever
