@@ -1,75 +1,89 @@
-# Bridging 
+---
+date: "2016-11-21"
+draft: false
+weight: 30
+title: "Lab 03 - Bridging"
+---
+[Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
 
-## TODO:
-- This lab took Hilary 20 minutes (one handed typing, just entering commands)
+### MONDAY - &#x2B50;REQUIRED&#x2B50;
 
-## What is a bridge
-A bridge transparently relays traffic between multiple network interfaces.
-A bridge connects two or more physical links together to form one bigger (logical) link.
-A bridge does not know anything about protocols, it only sees Ethernet frames.
-A bridge is essentially a switch, but with all the flexibility of Linux networking.
+### Lab Objective
 
-## a3diff
+The objective of this lab is to explore briding interfaces.
+  - A bridge transparently relays traffic between multiple network interfaces.
+  - A bridge connects two or more physical links together to form one bigger (logical) link.
+  - A bridge does not know anything about protocols, it only sees Ethernet frames.
+  - A bridge is essentially a switch, but with all the flexibility of Linux networking.
 
-Open .bashrc and read the funciton `a3diff`.  
-We will use this function in this lab to compare the output of some iproute2 commands.
+### Procedure
 
-```
-function a3diff {
-    wdiff -n $1 $2 | colordiff
-}
-```
+0. Close any terminals you currently have open within the remote desktop session.
 
-We are saving ourselves some keystrokes in order to accomplish two things:
+0. From your remote desktop, open a new terminal session, and move to the student home directory.
 
-* look for within-line differences (`wdiff`)
-* display the results in color (`colordiff`)
+    `student@beachhead:/$` `cd`
+
+0. The Alta3 Research Labratories has created an piece of invaluable coding called the *a3diff function*. If you tail the .bashrc file, you'll see it at the end. Just something we want you to be aware of, as we'll be using it in this lab to compare the output of some iproute2 commands.
+
+    `student@beachhead:~$` `tail .bashrc`
+
+    ```
+    function a3diff {
+        wdiff -n $1 $2 | colordiff
+    }
+    ```
+
+    > If you're not a programmer, no big deal. All you have to know is that this little code snippit will save us some keystrokes, and allow us to do two (2) things: 1) look for within-line differences (`wdiff`), and 2) display the results in color (`colordiff`)
 
 ## Create a traditional Linux bridge with virtual interfaces
 
 0. Collect information about your initial configuration
 
-  * `student@beachhead:~$` `ip link list`
+    `student@beachhead:~$` `ip link list`
   
-  ```
-  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-    link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
-  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-    link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-  ```
+    ```
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+      link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
+    3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+      link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
+    ```
   
-  * `student@beachhead:~$` `ip addr show`
-  ```
-  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    inet 127.0.0.1/8 scope host lo
-       valid_lft forever preferred_lft forever
-    inet6 ::1/128 scope host 
-       valid_lft forever preferred_lft forever
-  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP group default qlen 1000
-    link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
-    inet 172.16.1.4/24 brd 172.16.1.255 scope global ens3
-       valid_lft forever preferred_lft forever
-    inet6 fe80::f816:3eff:fe6f:4752/64 scope link 
-       valid_lft forever preferred_lft forever
-  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
-    link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-    inet6 2003:db5:0:f102::1/64 scope global 
-       valid_lft forever preferred_lft forever
-    inet6 fe80::f816:3eff:fe2b:a795/64 scope link 
-       valid_lft forever preferred_lft forever
-  ```
+    `student@beachhead:~$` `ip addr show`
   
-  * `student@beachhead:~$` `ip route show`
+    ```
+    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+      inet 127.0.0.1/8 scope host lo
+         valid_lft forever preferred_lft forever
+      inet6 ::1/128 scope host 
+         valid_lft forever preferred_lft forever
+    2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP group default qlen 1000
+      link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
+      inet 172.16.1.4/24 brd 172.16.1.255 scope global ens3
+         valid_lft forever preferred_lft forever
+      inet6 fe80::f816:3eff:fe6f:4752/64 scope link 
+         valid_lft forever preferred_lft forever
+    3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+      link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
+      inet6 2003:db5:0:f102::1/64 scope global 
+         valid_lft forever preferred_lft forever
+      inet6 fe80::f816:3eff:fe2b:a795/64 scope link 
+         valid_lft forever preferred_lft forever
+    ```
+0. Exmaine the current routing table.
+
+    `student@beachhead:~$` `ip route show`
   
-  ```
-  default via 172.16.1.1 dev ens3 
-  169.254.169.254 via 172.16.1.1 dev ens3 
-  172.16.1.0/24 dev ens3  proto kernel  scope link  src 172.16.1.4 
-  ```
-  
+    ```
+    default via 172.16.1.1 dev ens3 
+    169.254.169.254 via 172.16.1.1 dev ens3 
+    172.16.1.0/24 dev ens3  proto kernel  scope link  src 172.16.1.4 
+    ```
+0. 
+
   * `student@beachhead:~$` `ip link list > /tmp/ip-link-list-init`  
   * `student@beachhead:~$` `ip addr show > /tmp/ip-addr`
   * `student@beachhead:~$` `ip route show > /tmp/ip-route`
