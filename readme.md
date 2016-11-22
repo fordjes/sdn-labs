@@ -3,7 +3,8 @@
 ### Linux networking primer
 | Number | Title               | Est. Length | % Complete | Tested / Notes |
 |--------|---------------------|-------------|------------|--------|
-| 00     | iproute2            | 20 mins     | 50%        | hilary: needs fixed for beachhead       |
+| 00.a   | iproute2            | 20 mins     | 50%        | hilary: needs fixed for beachhead       |
+| 00.b   | tcpdump             |             | 50%        |        |
 | 01     | veth                | 10 mins     | 100%       | hilary: needs IP updates |
 | 02     | bridges             |             | 100%       |        |
 | 03     | ovs switch          |             | 100%       |        |
@@ -13,8 +14,8 @@
 ### Mininet
 | Number | Title              | % Complete | Tested |
 |--------|--------------------|------------|--------|
-| 00     | mininet #1         | 0%         |        |
-| 01     | mininet #2         | 0%         |        |
+| 00     | mininet intro      | 100%         |        |
+| 01     | mininet ovs-ofctl  | 100%         |        |
 | 02     | wireshark openflow | 0%         |        |
    > Convert this to labs: http://mininet.org/walkthrough/
 
