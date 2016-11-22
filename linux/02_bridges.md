@@ -179,7 +179,7 @@ The objective of this lab is to explore briding interfaces.
 
 0. Add the veth1 interface to the bridging interface.
  
-  `student@beachhead:~$` `sudo ip link set dev veth1 master br0 `
+  `student@beachhead:~$` `sudo ip link set dev veth1 master br0`
 
 0. Make a copy of the current link layer with the *ip link list* command, and write the output to the file *ip-link-bridge-veth1*
 
@@ -191,20 +191,20 @@ The objective of this lab is to explore briding interfaces.
   
   ```
   1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
   2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-    link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
+      link/ether fa:16:3e:59:a0:b8 brd ff:ff:ff:ff:ff:ff
   3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-    link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-  6: veth2@veth1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-  link/ether 66:22:9b:e1:f4:9b brd ff:ff:ff:ff:ff:ff
-  7: veth1@veth2: <NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN> mtu 1500 qdisc noqueue state LOWERLAYERDOWN mode DEFAULT group default       qlen 1000
-    link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff
-    {+8: br0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000+}
-    {+    link/ether 06:37:83:bf:f2:f1 brd ff:ff:ff:ff:ff:ff+}
+      link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
+  8: veth2@veth1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+      link/ether aa:a5:4a:4a:e2:ea brd ff:ff:ff:ff:ff:ff
+  9: veth1@veth2: <NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN> mtu 1500 qdisc noqueue {+master br0+} state LOWERLAYERDOWN mode DEFAULT group default qlen 1000
+      link/ether 82:74:39:11:e1:ec brd ff:ff:ff:ff:ff:ff
+  10: br0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+      link/ether [-2e:1e:c7:1d:8d:6e-] {+82:74:39:11:e1:ec+} brd ff:ff:ff:ff:ff:ff
   ```
 
-0. Add an ip address to the bridge interface
+0. Add an ip address to the bridge interface.
 
   `student@beachhead:~$` `sudo ip address add 172.16.2.100/24 dev br0`
   
@@ -226,26 +226,26 @@ The objective of this lab is to explore briding interfaces.
 
 0. Examine the changes that occured at the link layer by using the *a3diff* command.
   
-  `student@beachhead:~$` `a3diff /tmp/ip-link-init /tmp/ip-link-list-bridge`
+  `student@beachhead:~$` `a3diff /tmp/ip-link-bridge-veth1 /tmp/ip-link-list-bridge`
   
   ```
   1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
   2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-    link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
+      link/ether fa:16:3e:59:a0:b8 brd ff:ff:ff:ff:ff:ff
   3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-    link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-  {+16: veth2@veth1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000+}
-  {+    link/ether 66:22:9b:e1:f4:9b brd ff:ff:ff:ff:ff:ff+}
-  {+17: veth1@veth2: <NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN> mtu 1500 qdisc noqueue master br0 state LOWERLAYERDOWN mode DEFAULT group default qlen 1000+}
-  {+    link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff+}
-  {+18: br0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000+}
-  {+    link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff+}
+      link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
+  8: veth2@veth1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+      link/ether aa:a5:4a:4a:e2:ea brd ff:ff:ff:ff:ff:ff
+  9: veth1@veth2: <NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN> mtu 1500 qdisc noqueue master br0 state LOWERLAYERDOWN mode DEFAULT group default qlen 1000
+      link/ether 82:74:39:11:e1:ec brd ff:ff:ff:ff:ff:ff
+  10: br0: [-<BROADCAST,MULTICAST>-] {+<NO-CARRIER,BROADCAST,MULTICAST,UP>+} mtu 1500 qdisc [-noop-] {+noqueue+} state DOWN mode DEFAULT group default qlen 1000
+      link/ether 82:74:39:11:e1:ec brd ff:ff:ff:ff:ff:ff
   ```
   
 0. Examine the L3 changes that occured by applying an IP address to the bridge interface (br0).
 
-  * `student@beachhead:~$` `a3diff /tmp/ip-addr-init /tmp/ip-addr-bridge `
+  * `student@beachhead:~$` `a3diff /tmp/ip-addr-init /tmp/ip-addr-bridge`
   
   ```
   1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
@@ -254,31 +254,31 @@ The objective of this lab is to explore briding interfaces.
        valid_lft forever preferred_lft forever
     inet6 ::1/128 scope host 
        valid_lft forever preferred_lft forever
-2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP group default qlen 1000
+  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP group default qlen 1000
     link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
     inet 172.16.1.4/24 brd 172.16.1.255 scope global ens3
        valid_lft forever preferred_lft forever
     inet6 fe80::f816:3eff:fe6f:4752/64 scope link 
        valid_lft forever preferred_lft forever
-3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
     link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
     inet6 2003:db5:0:f102::1/64 scope global 
        valid_lft forever preferred_lft forever
     inet6 fe80::f816:3eff:fe2b:a795/64 scope link 
        valid_lft forever preferred_lft forever
-{+16: veth2@veth1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000+}
-{+    link/ether 66:22:9b:e1:f4:9b brd ff:ff:ff:ff:ff:ff+}
-{+17: veth1@veth2: <NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN> mtu 1500 qdisc noqueue master br0 state LOWERLAYERDOWN group default qlen 1000+}
-{+    link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff+}
-{+18: br0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000+}
-{+    link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff+}
-{+    inet 172.16.2.100/24 scope global br0+}
-{+       valid_lft forever preferred_lft forever+}
+  {+16: veth2@veth1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000+}
+  {+    link/ether 66:22:9b:e1:f4:9b brd ff:ff:ff:ff:ff:ff+}
+  {+17: veth1@veth2: <NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN> mtu 1500 qdisc noqueue master br0 state LOWERLAYERDOWN group default qlen 1000+}
+  {+    link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff+}
+  {+18: br0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000+}
+  {+    link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff+}
+  {+    inet 172.16.2.100/24 scope global br0+}
+  {+       valid_lft forever preferred_lft forever+}
   ```
 
 0. Examine the changes that occured to the routing table when a an IP address was applied to the bridge interface (br0).
 
-  `student@beachhead:~$` `a3diff /tmp/ip-route-init /tmp/ip-route-bridge `
+  `student@beachhead:~$` `a3diff /tmp/ip-route-init /tmp/ip-route-bridge`
   
   ```
   default via 172.16.1.1 dev ens3 
@@ -294,6 +294,7 @@ The objective of this lab is to explore briding interfaces.
   ```
   17: veth1 state LOWERLAYERDOWN @veth2: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 master br0 state disabled priority 32 cost 2 
   ```
+
 
 ## Use the Linux Brige to access a network namespace 
 
