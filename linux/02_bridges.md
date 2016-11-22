@@ -298,13 +298,30 @@ The objective of this lab is to explore briding interfaces.
 0. So remember our problem from the previous lab, where we were unable to ping our two veth interfaces? We can solve that issue by creating a Linux bridge, to access a network namespace. First, let's create a network namespace.
 
   `student@beachhead:~$` `sudo ip netns add mario`
-  `student@beachhead:~$` `ip netns list`
-  `student@beachhead:~$` `ip link list > /tmp/ip-link-netns` _save for comparison_
 
-0. and move the 2nd veth into it 
-* `student@beachhead:~$` `sudo ip link set veth2 netns mario`
-  * `student@beachhead:~$` `ip link list > /tmp/ip-link-netns-veth2` _save for comparison_
-  * `student@beachhead:~$` `a3diff /tmp/ip-link-netns /tmp/ip-link-netns-veth2 `
+0. Linux will reveal the available namespaces with the *ip netns* command.
+
+  `student@beachhead:~$` `ip netns list`
+  
+  ```
+  mario
+  ```
+  
+0. Make a copy of the current L2 state, prior to adding veth2 to the mario namespace.
+
+  `student@beachhead:~$` `ip link list > /tmp/ip-link-netns`
+  
+0. Move the 2nd veth into the mario namespace.
+
+  `student@beachhead:~$` `sudo ip link set veth2 netns mario`
+  
+0. Now that veth2 has been moved into the mario namespace, again, copy the state of L2 configuration within the system.
+
+  `student@beachhead:~$` `ip link list > /tmp/ip-link-netns-veth2`
+
+0. Run the *a3diff* function on the two L2 files we just created to see how adding the veth2 interface to the mario namespace changed L2 configuration.
+
+  `student@beachhead:~$` `a3diff /tmp/ip-link-netns /tmp/ip-link-netns-veth2`
 
 0. Configure the namespace ip address
   
