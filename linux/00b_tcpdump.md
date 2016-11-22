@@ -13,9 +13,9 @@ The objective of this lab is to demonstrate how to use the tcpdump tool, as this
 
 When tcpdump finishes capturing packets, it will report counts of:
 
-  - *packets ``captured''* - The number of packets that tcpdump has received and processed
-  - *packets ``received by filter''* - The meaning of this depends on the OS on which you're running tcpdump, and possibly on the way the OS was configured - if a filter was specified on the command line, on some OSes it counts packets regardless of whether they were matched by the filter expression and, even if they were matched by the filter expression, regardless of whether tcpdump has read and processed them yet, on other OSes it counts only packets that were matched by the filter expression regardless of whether tcpdump has read and processed them yet, and on other OSes it counts only packets that were matched by the filter expression and were processed by tcpdump)
-  - *packets ``dropped by kernel''* - This is the number of packets that were dropped, due to a lack of buffer space, by the packet capture mechanism in the OS on which tcpdump is running, if the OS reports that information to applications; if not, it will be reported as 0.
+  - **packets 'captured'** - The number of packets that tcpdump has received and processed.
+  - **packets 'received by filter'** - The meaning of this depends on the OS on which you're running tcpdump, and possibly on the way the OS was configured - if a filter was specified on the command line, on some OSes it counts packets regardless of whether they were matched by the filter expression and, even if they were matched by the filter expression, regardless of whether tcpdump has read and processed them yet, on other OSes it counts only packets that were matched by the filter expression regardless of whether tcpdump has read and processed them yet, and on other OSes it counts only packets that were matched by the filter expression and were processed by tcpdump).
+  - **packets 'dropped by kernel'** - This is the number of packets that were dropped, due to a lack of buffer space, by the packet capture mechanism in the OS on which tcpdump is running, if the OS reports that information to applications; if not, it will be reported as 0.
 
 ### Procedure
 
@@ -85,64 +85,102 @@ When tcpdump finishes capturing packets, it will report counts of:
 
   `student@beachhead:~$` `sudo tcpdump -i any -w capture.pcap -v -c 5`
 
-0. We can limit a file size with the captial C option (-C). Before writing a raw packet to a savefile, tcpdump will check if file is currently larger than file_size and, if so, *close the current savefile and open a new one*. Savefiles after the first savefile will have the name specified with the -w flag, with a number after it, starting at 1 and continuing upward. The units of file_size are millions of bytes (1,000,000 bytes, not 1,048,576 bytes).
+0. We can limit a file size with the captial C option (-C). Before writing a raw packet to a savefile, tcpdump will check if file is currently larger than file_size and, if so, *close the current savefile and open a new one*. Savefiles after the first savefile will have the name specified with the -w flag, with a number after it, starting at 1 and continuing upward. The units of file_size are millions of bytes (1,000,000 bytes, not 1,048,576 bytes). The following command will create 10Mb files (-C 10) named *capture_10Mb.pcap*
 
   `student@beachhead:~$` `sudo tcpdump -i any -w capture_10Mb.pcap -v -C 10`
 
-0. The above command will go on indefinately, so press **CTRL + C** to quit.
+0. The above command will go on indefinately, so press **CTRL + C** to quit tcpdump.
 
-Existing capture files can be read with the -r option:
-`sudo tcpdump -n -r capture.pcap`
+0. Existing capture files can be read with the -r option. The follow command asks to readout (-r) the file capture.pcap, and display the IP addresses of the interfaces in lieu of their names (-n):
 
-Packets go by too quickly on large files, so lets use a pipe and less, and that will help so that we can scroll up and down through the capture:
-`sudo tcpdump -n -r capture.pcap | less
+  `student@beachhead:~$` `sudo tcpdump -n -r capture.pcap`
 
-Filtering:
-With this capture I'm using the host keyword to specify that I only want to capture traffic going to or from the IP at 10.0.0.3:
-`sudo tcpdump -i eth1 -n host 10.0.0.3 -c5
+0. Packets go by too quickly on large files, so let's use a pipe (usually found above the *ENTER* key) and the less command. This will allow us to scroll up and down (with the arrow keys) through the capture:
 
-If I now ping that vm, in the capture window immediately the icmp packets are seen:
-`ping 10.0.0.3`
+  `student@beachhead:~$` `sudo tcpdump -n -r capture.pcap | less`
+  
+  >
+  When you are done using the less utility, you can press **q** to quit.
+  
+0. The information returned by tcpdump can be overwhelming, so let's try applying some filters to the type of traffic we wish to capture. The host keyword can be used to specify traffic going to or from a specific IP. The following command says to capture traffic on any interface (-i any), display IP addresses in lieu of names (-n), to only capture traffic with a source or destination of 172.16.1.4 (host 172.16.1.4), and to only capture a total of 5 packets (-c 5):
 
-All the traffic not relating to 10.0.0.3 is being ignored for analysis. The source and destination keywords. This is the same capture as before except now you added the source keyword:
-`sudo tcpfump -i eth1 -n src host 10.0.0.3 -c5`
+  `student@beachhead:~$` `sudo tcpdump -i any -n host 172.16.1.4 -c 5`
 
-Filter expression support the use of the logical operators 'and' and 'or'
-`sudo tcpdump -i eth1 -n host 10.0.0.1 and host 10.0.0.3 -c5`
+0. It is more than likely that the above command will capture 5 packets almost immediately, but if it doesn't, you can press **CTRL + C** to quit tcpdump.
 
-Filters can be used to isolate traffic to define TCP or UDP ports. Here, only port 80 traffic is captured:
-`sudo tcpdump -i eth0 -n host 192.168.1.91 and port 80`
+0. With our last command, all of the traffic not relating to 10.0.0.3 is being ignored for analysis. This command can be augmented by the source (src) and destination (dst) keywords. This is the same capture as before except now you added the source (src) keyword; only traffic with a source IP of 172.16.1.14 will be captured.
 
-I'll do a wget to google.com and in the capture window, the HTTP traffic only on port 80 is seen:
-`wget google.com`
+  `student@beachhead:~$` `sudo tcpdump -i any -n src host 172.16.1.4 -c 5`
 
-Here is an example of a compound expression:
-`sudo tcpdump -i eth0 -n "host 192.168.1.91 \
-> and (port 80 or 443)"`
+0. It is more than likely that the above command will capture 5 packets almost immediately, but if it doesn't, you can press **CTRL + C** to quit tcpdump.
 
-More filters can be used to include or ignore an entire subnet:
-`sudo tcpdump -i eth0 -n -c100 "src net 192.168.0.0/16 \
-> and not dst net 192.168.0.0/16 and not dst net 10.0.0.0/8"`
+0. This is the same capture as before except now you added the destination (dst) keyword; only traffic with a destination IP of 172.16.1.14 will be captured.
 
-`ping google.com`
-`nc google.com` 
-`nc google.com 80`
+  `student@beachhead:~$` `sudo tcpdump -i any -n dst host 172.16.1.4 -c 5`
 
-Filters can be applied based on MAC addresses as well using the ether host keyword:
-`sudo tcpdump -i eth0 ether host 28:16:2e:1f:25:49 -n -c10`
+0. It is more than likely that the above command will capture 5 packets almost immediately, but if it doesn't, you can press **CTRL + C** to quit tcpdump.
 
-To see MAC addresses in captures, we use the lower case e option:
-`sudo tcpdump -i eth0 ether host 28:16:2e:1f:25:49 -n -c10 -e`
+0. Filter expressions also support the use of the logical operators, such as *and*, and *or*. The following command will capture on any interface (-i any), display IP in lieu of names (-n), capture packets exchanged between the hosts 172.16.1.4 and 172.16.1.5, and capture a total of only 5 packets (-c 5).  
 
-More filters include protocol type. These can include the TCP, UDP, ICMP, ARP and RARP keywords:
-`sudo tcpdump -i any ip 6`
+  `student@beachhead:~$` `sudo tcpdump -i any -n host 172.16.1.4 and host 172.16.1.5 -c 5`
 
-Lets do a ping to an ipv6 ip, and in the capture window that icmp traffic shows up:
-`ping6 2002::2`
+0. The above command should terminate after a minute or two, if you'd like to speed up the process, open Firefox within the remote desktop, and navigate to **http://controller/horizon** which should cause tcpdump to close immediately. Alternatively, you can press **CTRL + C** to quit capturing with tcpdump.
 
-Finally, here are some filters based on tcp flags:
-`sudo tcpdump -i any "tcp[tcpflags \
-> & tcp-syn !=0"`
+0. Filters can be used to isolate traffic to define TCP or UDP ports. Here, only port 80 traffic is captured:
+
+  `student@beachhead:~$` `sudo tcpdump -i any -n host 172.16.1.4 and port 80 -c 5`
+
+0. As before, to create http traffic, open Firefox within the remote desktop, and navigate to **http://controller/horizon** which should cause tcpdump to close immediately. Alternatively, you can press **CTRL + C** to quit capturing with tcpdump.
+
+0. Here is an example of a compound expression:
+
+  `student@beachhead:~$` `sudo tcpdump -i any -n "host 172.16.1.4 and (port 80 or 443)" -c 5`
+  
+0. As before, to create http traffic, open Firefox within the remote desktop, and navigate to **http://controller/horizon** which should cause tcpdump to close immediately. Alternatively, you can press **CTRL + C** to quit capturing with tcpdump.
+
+0. More filters can be used to include or ignore an entire subnet:
+
+  `student@beachhead:~$` `sudo tcpdump -i any -n -c 5 "src net 172.16.0.0/16 and not dst net 192.168.0.0/16"`
+
+0. Filters can be applied based on MAC addresses by using the **ether host** keyword:
+
+  `student@beachhead:~$` `sudo tcpdump -i ens3 ether host 28:16:2e:1f:25:49 -n -c 10`
+
+0. The above command will go on indefinately, as that MAC address was one that was made up, so press **CTRL + C** to quit tcpdump.
+
+0. To see MAC addresses in captures, we use the lower case e option:
+
+  `student@beachhead:~$` `sudo tcpdump -i any -n -c 5 -e`
+
+0. More filters include protocol type. These can include keywords such as TCP, UDP, ICMP, ARP and RARP. The follwoing captures only IPv6 traffic:
+
+  `student@beachhead:~$` `sudo tcpdump -i any ip6`
+
+0. The above command will go on indefinately, so press **CTRL + C** to quit tcpdump.
+
+0. Just a few final thoughts. The -v option can be used to increase more detail or verbosity in packet captures. Three v's is max verbosity (-vvv):
+
+  `student@beachhead:~$` `sudo tcpdump -i any -c 5 -vvv`
+
+0. Just a few final thoughts. The queit option (-q) can be used to provide a minimal 'quiet display' output:
+
+  `student@beachhead:~$` `sudo tcpdump -i eth1 -c 15 -q`
+
+0. Lastly we'll look at the timestamp display option which uses lowercase t (-t). Types of timestamping supports are:
+
+  - **(-t)** - Don't print a time stamp on each line
+  - **(-tt)** - Print the timestamp as seconds from January 1, 1970 00:00:00 UTC
+  - **(-ttt)** - Print a delta (micro-second resolution) between current and previous line
+  - **(-tttt)** - Print a timestamp, as hours, minutes, seconds, and fractions of a second since midnight
+  - **(-ttttt)** - Print a delta (micro-second resolution) between current and first line
+
+0. Issue the following command, which will not display a timestamp.
+
+  `student@beachhead:~$` `sudo tcpdump -i any -c 5 -q -t`
+
+0. Finally, here are some filters based on tcp flags:
+
+  `student@beachhead:~$` `sudo tcpdump -i any "tcp[tcpflags] & tcp-syn !=0"`
 
 `nc 10.0.0.3 80`
 `nc 10.0.0.3 801`
@@ -166,25 +204,4 @@ Often the hex is not needed, so the -A option can be used instead:
 
 `wget youtube.com`
 
-The -v option is used to provide more detail or verbosity in packet captures:
-`sudo tcpdump -i eth1 -c15 -vvv`
-
-`ssh 10.0.0.3`
-
-This error can be ignored by using the uppercase K option:
-`sudo tcpdump -i eth1 -c15 -vvv -K`
-
--q provides minimal quiet display output:
-`sudo tcpdump -i eth1 -c15 -q`
-
-`ssh 10.0.0.3`
-
-Lastly we'll look at the timestamp display option which uses lowercase t:
-`sudo tcpdump -i eth1 -c5 -q -t`
-
-5 t's show the times since the first packet in the capture which is useful when measuring how long certain transactions take to complete:
-`sudo tcpdump -i eth1 -c5 -q -ttttt`
-
-
-
-
+http://www.tcpdump.org/tcpdump_man.html
