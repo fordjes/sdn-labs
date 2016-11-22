@@ -208,7 +208,7 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
 0. Write out the current L2 state to a file called *ovs-link-vethmove*
 
-* `student@beachhead:~$` `ip link show > /tmp/ovs-link-vethmove`
+  `student@beachhead:~$` `ip link show > /tmp/ovs-link-vethmove`
 
 0. Compare the current state of L2 (having placed two of the veth interfaces into namespaces), with how L2 looked just after creating those veth pairs.
 
