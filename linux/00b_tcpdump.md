@@ -204,4 +204,8 @@ Often the hex is not needed, so the -A option can be used instead:
 
 `wget youtube.com`
 
-http://www.tcpdump.org/tcpdump_man.html
+#### Additional Learning / References
+
+The following is a list of pages we thought might be helpful for our students to know about:
+
+* [TCPdump man page](http://www.tcpdump.org/tcpdump_man.html)
