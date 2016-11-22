@@ -1,46 +1,95 @@
-version checking:
-`tcpdump -h`
+---
+date: "2016-11-21"
+draft: false
+weight: 15
+title: "Lab 01B - Linux Networking"
+---
+[Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
+
+### MONDAY - &#x2B50;REQUIRED&#x2B50;
+
+### Lab Objective
+The objective of this lab is to demonstrate how to use the tcpdump tool, as this will be one of the many CLI tools we'll be working with in this class. Tcpdump prints out a description of the contents of packets on a network interface that match a boolean expression. The files saved by tcpdump are **\*.pcap files** which many users may recognize from working with Wireshark.
+
+When tcpdump finishes capturing packets, it will report counts of:
+
+  - *packets ``captured''* - The number of packets that tcpdump has received and processed
+  - *packets ``received by filter''* - The meaning of this depends on the OS on which you're running tcpdump, and possibly on the way the OS was configured - if a filter was specified on the command line, on some OSes it counts packets regardless of whether they were matched by the filter expression and, even if they were matched by the filter expression, regardless of whether tcpdump has read and processed them yet, on other OSes it counts only packets that were matched by the filter expression regardless of whether tcpdump has read and processed them yet, and on other OSes it counts only packets that were matched by the filter expression and were processed by tcpdump)
+  - *packets ``dropped by kernel''* - This is the number of packets that were dropped, due to a lack of buffer space, by the packet capture mechanism in the OS on which tcpdump is running, if the OS reports that information to applications; if not, it will be reported as 0.
+
+### Procedure
+
+0. Close any terminals you have open. Open a new terminal, and then change to the home directory.
+
+  `student@beachhead:/$` `cd`
+
+0. We can start by version checking the instance of *tcpdump* installed, as well as review the usage.
+
+  `student@beachhead:~$` `tcpdump -h`
  
-running TCPdump:
-`sudo tcpdump -D
+0. See the list of interfaces that *tcpdump* can listen on with the *-D* argument.
 
-Lets capture packets on all interfaces by using the any option:
-`sudo tcpdump -i any`
+  `student@beachhead:~$` `sudo tcpdump -D`
 
-Instead of letting TCP dump run until interuppted, you can use lower case c option:
-`sudo tcpdump -i any -c 5`
+0. Lets capture packets on all interfaces by using the any option:
 
-Usually it is easier to work with IP addresses and port numbers instead of these names. The lower case n option will take care of this:
-`sudo tcpdump -i any -c 5 -n`
+  `student@beachhead:~$` `sudo tcpdump -i any`
 
-Just the first 96 bites of every packet is captured:
-`sudo tcpdump -i any -c 5 -n -s96`
+0. Whoa! So much traffic. Press **CTRL + C** to quit.
 
-`clear`
+0. Instead of letting TCP dump run until interuppted, you can use lower case c option to specify the number of packets you'd like to capture:
 
-For an example, lets generate some traffic over the eth1 interface:
-`sudo tcpdump -i eth1 -n -t`
+  `student@beachhead:~$` `sudo tcpdump -i any -c 5`
 
-The next fields are the sequence and acknowledgement numbers. TCPDUMP by default uses relative numbers here. Lets look at an example:
-`sudo tcpdump -i any -c20 -n tcp and dst port 49952 -t`
+0. Usually it is easier to work with IP addresses and port numbers instead of these names. The lower case n option will take care of this:
 
-Relative sequence numbers can be turned off with the uppercase S option
-`sudo tcpdump -i any -c20 -n tcp and port 49952 -i - S`
+  `student@beachhead:~$` `sudo tcpdump -i any -c 5 -n`
 
-Lets look at sample output for DNS requests. Here is a capture on port 53:
-`sudo tcpdump -i eth0 port 53 -n`
+0. Let's augment the command further to just capture the first 96 bites of every packet is captured:
 
-Now we'll do a wget to youtube.com to generate some dns traffic:
-`wget youtube.com`
+  `student@beachhead:~$` `sudo tcpdump -i any -c 5 -n -s96`
 
-Often, tcpdump is used to save captures to a file for later analysis. This is done using the lower case w option:
-`sudo tcpdump -i any -w capture.pcap`
+0. Let's clean up the screen, and go in a new direction.
 
-When writing packets to a file, the lower case v option is very helpful:
-`sudo tcpdump -i any -w capture.pcap -v`
+  `student@beachhead:~$` `clear`
 
-A good way to limit the file size is to use the lower case c option:
-`sudo tcpdump -i any -w capture.pcap -v c20`
+0. For an example, lets generate some traffic over the eth1 interface:
+
+  `student@beachhead:~$` `sudo tcpdump -i eth1 -n -t`
+
+0. The next fields are the sequence and acknowledgement numbers. TCPDUMP by default uses relative numbers here. Lets look at an example:
+
+  `student@beachhead:~$` `sudo tcpdump -i any -c 20 -n tcp and dst port 22 -t`
+
+0. Relative sequence numbers can be turned off with the uppercase S option
+
+  `student@beachhead:~$` `sudo tcpdump -i any -c 20 -n tcp and dst port 22 -S`
+
+0. Lets look at sample output for DNS requests. Here is a capture on all interfaces (-i any), port 53 (port 53), displaying IP addresses in lieu of names (-n), and capturing only 50 packets (-c 50):
+
+  `student@beachhead:~$` `sudo tcpdump -i any port 53 -n -c 50`
+  
+0. It is more than likely that *tcpdump* will just sit as you're not making DNS requests. Within your remote desktop, click the Firefox icon.
+
+0. Navigate to **www.google.com**, and search for **alta3 research**
+
+0. By now tcp dump will have stopped capturing.
+  
+  > If you accidently started tcpdump to capture more than 50 packets, you can press **CTRL + C** to quit tcpdump.
+
+0. Often, tcpdump is used to save captures to a file for later analysis. This is done using the lower case w option. The following command will capture on any interface (-i any), will writeout the capture to the file capture.pcap (-w capture.pcap), and capture a total of 5 packets (-c 5):
+
+  `student@beachhead:~$` `sudo tcpdump -i any -w capture.pcap -c 5`
+
+0. When writing packets to a file, the lower case v option (-v) runs a counter, which reflects the number of packets captured. The following command will capture on any interface (-i any), will writeout the capture to the file capture.pcap (-w capture.pcap), will display a packet capture counter (-v), and capture a total of 5 packets (-c 5):
+
+  `student@beachhead:~$` `sudo tcpdump -i any -w capture.pcap -v -c 5`
+
+0. We can limit a file size with the captial C option (-C). Before writing a raw packet to a savefile, tcpdump will check if file is currently larger than file_size and, if so, *close the current savefile and open a new one*. Savefiles after the first savefile will have the name specified with the -w flag, with a number after it, starting at 1 and continuing upward. The units of file_size are millions of bytes (1,000,000 bytes, not 1,048,576 bytes).
+
+  `student@beachhead:~$` `sudo tcpdump -i any -w capture_10Mb.pcap -v -C 10`
+
+0. The above command will go on indefinately, so press **CTRL + C** to quit.
 
 Existing capture files can be read with the -r option:
 `sudo tcpdump -n -r capture.pcap`
