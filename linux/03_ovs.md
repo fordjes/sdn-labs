@@ -1,7 +1,20 @@
-# OVS Bridging 
+---
+date: "2016-11-22"
+draft: false
+weight: 30
+title: "Lab 03 - Open vSwitch (OVS)"
+---
+[Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
 
-This lab is very similar to the linux bridge lab except we will use an ovs bridge.
-We will also demonstrate some of the commands in a diffrent order.
+### MONDAY - &#x2B50;REQUIRED&#x2B50;
+
+### Lab Objective
+
+The objective of this lab is very similar to the Linux Bridge lab, except we will use an Open vSwitch (OVS bridge).
+
+Some of the commands are presented in a different order than the Linux Bridge lab.
+
+### Procedure
 
 ## a3diff
 
