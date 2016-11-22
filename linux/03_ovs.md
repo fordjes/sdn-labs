@@ -275,16 +275,37 @@ Some of the commands are presented in a different order than the Linux Bridge la
       ovs_version: "2.5.0"
   ``` 
 
-0. Bring all the interaces up and examine the changes
+0. Bring all the interaces up and examine the changes. The following command will place the veth-luigi interface in an UP state.
 
-  * `student@beachhead:~$` `sudo ip link set veth-luigi up`
-  * `student@beachhead:~$` `sudo ip link set veth-toad up`
-  * `student@beachhead:~$` `sudo ip netns exec luigi ip link set dev eth0-luigi up`
-  * `student@beachhead:~$` `sudo ip netns exec toad ip link set dev eth0-toad up`
-  * `student@beachhead:~$` `sudo ip netns exec luigi ip link > /tmp/ovs-l-link-up`
-  * `student@beachhead:~$` `sudo ip netns exec toad ip link > /tmp/ovs-t-link-up`
-  * `student@beachhead:~$` `a3diff /tmp/ovs-l-link-veth /tmp/ovs-link-l-link-up`
-  * `student@beachhead:~$` `a3diff /tmp/ovs-t-link-up /tmp/ovs-link-t-link-up`
+  `student@beachhead:~$` `sudo ip link set veth-luigi up`
+
+0. The following command will place the veth-toad interface in an UP state.
+
+  `student@beachhead:~$` `sudo ip link set veth-toad up`
+  
+0. The following command will place the *eth0-luigi* interface within the network namespace *luigi* in an UP state.
+
+  `student@beachhead:~$` `sudo ip netns exec luigi ip link set dev eth0-luigi up`
+
+0. The following command will place the *eth0-toad* interface within the network namespace *toad* in an UP state.
+
+  `student@beachhead:~$` `sudo ip netns exec toad ip link set dev eth0-toad up`
+
+0. Write out the current L2 configuration within the *luigi* namespace to a file called, *ovs-l-link-up*.
+
+  `student@beachhead:~$` `sudo ip netns exec luigi ip link > /tmp/ovs-l-link-up`
+
+0. Write out the current L2 configuration within the *toad* namespace to a file called, *ovs-t-link-up*.
+
+  `student@beachhead:~$` `sudo ip netns exec toad ip link > /tmp/ovs-t-link-up`
+
+0. Use the *a3diff* function to compare how placing the interfaces in an UP state within the *luigi* namespaces changed the L2 configuration. 
+
+  `student@beachhead:~$` `a3diff /tmp/ovs-l-link-veth /tmp/ovs-link-l-link-up`
+
+0. Use the *a3diff* function to compare how placing the interfaces in an UP state within the *toad* namespaces changed the L2 configuration. 
+
+  `student@beachhead:~$` `a3diff /tmp/ovs-t-link-up /tmp/ovs-link-t-link-up`
 
 0. Add ip addresses to the internal interaces
 
