@@ -295,15 +295,14 @@ The objective of this lab is to explore briding interfaces.
   17: veth1 state LOWERLAYERDOWN @veth2: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 master br0 state disabled priority 32 cost 2 
   ```
 
+0. So remember our problem from the previous lab, where we were unable to ping our two veth interfaces? We can solve that issue by creating a Linux bridge, to access a network namespace. First, let's create a network namespace.
 
-## Use the Linux Brige to access a network namespace 
+  `student@beachhead:~$` `sudo ip netns add mario`
+  `student@beachhead:~$` `ip netns list`
+  `student@beachhead:~$` `ip link list > /tmp/ip-link-netns` _save for comparison_
 
-0. Create a network namespace and move the 2nd veth into it 
-
-  * `student@beachhead:~$` `sudo ip netns add mario`
-  * `student@beachhead:~$` `ip netns list`
-  * `student@beachhead:~$` `ip link list > /tmp/ip-link-netns` _save for comparison_
-  * `student@beachhead:~$` `sudo ip link set veth2 netns mario`
+0. and move the 2nd veth into it 
+* `student@beachhead:~$` `sudo ip link set veth2 netns mario`
   * `student@beachhead:~$` `ip link list > /tmp/ip-link-netns-veth2` _save for comparison_
   * `student@beachhead:~$` `a3diff /tmp/ip-link-netns /tmp/ip-link-netns-veth2 `
 
