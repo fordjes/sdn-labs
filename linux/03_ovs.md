@@ -16,25 +16,43 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
 ### Procedure
 
-## a3diff
+0. Close any terminals, and Firefox windows you currently have open within the remote desktop session.
 
-  Open .bashrc and read the funciton `a3diff`.  
-  We will use this function in this lab to compare the output of some iproute2 commands.
+0. From your remote desktop, open a new terminal session, and move to the student home directory.
+
+  `student@beachhead:/$` `cd`
+
+0. We explored this in the last lab, but just to cover all our bases. In this lab, we'll be using a little code snippet we invented called the *a3diff function*. If you tail the .bashrc file, you'll see it at the end. Just something we want you to be aware of, as we'll be using it in this lab to compare the output of some iproute2 commands.
+
+  `student@beachhead:~$` `tail .bashrc`
 
   ```
   function a3diff {
       wdiff -n $1 $2 | colordiff
   }
   ```
+  >
+  If you're not a programmer, no big deal. All you have to know is that this little code snippit will save us some keystrokes, and allow us to do two (2) things:
+  >
+  1) Look for within-line differences (`wdiff`)   
+  >
+  2) Display the results in color (`colordiff`)
 
-## Create a OVS Bridge with virtual interfaces
+0. While we eventually want to create a OVS Bridge with virtual interfaces, let's first collect information about our current configuration. First display the L2 information.
 
-0. Collect information about your initial configuration
+  `student@beachhead:~$` `ip link list`
+  
+0. Great, now display L3 information.
 
-  * `student@beachhead:~$` `ip link list`
-  * `student@beachhead:~$` `ip addr show`
-  * `student@beachhead:~$` `ip route show`
-  * `student@beachhead:~$` `sudo ovs-vsctl show`
+  `student@beachhead:~$` `ip addr show`
+
+0. Finally, show the current state of the routing table.
+
+  `student@beachhead:~$` `ip route show`
+
+0.   
+  
+  `student@beachhead:~$` `sudo ovs-vsctl show`
 
   * `student@beachhead:~$` `ip link list > /tmp/ovs-link-init`
   * `student@beachhead:~$` `ip addr show > /tmp/ovs-addr-init`
