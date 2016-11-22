@@ -106,36 +106,113 @@ Some of the commands are presented in a different order than the Linux Bridge la
   -r--r--r-- 1 root root 0 Nov 22 15:53 toad
   ```
   
-0. Examine network namespaces.
+0. Examine network namespaces. The following command will reveal the network devices within the luigi namespace.
 
   * `student@beachhead:~$` `sudo ip netns exec luigi ip link`
-  * `student@beachhead:~$` `sudo ip netns exec toad ip link`
-  * `student@beachhead:~$` `sudo ip netns exec luigi ip link > /tmp/ovs-l-link-init`
-  * `student@beachhead:~$` `sudo ip netns exec toad ip link > /tmp/ovs-t-link-init`
+  
+  ```
+  1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  ```
 
-0. Create an open vswitch bridge and examine the changes
+0.  The following command will reveal the network devices within the toad namespace.
 
-  * `student@beachhead:~$` `sudo ovs-vsctl add-br yoshis-island`
-  * `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs-show-br`
-  * `student@beachhead:~$` `a3diff /tmp/ovs-show-init /tmp/ovs-show-br`
-  * `student@beachhead:~$` `ip link show > /tmp/ovs-link-br`
-  * `student@beachhead:~$` `a3diff /tmp/ovs-link-init /tmp/ovs-link-br`
-  * `student@beachhead:~$` `ip addr show > /tmp/ovs-addr-br`
-  * `student@beachhead:~$` `a3diff /tmp/ovs-addr-init /tmp/ovs-addr-br`
+  `student@beachhead:~$` `sudo ip netns exec toad ip link`
+  
+  ```
+  1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  ```
+  
+0. Write the current configuration of the *luigi* namespace to the file *ovs-l-link-init*.
 
-0. Create virtual ethernet interfaces which will get added into the namespaces
+  `student@beachhead:~$` `sudo ip netns exec luigi ip link > /tmp/ovs-l-link-init`
 
-  * `student@beachhead:~$` `sudo ip link add eth0-luigi type veth peer name veth-luigi`
-  * `student@beachhead:~$` `sudo ip link add eth0-toad type veth peer name veth-toad`
-  * `student@beachhead:~$` `ip link show > /tmp/ovs-link-veths`
-  * `student@beachhead:~$` `a3diff /tmp/ovs-link-br /tmp/ovs-link-veths`
+0. Write the current configuration of the *toad* namespace to the file *ovs-t-link-init*.
 
-0. Add the virtual ethernet interfaces into the network namespaces 
+  `student@beachhead:~$` `sudo ip netns exec toad ip link > /tmp/ovs-t-link-init`
 
-  * `student@beachhead:~$` `sudo ip link set eth0-luigi netns luigi`
-  * `student@beachhead:~$` `sudo ip link set eth0-toad netns toad`
-  * `student@beachhead:~$` `ip link show > /tmp/ovs-link-vethmove`
-  * `student@beachhead:~$` `a3diff /tmp/ovs-link-veths /tmp/ovs-link-vethmove`
+0. Create an open vswitch bridge. The following command instructs Open vSwitch to create a bridge named *yoshis-island*
+
+  `student@beachhead:~$` `sudo ovs-vsctl add-br yoshis-island`
+
+0. Great. Now check out the current state of the Open vSwitch.
+
+  `student@beachhead:~$` `sudo ovs-vsctl show`
+  
+  ```
+  a00e3ca2-3926-4d0d-9f71-a2105f6c6166
+    Bridge yoshis-island
+        Port yoshis-island
+            Interface yoshis-island
+                type: internal
+    ovs_version: "2.5.0"
+   ```
+  
+0. Write the current state of Open vSwtich to the file *ovs-show-br*, so that we can compare it to our original configuration.
+
+  `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs-show-br`
+  
+0. Run the *a3diff* function to clearly reveal how the Open vSwitch configuration has changed.
+
+  `student@beachhead:~$` `a3diff /tmp/ovs-show-init /tmp/ovs-show-br`
+  
+  ```
+  a00e3ca2-3926-4d0d-9f71-a2105f6c6166
+      {+Bridge yoshis-island+}
+  {+        Port yoshis-island+}
+  {+            Interface yoshis-island+}
+  {+                type: internal+}
+      ovs_version: "2.5.0"
+  ```
+
+0. Now that we've created this Open vSwitch, let's write the current state of L2 to a new file, so that we might compare it to our original configuration.
+
+  `student@beachhead:~$` `ip link show > /tmp/ovs-link-br`
+
+0. Run the *a3diff* function to clearly reveal how the creation of the Open vSwitch bridge changed L2 configuration. 
+
+  `student@beachhead:~$` `a3diff /tmp/ovs-link-init /tmp/ovs-link-br`
+
+0. Write the current state of the L3 system configuration to a file called *ovs-addr-br*
+
+  `student@beachhead:~$` `ip addr show > /tmp/ovs-addr-br`
+
+0. Run the *a3diff* function to clearly reveal how the creation of the Open vSwitch bridge changed L3 configuration. 
+
+  `student@beachhead:~$` `a3diff /tmp/ovs-addr-init /tmp/ovs-addr-br`
+
+0. Okay, so now let's create two veth pairs, will get added into the namespaces.
+
+  `student@beachhead:~$` `sudo ip link add eth0-luigi type veth peer name veth-luigi`
+  
+0. Create another veth pair.
+
+  `student@beachhead:~$` `sudo ip link add eth0-toad type veth peer name veth-toad`
+
+0. Write out the current L2 state to a file called *ovs-link-veths*
+
+  `student@beachhead:~$` `ip link show > /tmp/ovs-link-veths`
+
+0. Examine how L2 configuration changed with the creation of these two veth pairs.
+
+  `student@beachhead:~$` `a3diff /tmp/ovs-link-br /tmp/ovs-link-veths`
+
+0. Add the veths into the network namespaces. First set the *eth0-luigi* veth into the network namespace *luigi*
+
+  `student@beachhead:~$` `sudo ip link set eth0-luigi netns luigi`
+
+0. Add the second veth, *eth0-toad*, into the network namespace *toad*.
+
+  `student@beachhead:~$` `sudo ip link set eth0-toad netns toad`
+
+0. Write out the current L2 state to a file called *ovs-link-vethmove*
+
+* `student@beachhead:~$` `ip link show > /tmp/ovs-link-vethmove`
+
+0. Compare the current state of L2 (having placed two of the veth interfaces into namespaces), with how L2 looked just after creating those veth pairs.
+
+  `student@beachhead:~$` `a3diff /tmp/ovs-link-veths /tmp/ovs-link-vethmove`
   
 0. Examine the changes inside the network namespaces
  
