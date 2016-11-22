@@ -214,16 +214,37 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
   `student@beachhead:~$` `a3diff /tmp/ovs-link-veths /tmp/ovs-link-vethmove`
   
-0. Examine the changes inside the network namespaces
+0. So we just examined how the changes look outside of the network namespaces. Now lets look at how things have changed inside of the network namespaces. This next command will write out the L2 information from within the *luigi* network namespace to a file called *ovs-l-link-veth*.
  
-  * `student@beachhead:~$` `sudo ip netns exec luigi ip link > /tmp/ovs-l-link-veth`
-  * `student@beachhead:~$` `sudo ip netns exec toad ip link > /tmp/ovs-t-link-veth`
-  * `student@beachhead:~$` `a3diff /tmp/ovs-l-link-init /tmp/ovs-link-l-link-veth`
-  * `student@beachhead:~$` `a3diff /tmp/ovs-t-link-init /tmp/ovs-link-t-link-veth`
-  * `student@beachhead:~$` `sudo ip netns exec luigi ip addr`
-  * `student@beachhead:~$` `sudo ip netns exec toad ip addr`
-  * `student@beachhead:~$` `sudo ip netns exec luigi ip addr > /tmp/ovs-l-addr-init`
-  * `student@beachhead:~$` `sudo ip netns exec toad ip addr > /tmp/ovs-t-addr-init`
+  `student@beachhead:~$` `sudo ip netns exec luigi ip link > /tmp/ovs-l-link-veth`
+  
+0. We can issue the same command within the *toad* namespace, creating a new file called *ovs-t-link-veth*.
+
+  `student@beachhead:~$` `sudo ip netns exec toad ip link > /tmp/ovs-t-link-veth`
+
+0. Run the *a3diff* function on how the *luigi* namespace looks now that a veth pair has been added to it.
+  
+  `student@beachhead:~$` `a3diff /tmp/ovs-l-link-init /tmp/ovs-link-l-link-veth`
+
+0. Run the *a3diff* function on how the *luigi* namespace looks now that a veth pair has been added to it.
+  
+  `student@beachhead:~$` `a3diff /tmp/ovs-t-link-init /tmp/ovs-link-t-link-veth`
+  
+0. Alright, so we pretty much exhausted the L2 basics, so let's move up to L3. Take a look a the current L3 (IP) configuration in the *luigi* namespace. The following command executes the command **ip addr** within the luigi namespace.
+
+  `student@beachhead:~$` `sudo ip netns exec luigi ip addr`
+
+0. Take a look a the current L3 (IP) configuration in the *toad* namespace. The following command executes the command **ip addr** within the toad namespace.
+
+  `student@beachhead:~$` `sudo ip netns exec toad ip addr`
+
+0. Save the current L3 information from the *luigi* namespace in a file called, *ovs-l-addr-init*
+
+  `student@beachhead:~$` `sudo ip netns exec luigi ip addr > /tmp/ovs-l-addr-init`
+
+0. Save the current L3 information from the *toad* namespace in a file called, *ovs-t-addr-init*
+
+  `student@beachhead:~$` `sudo ip netns exec toad ip addr > /tmp/ovs-t-addr-init`
 
 0. Add the namespace interfaces to the open vswitch bridge
 
