@@ -50,23 +50,63 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
   `student@beachhead:~$` `ip route show`
 
-0.   
+0.  The ovs-vsctl is the utility used for quering and confiruing ovs-vswitchd, so let's start with reviewing usage.
+
+  `student@beachhead:~$` `sudo ovs-vsctl -help`
+
+0. Let's display the version of OVS software we are using, as well as show the state of OVS switches tracked by the OVS database.
   
   `student@beachhead:~$` `sudo ovs-vsctl show`
-
-  * `student@beachhead:~$` `ip link list > /tmp/ovs-link-init`
-  * `student@beachhead:~$` `ip addr show > /tmp/ovs-addr-init`
-  * `student@beachhead:~$` `ip route show > /tmp/ovs-route-init`
-  * `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs-show-init`
-
-0. Create network namespaces
-
-  * `student@beachhead:~$` `sudo ip netns add luigi`
-  * `student@beachhead:~$` `sudo ip netns add toad`
-  * `student@beachhead:~$` `ip netns show`
-  * `student@beachhead:~$` `ls /var/run/netns`
   
-0. Examine network namespaces
+  ```
+  a00e3ca2-3926-4d0d-9f71-a2105f6c6166
+    ovs_version: "2.5.0"
+  ```
+
+0. Save the current L2 configuration in a file called *ovs-link-init*.
+
+  `student@beachhead:~$` `ip link list > /tmp/ovs-link-init`
+
+0. Save the current L3 configuration in a file called *ovs-addr-init*.
+
+  `student@beachhead:~$` `ip addr show > /tmp/ovs-addr-init`
+
+0. Save the current routing information in a file called *ovs-route-init*.
+
+  `student@beachhead:~$` `ip route show > /tmp/ovs-route-init`
+
+0. Finally, save the current state of OVS confirmation in a file called *ovs-show-init*.
+
+  `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs-show-init`
+
+0. Now let's create some network namespaces. In keeping in the spirit of our previous labs, we'll call this namespace *luigi*
+
+  `student@beachhead:~$` `sudo ip netns add luigi`
+
+0. And we'll need a second name space called *toad*.
+
+  `student@beachhead:~$` `sudo ip netns add toad`
+
+0. Display the current namespaces configured within the system.
+
+  `student@beachhead:~$` `ip netns show`
+  
+  ```
+  toad
+  luigi
+  ```
+  
+0. Network namespaces, like the two we just created, are tracked in the following location.
+
+  `student@beachhead:~$` `ls /var/run/netns -ll`
+  
+  ```
+  total 0
+  -r--r--r-- 1 root root 0 Nov 22 15:52 luigi
+  -r--r--r-- 1 root root 0 Nov 22 15:53 toad
+  ```
+  
+0. Examine network namespaces.
 
   * `student@beachhead:~$` `sudo ip netns exec luigi ip link`
   * `student@beachhead:~$` `sudo ip netns exec toad ip link`
