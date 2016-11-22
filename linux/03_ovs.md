@@ -246,12 +246,34 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
   `student@beachhead:~$` `sudo ip netns exec toad ip addr > /tmp/ovs-t-addr-init`
 
-0. Add the namespace interfaces to the open vswitch bridge
+0. Add the namespace interfaces to the Open vSwitch bridge. First we'll add *veth-luigi* to our Open Vswitch bridge named *yoshis-island*.
 
-  * `student@beachhead:~$` `sudo ovs-vsctl add-port yoshis-island veth-luigi`
-  * `student@beachhead:~$` `sudo ovs-vsctl add-port yoshis-island veth-toad`
-  * `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs-show-veth`
-  * `student@beachhead:~$` `a3diff /tmp/ovs-show-br /tmp/ovs-show-veth`
+  `student@beachhead:~$` `sudo ovs-vsctl add-port yoshis-island veth-luigi`
+
+0. Now add *veth-toad* to our Open Vswitch bridge named *yoshis-island*.
+
+  `student@beachhead:~$` `sudo ovs-vsctl add-port yoshis-island veth-toad`
+
+0. Make a copy of the current Open vSwitch configuration in a file called, *ovs-show-veth*.
+
+  `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs-show-veth`
+
+0. Compare how adding the veths to the Open vSwitch bridge changed its configuration.
+
+  `student@beachhead:~$` `a3diff /tmp/ovs-show-br /tmp/ovs-show-veth`
+  
+  ```
+  a00e3ca2-3926-4d0d-9f71-a2105f6c6166
+      Bridge yoshis-island
+          Port {+veth-toad+}
+  {+            Interface veth-toad+}
+  {+        Port+} yoshis-island
+              Interface yoshis-island
+                  type: internal
+          {+Port veth-luigi+}
+  {+            Interface veth-luigi+}
+      ovs_version: "2.5.0"
+  ``` 
 
 0. Bring all the interaces up and examine the changes
 
