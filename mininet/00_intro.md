@@ -236,7 +236,7 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
   64 bytes from 10.0.0.2: icmp_seq=8 ttl=64 time=80.2 ms
   ```
 
-0. Exit mininet.
+0. Wow cool! There you go, ~80 ms. Okay, exit mininet. Let's deploy some other simple topologies.
 
   `mininet>` `exit`
 
@@ -246,16 +246,39 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
 
 0. Show mn topology options
 
-  * `student@beachhead:~$` `sudo mn --topo=single,5` 
-  * `mininet>` `pingall`
-  * `mininet>` `exit`
-  * `student@beachhead:~$` `sudo mn --topo=linear,5` 
-  * `mininet>` `pingall`
-  * `mininet>` `exit`
-  * `student@beachhead:~$` `sudo mn --topo=tree,5` 
-  * `mininet>` `pingall`
-  * `mininet>` `exit`
+  `student@beachhead:~$` `sudo mn --topo=single,5` 
 
+0.
+  
+  `mininet>` `pingall`
+
+0. 
+
+  `mininet>` `exit`
+
+0.
+
+  `student@beachhead:~$` `sudo mn --topo=linear,5` 
+
+0.
+
+  `mininet>` `pingall`
+
+0.
+
+  `mininet>` `exit`
+
+0.
+
+  `student@beachhead:~$` `sudo mn --topo=tree,5` 
+
+0. 
+
+  `mininet>` `pingall`
+
+0.
+
+  `mininet>` `exit`
 
 
 #### Additional Learning / References
