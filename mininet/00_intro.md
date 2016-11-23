@@ -90,6 +90,11 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
   <Host h2: h2-eth0:10.0.0.2 pid=9310>
   <OVSBridge s1: lo:127.0.0.1,s1-eth1:None,s1-eth2:None pid=9316>
   ```
+  
+  - **Q1: What IP address was applied to h1 (host1)?**
+    - A1: 10.0.0.1
+  - **Q2: What IP address was applied to h2 (host2)?**
+    - A2: 10.0.0.2
 
 0. The mininet *net* command can be used to list any mininet network connections.
 
@@ -100,15 +105,39 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
   h2 h2-eth0:s1-eth2
   s1 lo:  s1-eth1:h1-eth0 s1-eth2:h2-eth0
   ```
+  
+0. We can also issue commands from in these "hosts". Run the command *ip link* on *h1* to determine its L2 configuration.
 
-0. We can also issue commands from in these "hosts"
+  `mininet>` `h1 ip link`
+  
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  2: h1-eth0@if28: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+      link/ether 4a:19:3a:99:0a:1a brd ff:ff:ff:ff:ff:ff link-netnsid 0
+  ```
 
-  * `mininet>` `h1 ping -c 2 h2`
-  * `mininet>` `h1 lxterminal &`
-  * `root@beachhead:~#` `ping -c 2 10.0.0.2` 
-  * `root@beachhead:~#` `ip link show` 
-  * `root@beachhead:~#` `exit 
-  * `mininet>`
+0. Instruct h1 (host1) to send two ICMP packets (-c 2) to h2 (host2).
+
+  `mininet>` `h1 ping -c 2 h2`
+  
+  ```
+  PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
+  64 bytes from 10.0.0.2: icmp_seq=1 ttl=64 time=0.919 ms
+  64 bytes from 10.0.0.2: icmp_seq=2 ttl=64 time=0.093 ms
+  ```
+  
+0.
+    
+  `mininet>` `h1 lxterminal &`
+
+  `root@beachhead:~#` `ping -c 2 10.0.0.2` 
+
+  `root@beachhead:~#` `ip link show` 
+
+  `root@beachhead:~#` `exit 
+
+  `mininet>`
 
   > Given these outputs from commands run inside `h1`, what is the likely way in which mininet has setup this environment for us?
 
@@ -120,7 +149,18 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
 0. Show connectivity while capturing traffic
 
   * `mininet>` `h1 ping -c 2 h2`
-  * `mininet>` `pingall`
+
+0. A nice way to determine connectivty within your mininet network is to use the *pingall* command, which does an all-pairs ping.
+
+  `mininet>` `pingall`
+  
+  ```
+  *** Ping: testing ping reachability
+  h1 -> h2
+  h2 -> h1
+  *** Results: 0% dropped (2/2 received)
+  ```
+  
   * `root@beachhead:~#` `ctrl` + `c`
   * `root@beachhead:~#` `exit` 
 
