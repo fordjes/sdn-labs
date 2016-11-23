@@ -10,10 +10,7 @@ title: "Lab 03b - ADVANCED - Open vSwitch (OVS)"
 
 ### Lab Objective
 
-The objective of this lab is very similar to the Open vSwitch lab, however it takes a much deeper dive into OVS concepts. Only attempt this lab if you have:
-
-  - First finished the "BASIC" version of the OVS lab
-  - Strong CLI skills
+The objective of this lab is very similar to the Open vSwitch lab, however it takes a much deeper dive into OVS concepts. This lab has been designed for advanced students, and therefore is *not* required. This lab assumes you understand the configuration steps in the "BASIC - Open vSwitch (OVS)" lab. Therefore, only attempt this lab after you have finished its "basic" counterpart.
 
 ### Procedure
 
@@ -122,21 +119,60 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
   * `student@beachhead:~$` `sudo ovs-vsctl add-port donut-plains veth-bowser`
   
-  
+0. Apply *VLAN tag 50* to *veth-peach*.
   
   * `student@beachhead:~$` `sudo ovs-vsctl set port veth-peach tag=50`
+
+0. Apply *VLAN tag 150* to *veth-bowser*.
+
   * `student@beachhead:~$` `sudo ovs-vsctl set port veth-bowser tag=150`
+
+0. Bring all the interaces up and examine the changes. The following command will place the *veth-peach* interface in an UP state.
+
   * `student@beachhead:~$` `sudo ip link set veth-peach up`
+  
+0. The following command will place the *veth-bowser* interface in an UP state.
+  
   * `student@beachhead:~$` `sudo ip link set veth-bowser up`
+  
+0. The following command will place the *eth0-peach* interface within the network namespace *peach* in an UP state.  
+  
   * `student@beachhead:~$` `sudo ip netns exec peach ip link set dev eth0-peach up`
+  
+0. The following command will place the *eth0-bowser* interface within the network namespace *bowser* in an UP state.  
+  
   * `student@beachhead:~$` `sudo ip netns exec bowser ip link set dev eth0-bowser up`
+
+0. Copy the current state of L2 to the file *ovs2-link-config*.
+  
   * `student@beachhead:~$` `ip link list > /tmp/ovs2-link-config`
+  
+0. Copy the current state of L3 (IP) to the file *ovs2-addr-config*.  
+  
   * `student@beachhead:~$` `ip addr show > /tmp/ovs2-addr-config`
+  
+0. Copy the current state of IP routing to the file *ovs2-route-config*.  
+  
   * `student@beachhead:~$` `ip route show > /tmp/ovs2-route-config`
+  
+0. Copy the current state of the Open vSwitch configuration to the file *ovs2-show-config*.
+  
   * `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs2-show-config`
+  
+0. Run the *a3diff* file to see how L2 configuration has changed since we started this lab.  
+  
   * `student@beachhead:~$` `a3diff /tmp/ovs2-link-init /tmp/ovs2-link-config`
+
+0. Run the *a3diff* file to see how L3 (IP) configuration has changed since we started this lab.
+
   * `student@beachhead:~$` `a3diff /tmp/ovs2-addr-init /tmp/ovs2-addr-config`
+
+0. Run the *a3diff* file to see how the IP routing configuration has changed since we started this lab.
+
   * `student@beachhead:~$` `a3diff /tmp/ovs2-route-init /tmp/ovs2-route-config`
+
+0. Run the *a3diff* file to see how the Open vSwitch configuration has changed since we started this lab.
+
   * `student@beachhead:~$` `a3diff /tmp/ovs2-show-init /tmp/ovs2-show-config`
 
 ### Setup dhcp for these two interfaces
