@@ -293,19 +293,33 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
 0. Write out the current L2 configuration within the *luigi* namespace to a file called, *ovs-l-link-up*.
 
-  `student@beachhead:~$` `sudo ip netns exec luigi ip link > /tmp/ovs-l-link-up`
+  `student@beachhead:~$` `sudo ip netns exec luigi ip link > /tmp/ovs-link-l-link-up`
 
 0. Write out the current L2 configuration within the *toad* namespace to a file called, *ovs-t-link-up*.
 
-  `student@beachhead:~$` `sudo ip netns exec toad ip link > /tmp/ovs-t-link-up`
+  `student@beachhead:~$` `sudo ip netns exec toad ip link > /tmp/ovs-link-t-link-up`
 
 0. Use the *a3diff* function to compare how placing the interfaces in an UP state within the *luigi* namespaces changed the L2 configuration. 
 
   `student@beachhead:~$` `a3diff /tmp/ovs-l-link-veth /tmp/ovs-link-l-link-up`
+  
+  ```
+  1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  14: eth0-luigi@if13: [-<BROADCAST,MULTICAST>-] {+<BROADCAST,MULTICAST,UP,LOWER_UP>+} mtu 1500 qdisc [-noop-] {+noqueue+} state [-DOWN-] {+UP+} mode DEFAULT group default qlen 1000
+      link/ether aa:d9:a6:f9:f5:e3 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+  ```
 
 0. Use the *a3diff* function to compare how placing the interfaces in an UP state within the *toad* namespaces changed the L2 configuration. 
 
-  `student@beachhead:~$` `a3diff /tmp/ovs-t-link-up /tmp/ovs-link-t-link-up`
+  `student@beachhead:~$` `a3diff /tmp/ovs-t-link-veth /tmp/ovs-link-t-link-up`
+  
+  ```
+  1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  16: eth0-toad@if15: [-<BROADCAST,MULTICAST>-] {+<BROADCAST,MULTICAST,UP,LOWER_UP>+} mtu 1500 qdisc [-noop-] {+noqueue+} state [-DOWN-]   {+UP+} mode DEFAULT group default qlen 1000
+      link/ether 5e:9b:e9:d9:66:f8 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+  ```
 
 0. Add ip addresses to the internal interaces
 
