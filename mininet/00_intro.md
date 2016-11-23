@@ -246,9 +246,37 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
 
 0. Show mn topology options
 
-  `student@beachhead:~$` `sudo mn --topo=single,5` 
+  `student@beachhead:~$` `sudo mn --topo=single,5`
+  
+  ```
+  *** No default OpenFlow controller found for default switch!
+  *** Falling back to OVS Bridge
+  *** Creating network
+  *** Adding controller
+  *** Adding hosts:
+  h1 h2 h3 h4 h5
+  *** Adding switches:
+  s1
+  *** Adding links:
+  (h1, s1) (h2, s1) (h3, s1) (h4, s1) (h5, s1)
+  *** Configuring hosts
+  h1 h2 h3 h4 h5
+  *** Starting controller
 
-0.
+  *** Starting 1 switches
+  s1 ...
+  *** Starting CLI:
+  ```
+
+0. Take a moment to think about our current, very basic, topology. Then, answer the questions below:
+
+  ```
+  ------------------(s1)-------------------
+  |         |         |         |         |
+  h1        h2        h3        h4        h5
+  ```
+
+0. Use the *pingall* command to demonstrate that there is connectivity betwen all of the hosts.
   
   `mininet>` `pingall`
 
