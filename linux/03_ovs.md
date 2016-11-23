@@ -321,16 +321,59 @@ Some of the commands are presented in a different order than the Linux Bridge la
       link/ether 5e:9b:e9:d9:66:f8 brd ff:ff:ff:ff:ff:ff link-netnsid 0
   ```
 
-0. Add ip addresses to the internal interaces
+0. Add IP addresses to the internal interaces. First apply the IP address to 172.16.2.100 to the dev *eth0-luigi*.
 
-  * `student@beachhead:~$` `sudo ip netns exec luigi ip addr add 172.16.2.100/24 dev eth0-luigi`
-  * `student@beachhead:~$` `sudo ip netns exec toad ip addr add 172.16.2.101/24 dev eth0-toad`
-  * `student@beachhead:~$` `sudo ip netns exec luigi ip addr`
-  * `student@beachhead:~$` `sudo ip netns exec toad ip addr`
-  * `student@beachhead:~$` `sudo ip netns exec luigi ip addr > /tmp/ovs-l-addr-ip`
-  * `student@beachhead:~$` `sudo ip netns exec toad ip addr > /tmp/ovs-t-addr-ip`
-  * `student@beachhead:~$` `a3diff /tmp/ovs-l-addr-init /tmp/ovs-link-l-addr-ip`
-  * `student@beachhead:~$` `a3diff /tmp/ovs-t-addr-init /tmp/ovs-link-t-addr-ip`
+  `student@beachhead:~$` `sudo ip netns exec luigi ip addr add 172.16.2.100/24 dev eth0-luigi`
+
+0. Add the IP address 172.16.2.101 to the dev *eth0-toad*.
+
+  `student@beachhead:~$` `sudo ip netns exec toad ip addr add 172.16.2.101/24 dev eth0-toad`
+
+0. Run the *ip addr* in the *luigi* network namespace to reveal the current L3 (IP) configuration.
+
+  `student@beachhead:~$` `sudo ip netns exec luigi ip addr`
+  
+  ```
+  1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  14: eth0-luigi@if13: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+      link/ether aa:d9:a6:f9:f5:e3 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+      inet 172.16.2.100/24 scope global eth0-luigi
+         valid_lft forever preferred_lft forever
+      inet6 fe80::a8d9:a6ff:fef9:f5e3/64 scope link
+         valid_lft forever preferred_lft forever
+  ```
+
+0. Run the *ip addr* in the *toad* network namespace to reveal the current L3 (IP) configuration.
+
+  `student@beachhead:~$` `sudo ip netns exec toad ip addr`
+
+  ```
+  1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  16: eth0-toad@if15: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+      link/ether 5e:9b:e9:d9:66:f8 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+      inet 172.16.2.101/24 scope global eth0-toad
+         valid_lft forever preferred_lft forever
+      inet6 fe80::5c9b:e9ff:fed9:66f8/64 scope link
+         valid_lft forever preferred_lft forever
+  ```
+
+0. Write the current L3 (IP) configuration of the *luigi* namespace into a file called *ovs-l-addr-ip*.
+
+  `student@beachhead:~$` `sudo ip netns exec luigi ip addr > /tmp/ovs-l-addr-ip`
+
+0. Write the current L3 (IP) configuration of the *toad* namespace into a file called *ovs-t-addr-ip*.
+
+  `student@beachhead:~$` `sudo ip netns exec toad ip addr > /tmp/ovs-t-addr-ip`
+
+0. Run the *a3diff* function to display how the L3 (IP) configuration wtihin the *luigi* namespace changed when an IP address was added to the *eth0-luigi* interface.
+
+  `student@beachhead:~$` `a3diff /tmp/ovs-l-addr-init /tmp/ovs-link-l-addr-ip`
+
+0. Run the *a3diff* function to display how the L3 (IP) configuration wtihin the *toad* namespace changed when an IP address was added to the *eth0-toad* interface.
+
+  `student@beachhead:~$` `a3diff /tmp/ovs-t-addr-init /tmp/ovs-link-t-addr-ip`
 
 0. Why can't we reach the new addressess?
 
