@@ -138,7 +138,7 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
   `student@beachhead:~$` `sudo ip netns exec toad ip link > /tmp/ovs-t-link-init`
 
-0. Create an open vswitch bridge. The following command instructs Open vSwitch to create a bridge named *yoshis-island*
+0. Create an Open vSwitch bridge. The following command instructs Open vSwitch to create a bridge named *yoshis-island*.
 
   `student@beachhead:~$` `sudo ovs-vsctl add-br yoshis-island`
 
@@ -201,7 +201,7 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
   `student@beachhead:~$` `a3diff /tmp/ovs-addr-init /tmp/ovs-addr-br`
 
-0. Okay, so now let's create two veth pairs, will get added into the namespaces.
+0. Okay, so now let's create two veth pairs for adding into the namespaces.
 
   `student@beachhead:~$` `sudo ip link add eth0-luigi type veth peer name veth-luigi`
   
