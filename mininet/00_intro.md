@@ -1,5 +1,25 @@
-# Introduction to Mininet
+---
+date: "2016-11-23"
+draft: false
+weight: 200
+title: "Lab xx - Mininet"
+---
+[Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
 
+### TUESDAY - &#x2B50;REQUIRED&#x2B50;
+
+### Lab Objective
+The objective of this lab is to introduce mininet.
+
+### Procedure
+
+0. From your remote desktop, open a terminal session, and move to the student home directory.
+
+    `student@beachhead:/$` `cd`
+
+0. Let's begin with a basic legacy command used with **net-tools**. The *ifconfig* command will display all conected network interfaces.
+
+    `student@beachhead:~$` `ifconfig -a`
 0. Default all the things + investigate
 
   * `student@beachhead:~$` `sudo mn`
