@@ -49,6 +49,12 @@ Some of the commands are presented in a different order than the Linux Bridge la
 0. Finally, show the current state of the routing table.
 
   `student@beachhead:~$` `ip route show`
+  
+  ```
+  default via 172.16.1.1 dev ens3
+  169.254.169.254 via 172.16.1.1 dev ens3
+  172.16.1.0/24 dev ens3  proto kernel  scope link  src 172.16.1.4
+  ```
 
 0.  The ovs-vsctl is the utility used for quering and confiruing ovs-vswitchd, so let's start with reviewing usage.
 
@@ -173,6 +179,19 @@ Some of the commands are presented in a different order than the Linux Bridge la
 0. Run the *a3diff* function to clearly reveal how the creation of the Open vSwitch bridge changed L2 configuration. 
 
   `student@beachhead:~$` `a3diff /tmp/ovs-link-init /tmp/ovs-link-br`
+  
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+      link/ether fa:16:3e:59:a0:b8 brd ff:ff:ff:ff:ff:ff
+  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+      link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
+  11: ovs-system: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1
+      link/ether ea:fb:5d:d4:53:b6 brd ff:ff:ff:ff:ff:ff
+  {+17: yoshis-island: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1+}
+  {+    link/ether b2:b4:6d:13:43:48 brd ff:ff:ff:ff:ff:ff+}
+   ```
 
 0. Write the current state of the L3 system configuration to a file called *ovs-addr-br*
 
@@ -224,19 +243,47 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
 0. Run the *a3diff* function on how the *luigi* namespace looks now that a veth pair has been added to it.
   
-  `student@beachhead:~$` `a3diff /tmp/ovs-l-link-init /tmp/ovs-link-l-link-veth`
+  `student@beachhead:~$` `a3diff /tmp/ovs-l-link-init /tmp/ovs-l-link-veth`
+  
+  ```
+  1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  {+19: eth0-luigi@if18: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000+}
+  {+    link/ether c2:4f:8c:83:8f:54 brd ff:ff:ff:ff:ff:ff link-netnsid 0+}
+  ```
 
 0. Run the *a3diff* function on how the *luigi* namespace looks now that a veth pair has been added to it.
   
-  `student@beachhead:~$` `a3diff /tmp/ovs-t-link-init /tmp/ovs-link-t-link-veth`
+  `student@beachhead:~$` `a3diff /tmp/ovs-t-link-init /tmp/ovs-t-link-veth`
+  
+  ```
+  1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  {+21: eth0-toad@if20: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000+}
+  {+    link/ether ea:07:01:40:30:b6 brd ff:ff:ff:ff:ff:ff link-netnsid 0+}
+  ```
   
 0. Alright, so we pretty much exhausted the L2 basics, so let's move up to L3. Take a look a the current L3 (IP) configuration in the *luigi* namespace. The following command executes the command **ip addr** within the luigi namespace.
 
   `student@beachhead:~$` `sudo ip netns exec luigi ip addr`
+  
+  ```
+  1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  19: eth0-luigi@if18: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+      link/ether c2:4f:8c:83:8f:54 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+  ```
 
 0. Take a look a the current L3 (IP) configuration in the *toad* namespace. The following command executes the command **ip addr** within the toad namespace.
 
   `student@beachhead:~$` `sudo ip netns exec toad ip addr`
+  
+  ```
+  1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  21: eth0-toad@if20: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+      link/ether ea:07:01:40:30:b6 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+  ```
 
 0. Save the current L3 information from the *luigi* namespace in a file called, *ovs-l-addr-init*
 
@@ -250,7 +297,7 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
   `student@beachhead:~$` `sudo ovs-vsctl add-port yoshis-island veth-luigi`
 
-0. Now add *veth-toad* to our Open Vswitch bridge named *yoshis-island*.
+0. Now add *veth-toad* to our Open vSwitch bridge named *yoshis-island*.
 
   `student@beachhead:~$` `sudo ovs-vsctl add-port yoshis-island veth-toad`
 
@@ -361,45 +408,147 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
 0. Write the current L3 (IP) configuration of the *luigi* namespace into a file called *ovs-l-addr-ip*.
 
-  `student@beachhead:~$` `sudo ip netns exec luigi ip addr > /tmp/ovs-l-addr-ip`
+  `student@beachhead:~$` `sudo ip netns exec luigi ip addr > /tmp/ovs-link-addr-ip`
 
 0. Write the current L3 (IP) configuration of the *toad* namespace into a file called *ovs-t-addr-ip*.
 
-  `student@beachhead:~$` `sudo ip netns exec toad ip addr > /tmp/ovs-t-addr-ip`
+  `student@beachhead:~$` `sudo ip netns exec toad ip addr > /tmp/ovs-toad-addr-ip`
 
 0. Run the *a3diff* function to display how the L3 (IP) configuration wtihin the *luigi* namespace changed when an IP address was added to the *eth0-luigi* interface.
 
-  `student@beachhead:~$` `a3diff /tmp/ovs-l-addr-init /tmp/ovs-link-l-addr-ip`
+  `student@beachhead:~$` `a3diff /tmp/ovs-l-addr-init /tmp/ovs-link-addr-ip`
+  
+  ```
+  1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  19: eth0-luigi@if18: [-<BROADCAST,MULTICAST>-] {+<BROADCAST,MULTICAST,UP,LOWER_UP>+} mtu 1500 qdisc [-noop-] {+noqueue+} state [-DOWN-] {+UP+} group default qlen 1000
+      link/ether c2:4f:8c:83:8f:54 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+      {+inet 172.16.2.100/24 scope global eth0-luigi+}
+  {+       valid_lft forever preferred_lft forever+}
+  {+    inet6 fe80::c04f:8cff:fe83:8f54/64 scope link +}
+  {+       valid_lft forever preferred_lft forever+}
+  ```
 
 0. Run the *a3diff* function to display how the L3 (IP) configuration wtihin the *toad* namespace changed when an IP address was added to the *eth0-toad* interface.
 
-  `student@beachhead:~$` `a3diff /tmp/ovs-t-addr-init /tmp/ovs-link-t-addr-ip`
+  `student@beachhead:~$` `a3diff /tmp/ovs-t-addr-init /tmp/ovs-toad-addr-ip`
+  
+  ```
+  1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  21: eth0-toad@if20: [-<BROADCAST,MULTICAST>-] {+<BROADCAST,MULTICAST,UP,LOWER_UP>+} mtu 1500 qdisc [-noop-] {+noqueue+} state [-DOWN-]   {+UP+} group default qlen 1000
+      link/ether ea:07:01:40:30:b6 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+      {+inet 172.16.2.101/24 scope global eth0-toad+}
+  {+       valid_lft forever preferred_lft forever+}
+  {+    inet6 fe80::e807:1ff:fe40:30b6/64 scope link +}
+  {+       valid_lft forever preferred_lft forever+}
+   ```
 
-0. Why can't we reach the new addressess?
+0. At this time we cannot ping the addresses we applied to the interfaces. Confirm this is the case by trying to ping, *172.16.2.100*, which was applied to *eth0-luigi*.
 
-  * `student@beachhead:~$` `ping -c 2 172.16.2.100`
-  * `student@beachhead:~$` `ping -c 2 172.16.2.101`
-  * `student@beachhead:~$` `ip route`
+  `student@beachhead:~$` `ping -c 2 172.16.2.100`
 
-0. These two IP's should be able to ping each other though
+0. It won't work. You'll need to press **CTRL + C** to quit trying to ping.
 
-  * `student@beachhead:~$` `sudo ip netns exec luigi ping 172.16.2.101`
-  * `student@beachhead:~$` `sudo ip netns exec toad ping 172.16.2.100`
+0. Try to ping the other IP address, *172.16.2.101*, which was applied to *eth0-toad*.
 
-0. Change the vlan tags for the two interfaces and show they can no loger connect with each other
+  `student@beachhead:~$` `ping -c 2 172.16.2.101`
 
-  * `student@beachhead:~$` `sudo ovs-vsctl set port veth-luigi tag=100`
-  * `student@beachhead:~$` `sudo ovs-vsctl set port veth-toad tag=101`
-  * `student@beachhead:~$` `sudo ip netns exec luigi ping 172.16.2.101`
-  * `student@beachhead:~$` `sudo ip netns exec toad ping 172.16.2.100`
-  * `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs-show-tags`
-  * `student@beachhead:~$` `a3diff /tmp/ovs-show-veth /tmp/ovs-show-tags`
+0. So that one didn't work either. You'll need to press **CTRL + C** to quit trying to ping.
 
-0. Cleanup 
+  `student@beachhead:~$` `ip route`
 
-  * `student@beachhead:~$` `sudo ip netns del luigi`
-  * `student@beachhead:~$` `sudo ip netns del toad`
-  * `student@beachhead:~$` `sudo ip link del veth-luigi`
-  * `student@beachhead:~$` `sudo ip link del veth-toad`
-  * `student@beachhead:~$` `ovs-vsctl del-br yoshis-island`
+0. So from outside of the network namespaces, we are unable to ping these IP addresses. However, these two IP do have connectivity to each other from *within* the namespace.
 
+  `student@beachhead:~$` `sudo ip netns exec luigi ping 172.16.2.101`
+  
+  ```
+  PING 172.16.2.101 (172.16.2.101) 56(84) bytes of data.
+  64 bytes from 172.16.2.101: icmp_seq=1 ttl=64 time=0.739 ms
+  64 bytes from 172.16.2.101: icmp_seq=2 ttl=64 time=0.089 ms
+  ^C
+  ```
+
+0. So the IP address is there, and assigned to an interface within the Linux system. However, we can only access it if we gain access to the network namespace. You'll need to press **CTRL + C** to quit pinging.
+
+  `student@beachhead:~$` `sudo ip netns exec toad ping 172.16.2.100`
+
+  ```
+  PING 172.16.2.100 (172.16.2.100) 56(84) bytes of data.
+  64 bytes from 172.16.2.100: icmp_seq=1 ttl=64 time=0.052 ms
+  64 bytes from 172.16.2.100: icmp_seq=2 ttl=64 time=0.063 ms
+  ^C
+  ```
+
+0. Again, that should work. You'll need to press **CTRL + C** to quit trying to ping.
+
+0. VLAN tags (L2) can also exist within the network namespaces. If two devices have different VLAN tags applied to them, they're effectively on seperate L2 networks. So to drive home a point, let's change the VLAN tags for the two interfaces, and then demonstrate that they can no loger connect with each other.
+
+0. Apply *VLAN tag 100* to *veth-luigi*
+
+  `student@beachhead:~$` `sudo ovs-vsctl set port veth-luigi tag=100`
+  
+0. Apply *VLAN tag 101* to *veth-toad*
+  
+  `student@beachhead:~$` `sudo ovs-vsctl set port veth-toad tag=101`
+
+0. Try pinging the IP address *172.16.2.101*, the IP applied to *eth0-toad*, from within the *luigi* namespace.
+
+  `student@beachhead:~$` `sudo ip netns exec luigi ping 172.16.2.101`
+  
+0. It won't work. You'll need to press **CTRL + C** to quit trying to ping.
+
+0. Try pinging the IP address *172.16.2.100*, the IP applied to *eth0-luigi*, from within the *toad* namespace.
+
+  `student@beachhead:~$` `sudo ip netns exec toad ping 172.16.2.100`
+
+0. It won't work. You'll need to press **CTRL + C** to quit trying to ping.
+
+0. Let's check out our "final" OVS configuration by creating a file called *ovs-show-tags*.
+
+  `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs-show-tags`
+
+0. Run the *a3diff* function one last time to reveal how the addition of VLAN tags changed the OVS configuration.
+
+  `student@beachhead:~$` `a3diff /tmp/ovs-show-veth /tmp/ovs-show-tags`
+  
+  ```
+  a00e3ca2-3926-4d0d-9f71-a2105f6c6166
+    Bridge yoshis-island
+        Port veth-toad
+            {+tag: 101+}
+            Interface veth-toad
+        Port yoshis-island
+            Interface yoshis-island
+                type: internal
+        Port veth-luigi
+            {+tag: 100+}
+            Interface veth-luigi
+    ovs_version: "2.5.0"
+  ```
+
+0. So imagine what we just demonstrated on a massive scale, with management augmented by a human. That's effectively what the OVS project has set out to do. Configure lots of network namespaces, connect them together when applicable (by veths), and further isolate L2 networks with VLAN tags.
+
+0. Well that was fun! Time to cleanup our system. Running all of the steps from here down will remove all of our configuration.
+
+0. Trash the network namespace *luigi*.
+
+  `student@beachhead:~$` `sudo ip netns del luigi`
+
+0. Trash the network namespace *toad*.
+
+  `student@beachhead:~$` `sudo ip netns del toad`
+
+0. Trash the L2 interface *veth-luigi*.
+
+  `student@beachhead:~$` `sudo ip link del veth-luigi`
+
+0. Trash the L2 interface *veth-toad*.
+
+  `student@beachhead:~$` `sudo ip link del veth-toad`
+
+0. Finally, trash the bridge *yoshis-island*.
+
+  `student@beachhead:~$` `ovs-vsctl del-br yoshis-island`
+
+0. You should be right back to the way things were before you started this lab. If anything was unclear, run it again!
