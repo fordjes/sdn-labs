@@ -16,9 +16,13 @@ The objective of this lab is to give **advanced** students a documented mechanis
 
 0. Start by backing up a copy of the current *.bashrc* file.
 
+  `student@beachhead:~$` `cp /home/student/.bashrc /home/student/old.bashrc` 
+
+0. Open `/home/student/.bashrc` in vim.
+
   `student@beachhead:~$` `cp .bashrc old.bashrc` 
 
-0. Open `/home/ubuntu/.bashrc` in your favorite editor and edit the seciton around `"$color_prompt" = yes` to look like below:
+0. Edit the seciton around `"$color_prompt" = yes` to look like below:
 
   ``` bash
   namespace=`ip netns identify $$`
