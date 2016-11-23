@@ -145,6 +145,11 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
 
   * `mininet>` `h1 lxterminal &`
   * `root@beachhead:~#` `tcpdump -n` 
+  
+  * `root@beachhead:~#` `ctrl` + `c`
+  * `root@beachhead:~#` `exit` 
+
+
 
 0. Show connectivity while capturing traffic
 
@@ -160,10 +165,6 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
   h2 -> h1
   *** Results: 0% dropped (2/2 received)
   ```
-  
-  * `root@beachhead:~#` `ctrl` + `c`
-  * `root@beachhead:~#` `exit` 
-
 0. Inter node performance can be demonstrated with the following two commands. To determine TCP performance, use the *iperf* command:
  
   `mininet>` `iperf`
@@ -202,20 +203,46 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
   >
   The term Quality of Service (QoS) is often used as a synonym for traffic control.
 
-0.
+0. We can check out the manual page on the traffic control (tc) utility with the following command.
 
   `student@beachhead:~$` `man tc`
-  
-0. The following command will 
+
+0. The following command will ask mininet to deploy two hosts and a switch, connected with 20 Mbit/sec links, with 20 ms delays.
 
   `student@beachhead:~$` `sudo mn --link tc,bw=20,delay=20ms`
 
-0. Show performance between nodes
- 
-  * `mininet>` `iperf`
-  * `mininet>` `iperfudp`
-  * `mininet>` `exit`
-  * `student@beachhead:~$` 
+0. Take a moment to think about our current, very basic, topology. Then, answer the questions below:
+
+  ```
+  (h1)-----20ms-----(s1)-----20ms-----(h2)
+  ```
+  
+  - **Q1: When you send a *ping*, you measure the roundtrip delay for an ICMP packet to travel from one host to another. Assuming our current deployment, what will be the reported roundtrip delay?**
+    - A1: ~80 ms
+
+0. Let's test that assertion! The following command will ask mininet to send an ICMP packet (ping) from host1 (h1) to host2 (h2), a total of 8 times (-c 8).
+
+  `mininet>` `h1 ping -c 8 h2`
+
+  ```
+  PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
+  64 bytes from 10.0.0.2: icmp_seq=1 ttl=64 time=161 ms
+  64 bytes from 10.0.0.2: icmp_seq=2 ttl=64 time=80.3 ms
+  64 bytes from 10.0.0.2: icmp_seq=3 ttl=64 time=80.2 ms
+  64 bytes from 10.0.0.2: icmp_seq=4 ttl=64 time=80.3 ms
+  64 bytes from 10.0.0.2: icmp_seq=5 ttl=64 time=80.3 ms
+  64 bytes from 10.0.0.2: icmp_seq=6 ttl=64 time=80.2 ms
+  64 bytes from 10.0.0.2: icmp_seq=7 ttl=64 time=80.3 ms
+  64 bytes from 10.0.0.2: icmp_seq=8 ttl=64 time=80.2 ms
+  ```
+
+0. Exit mininet.
+
+  `mininet>` `exit`
+
+0. Make sure mininet has closed all current processes.
+
+  `student@beachhead:~$` `sudo mn --clean`
 
 0. Show mn topology options
 
