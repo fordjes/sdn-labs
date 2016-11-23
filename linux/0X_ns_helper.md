@@ -2,7 +2,7 @@
 date: "2016-11-23"
 draft: false
 weight: 40
-title: "Lab 0X - OPTIONAL - Augmenting bash for working with Network Namespaces"
+title: "Lab 0X - OPTIONAL - Documentation - Augmenting bash for working with Network Namespaces"
 ---
 [Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
 
