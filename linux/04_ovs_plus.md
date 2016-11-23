@@ -85,129 +85,167 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
 0. Now let's create some network namespaces. In keeping in the spirit of our previous labs, we'll call this namespace *peach*
 
-  * `student@beachhead:~$` `sudo ip netns add peach`
+  `student@beachhead:~$` `sudo ip netns add peach`
   
 0. And we'll need a second name space called *bowser*.  
   
-  * `student@beachhead:~$` `sudo ip netns add bowser`
+  `student@beachhead:~$` `sudo ip netns add bowser`
   
 0. Create an Open vSwitch bridge. The following command instructs Open vSwitch to create a bridge named *donut-plains*.
   
-  * `student@beachhead:~$` `sudo ovs-vsctl add-br donut-plains`
+  `student@beachhead:~$` `sudo ovs-vsctl add-br donut-plains`
   
 0. Okay, so now let's create two veth pairs for adding into the namespaces.  
   
-  * `student@beachhead:~$` `sudo ip link add eth0-peach type veth peer name veth-peach`
+  `student@beachhead:~$` `sudo ip link add eth0-peach type veth peer name veth-peach`
   
 0. Create another veth pair.  
   
-  * `student@beachhead:~$` `sudo ip link add eth0-bowser type veth peer name veth-bowser`
+  `student@beachhead:~$` `sudo ip link add eth0-bowser type veth peer name veth-bowser`
 
 0. Add the veths into the network namespaces. First set the *eth0-peach* veth into the network namespace *peach*
 
-  * `student@beachhead:~$` `sudo ip link set eth0-peach netns peach`
+  `student@beachhead:~$` `sudo ip link set eth0-peach netns peach`
   
 0. Add the second veth, *eth0-bowser*, into the network namespace *bowser*.  
   
-  * `student@beachhead:~$` `sudo ip link set eth0-bowser netns bowser`
+  `student@beachhead:~$` `sudo ip link set eth0-bowser netns bowser`
   
 0. Add the namespace interfaces to the Open vSwitch bridge. First we'll add *veth-peach* to our Open Vswitch bridge named *donut-plains*.
   
-  * `student@beachhead:~$` `sudo ovs-vsctl add-port donut-plains veth-peach`
+  `student@beachhead:~$` `sudo ovs-vsctl add-port donut-plains veth-peach`
 
 0. Now add *veth-bowser* to our Open vSwitch bridge named *donut-plains*.
 
-  * `student@beachhead:~$` `sudo ovs-vsctl add-port donut-plains veth-bowser`
+  `student@beachhead:~$` `sudo ovs-vsctl add-port donut-plains veth-bowser`
   
 0. Apply *VLAN tag 50* to *veth-peach*.
   
-  * `student@beachhead:~$` `sudo ovs-vsctl set port veth-peach tag=50`
+  `student@beachhead:~$` `sudo ovs-vsctl set port veth-peach tag=50`
 
 0. Apply *VLAN tag 150* to *veth-bowser*.
 
-  * `student@beachhead:~$` `sudo ovs-vsctl set port veth-bowser tag=150`
+  `student@beachhead:~$` `sudo ovs-vsctl set port veth-bowser tag=150`
 
 0. Bring all the interaces up and examine the changes. The following command will place the *veth-peach* interface in an UP state.
 
-  * `student@beachhead:~$` `sudo ip link set veth-peach up`
+  `student@beachhead:~$` `sudo ip link set veth-peach up`
   
 0. The following command will place the *veth-bowser* interface in an UP state.
   
-  * `student@beachhead:~$` `sudo ip link set veth-bowser up`
+  `student@beachhead:~$` `sudo ip link set veth-bowser up`
   
 0. The following command will place the *eth0-peach* interface within the network namespace *peach* in an UP state.  
   
-  * `student@beachhead:~$` `sudo ip netns exec peach ip link set dev eth0-peach up`
+  `student@beachhead:~$` `sudo ip netns exec peach ip link set dev eth0-peach up`
   
 0. The following command will place the *eth0-bowser* interface within the network namespace *bowser* in an UP state.  
   
-  * `student@beachhead:~$` `sudo ip netns exec bowser ip link set dev eth0-bowser up`
+  `student@beachhead:~$` `sudo ip netns exec bowser ip link set dev eth0-bowser up`
 
 0. Copy the current state of L2 to the file *ovs2-link-config*.
   
-  * `student@beachhead:~$` `ip link list > /tmp/ovs2-link-config`
+  `student@beachhead:~$` `ip link list > /tmp/ovs2-link-config`
   
 0. Copy the current state of L3 (IP) to the file *ovs2-addr-config*.  
   
-  * `student@beachhead:~$` `ip addr show > /tmp/ovs2-addr-config`
+  `student@beachhead:~$` `ip addr show > /tmp/ovs2-addr-config`
   
 0. Copy the current state of IP routing to the file *ovs2-route-config*.  
   
-  * `student@beachhead:~$` `ip route show > /tmp/ovs2-route-config`
+  `student@beachhead:~$` `ip route show > /tmp/ovs2-route-config`
   
 0. Copy the current state of the Open vSwitch configuration to the file *ovs2-show-config*.
   
-  * `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs2-show-config`
+  `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs2-show-config`
   
 0. Run the *a3diff* file to see how L2 configuration has changed since we started this lab.  
   
-  * `student@beachhead:~$` `a3diff /tmp/ovs2-link-init /tmp/ovs2-link-config`
+  `student@beachhead:~$` `a3diff /tmp/ovs2-link-init /tmp/ovs2-link-config`
 
 0. Run the *a3diff* file to see how L3 (IP) configuration has changed since we started this lab.
 
-  * `student@beachhead:~$` `a3diff /tmp/ovs2-addr-init /tmp/ovs2-addr-config`
+  `student@beachhead:~$` `a3diff /tmp/ovs2-addr-init /tmp/ovs2-addr-config`
 
 0. Run the *a3diff* file to see how the IP routing configuration has changed since we started this lab.
 
-  * `student@beachhead:~$` `a3diff /tmp/ovs2-route-init /tmp/ovs2-route-config`
+  `student@beachhead:~$` `a3diff /tmp/ovs2-route-init /tmp/ovs2-route-config`
 
 0. Run the *a3diff* file to see how the Open vSwitch configuration has changed since we started this lab.
 
-  * `student@beachhead:~$` `a3diff /tmp/ovs2-show-init /tmp/ovs2-show-config`
+  `student@beachhead:~$` `a3diff /tmp/ovs2-show-init /tmp/ovs2-show-config`
 
 0. Let's create two new network namespaces. Eventually we're going to configure DHCP servcies within these spaces, so let's name them appropriately. First, create a new network namespace named, *dhcp-peach*.
 
-  * `student@beachhead:~$` `ip netns add dhcp-peach`
+  `student@beachhead:~$` `ip netns add dhcp-peach`
 
 0. Great! Now create another network namespace named, *dhcp-bowser*.
 
-  * `student@beachhead:~$` `ip netns add dhcp-bowser`
+  `student@beachhead:~$` `ip netns add dhcp-bowser`
 
-0. Create internal ovs interfaces for the dhcp servers to run on
+0. Open vSwtich *internal* interfaces, like *dhcp-peach*, can appear as “physical” interfaces to the Linux host, and therefore can be assigned IP addresses and used for communication. We'll assign IP addresses to these interfaces a bit later. For now, create the internal OVS interfaces for a pair of DHCP servers to run on. This first command creates the *dhcp-peach* OVS internal interface.
 
-  * `student@beachhead:~$` `sudo ocs-vsctl add-port yoshi-island dhcp-peach -- set interface dhcp-peach type=internal`
-  * `student@beachhead:~$` `sudo ocs-vsctl add-port yoshi-island dhcp-bowser -- set interface dhcp-bowser type=internal`
-  * `student@beachhead:~$` `sudo ovs-vsctl set port dhcp-peach tag=50`
-  * `student@beachhead:~$` `sudo ovs-vsctl set port dhcp-bowser tag=150`
-  * `student@beachhead:~$` `sudo ip link set dhcp-peach netns dhcp-peach`
-  * `student@beachhead:~$` `sudo ip link set dhcp-bowser netns dhcp-bowser`
-  * `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs-show-dhcp`
-  * `student@beachhead:~$` `a3diff /tmp/ovs2-show-config /tmp/ovs-show-dhcp`
-  * `student@beachhead:~$` `ip link show > /tmp/ovs-link-dhcp`
-  * `student@beachhead:~$` `a3diff /tmp/ovs-link-config /tmp/ovs-link-dhcp`
+  `student@beachhead:~$` `sudo ocs-vsctl add-port yoshi-island dhcp-peach -- set interface dhcp-peach type=internal`
 
-0. Bring up dhcp interfaces and assign ip addresses  
-
-  * `student@beachhead:~$` `sudo ip netns exec dhcp-peach ip link set dev dhcp-peach up`
-  * `student@beachhead:~$` `sudo ip netns exec dhcp-peach ip addr add 172.16.2.50/24 dev dhcp-peach`
-  * `student@beachhead:~$` `sudo ip netns exec dhcp-bowser ip link set dev dhcp-bowser up`
-  * `student@beachhead:~$` `sudo ip netns exec dhcp-bowser ip addr add 172.16.2.150/24 dev dhcp-bowser`
-
-0. Start the dnsmasq service in both network name spaces
-
+0. Now create the *dhcp-bowser* OVS internal interface.
   
-  * `student@beachhead:~$` `sudo ip netns exec dhcp-peach dnsmasq --interface=dhcp-peach --dhcp-range=172.16.2.51,172.16.2.149,255.255.255.0`
-  * `student@beachhead:~$` `sudo ip netns exec dhcp-bowser dnsmasq --interface=dhcp-bowser --dhcp-range=172.16.2.151,172.16.2.249,255.255.255.0`
+  `student@beachhead:~$` `sudo ocs-vsctl add-port yoshi-island dhcp-bowser -- set interface dhcp-bowser type=internal`
+
+0. Apply VLAN tag 50 to the *dhcp-peach* interface.
+
+  `student@beachhead:~$` `sudo ovs-vsctl set port dhcp-peach tag=50`
+
+0. Apply VLAN tag 150 to the *dhcp-bowser* interface.
+
+  `student@beachhead:~$` `sudo ovs-vsctl set port dhcp-bowser tag=150`
+
+0.
+
+  * `student@beachhead:~$` `sudo ip link set dhcp-peach netns dhcp-peach`
+
+0.
+
+  * `student@beachhead:~$` `sudo ip link set dhcp-bowser netns dhcp-bowser`
+
+0. Writeout the current Open vSwitch configuration to a file called, *ovs-show-dhcp*.
+
+  `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs-show-dhcp`
+
+0. Run the *a3diff* function to see how the OVS configuration has changed since the internal interfaces were created, and VLAN tags applied. 
+
+  `student@beachhead:~$` `a3diff /tmp/ovs2-show-config /tmp/ovs-show-dhcp`
+
+0. Writeout the L2 configuration to a file called, *ovs-link-dhcp*.
+
+  `student@beachhead:~$` `ip link show > /tmp/ovs-link-dhcp`
+
+0. Run the *a3diff* function to see how the L2 configuration has changed since the internal interfaces were created, and VLAN tags applied. 
+
+  `student@beachhead:~$` `a3diff /tmp/ovs-link-config /tmp/ovs-link-dhcp`
+
+0. Bring up DHCP interface *dhcp-peach* within the network namespace *dhcp-peach*.  
+
+  `student@beachhead:~$` `sudo ip netns exec dhcp-peach ip link set dev dhcp-peach up`
+
+0. Apply the IP address *172.16.2.50* to the *dhcp-peach* interface.
+
+  `student@beachhead:~$` `sudo ip netns exec dhcp-peach ip addr add 172.16.2.50/24 dev dhcp-peach`
+
+0. Bring up DHCP interface *dhcp-bowser* within the network namespace *dhcp-bowser*.
+
+  `student@beachhead:~$` `sudo ip netns exec dhcp-bowser ip link set dev dhcp-bowser up`
+
+0. Apply the IP address *172.16.2.150* to the *dhcp-bowser* interface.
+
+  `student@beachhead:~$` `sudo ip netns exec dhcp-bowser ip addr add 172.16.2.150/24 dev dhcp-bowser`
+
+0. A lightweight DHCP and caching DNS server, *dnsmasq* service provides network infrastructure for small networks: DNS, DHCP, router advertisement and network boot. It is designed to be lightweight and have a small footprint, suitable for resource constrained routers and firewalls. It has also been widely used for tethering on smartphones and portable hotspots, and to support virtual networking in virtualisation frameworks. Supported platforms include Linux (with glibc and uclibc), Android, BSD, and Mac OS X. In the next step, start the *dnsmasq* service in the *dhcp-peach* network namespace.
+  
+  `student@beachhead:~$` `sudo ip netns exec dhcp-peach dnsmasq --interface=dhcp-peach --dhcp-range=172.16.2.51,172.16.2.149,255.255.255.0`
+
+0. Start the *dnsmasq* service in the *dhcp-peach* network namespace.
+
+  `student@beachhead:~$` `sudo ip netns exec dhcp-bowser dnsmasq --interface=dhcp-bowser --dhcp range=172.16.2.151,172.16.2.249,255.255.255.0`
 
 0. DHCPDISCOVER 
 
