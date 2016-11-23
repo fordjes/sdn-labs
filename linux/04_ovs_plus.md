@@ -1,15 +1,21 @@
-# OVS advanced
+---
+date: "2016-11-22"
+draft: false
+weight: 30
+title: "Lab 03b - ADVANCED - Open vSwitch (OVS)"
+---
+[Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
 
-## a3diff
+### MONDAY - &#x2B50;REQUIRED&#x2B50;
 
-  Open .bashrc and read the funciton `a3diff`.  
-  We will use this function in this lab to compare the output of some iproute2 commands.
+### Lab Objective
 
-  ```
-  function a3diff {
-      wdiff -n $1 $2 | colordiff
-  }
-  ```
+The objective of this lab is very similar to the Open vSwitch lab, however it takes a much deeper dive into OVS concepts. Only attempt this lab if you have:
+
+  - 1) First finished the "BASIC" version of the OVS lab
+  - 2) Have strong CLI skills
+
+### Procedure
 
 ## OVS bridge, internal interfaces, and network namespace processes
 
