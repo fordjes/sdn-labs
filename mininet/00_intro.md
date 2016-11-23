@@ -2,14 +2,14 @@
 date: "2016-11-23"
 draft: false
 weight: 200
-title: "Lab xx - Mininet"
+title: "Lab xx - Introduction to Mininet"
 ---
 [Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
 
 ### TUESDAY - &#x2B50;REQUIRED&#x2B50;
 
 ### Lab Objective
-The objective of this lab is to introduce mininet.
+The objective of this lab is to introduce the Mininet CLI. Mininet creates a realistic virtual network, running real kernel, switch and application code, on a single machine (VM, cloud or native), in seconds, with a single command. It is easily manipulated with the Mininet CLI, which makes it a great tool for developing, share, and experiment with OpenFlow and Software-Defined Networking systems.
 
 ### Procedure
 
