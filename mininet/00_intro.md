@@ -244,7 +244,7 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
 
   `student@beachhead:~$` `sudo mn --clean`
 
-0. Show mn topology options
+0. Deploy a 5-host *single* topology.
 
   `student@beachhead:~$` `sudo mn --topo=single,5`
   
@@ -275,38 +275,84 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
   |         |         |         |         |
   h1        h2        h3        h4        h5
   ```
+  
+  - **Q1: **
+    - A1:
 
 0. Use the *pingall* command to demonstrate that there is connectivity betwen all of the hosts.
   
   `mininet>` `pingall`
 
-0. 
+0. Exit mininet.
 
   `mininet>` `exit`
 
-0.
+0. Shutdown all associated processes with mininet.
 
-  `student@beachhead:~$` `sudo mn --topo=linear,5` 
+  `student@beachhead:~$` `sudo mn --clean` 
 
-0.
+0. Deploy a 5-host *linear* topology.
+
+  `student@beachhead:~$` `sudo mn --topo=linear,5`
+  
+  ```
+  *** No default OpenFlow controller found for default switch!
+  *** Falling back to OVS Bridge
+  *** Creating network
+  *** Adding controller
+  *** Adding hosts:
+  h1 h2 h3 h4 h5
+  *** Adding switches:
+  s1 s2 s3 s4 s5
+  *** Adding links:
+  (h1, s1) (h2, s2) (h3, s3) (h4, s4) (h5, s5) (s2, s1) (s3, s2) (s4, s3) (s5, s4)
+  *** Configuring hosts
+  h1 h2 h3 h4 h5
+  *** Starting controller
+
+  *** Starting 5 switches
+  s1 s2 s3 s4 s5 ...
+  *** Starting CLI:
+  ```
+
+0. Take a moment to think about our current, very basic, topology. Then, answer the questions below:
+
+  ```
+  (s1)------(s2)------(s3)------(s4)------(s5)
+   |         |         |         |         |
+   h1        h2        h3        h4        h5
+  ```
+  
+  - **Q1: **
+    - A1:
+
+0. Demonstrate connectivity between all of the deployed hosts. 
 
   `mininet>` `pingall`
 
-0.
+0. Exit mininet.
 
   `mininet>` `exit`
 
-0.
+0. Shutdown all associated processes with mininet.
+
+  `student@beachhead:~$` `sudo mn --clean` 
+
+0. Deploy a 5-host *tree* topology.
 
   `student@beachhead:~$` `sudo mn --topo=tree,5` 
 
-0. 
+0. Demonstrate connectivity between all of the deployed hosts. 
 
   `mininet>` `pingall`
 
-0.
+0. Exit mininet.
 
   `mininet>` `exit`
+
+0. Shutdown all associated processes with mininet.
+
+  `student@beachhead:~$` `sudo mn --clean` 
 
 
 #### Additional Learning / References
