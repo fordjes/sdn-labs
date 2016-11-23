@@ -12,8 +12,8 @@ title: "Lab 03b - ADVANCED - Open vSwitch (OVS)"
 
 The objective of this lab is very similar to the Open vSwitch lab, however it takes a much deeper dive into OVS concepts. Only attempt this lab if you have:
 
-  - 1) First finished the "BASIC" version of the OVS lab
-  - 2) Strong CLI skills
+  - First finished the "BASIC" version of the OVS lab
+  - Strong CLI skills
 
 ### Procedure
 
