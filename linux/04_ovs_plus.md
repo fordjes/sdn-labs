@@ -86,20 +86,44 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
   `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs2-show-init`
 
-
-
-
-0. Basic Setup
+0. Now let's create some network namespaces. In keeping in the spirit of our previous labs, we'll call this namespace *peach*
 
   * `student@beachhead:~$` `sudo ip netns add peach`
+  
+0. And we'll need a second name space called *bowser*.  
+  
   * `student@beachhead:~$` `sudo ip netns add bowser`
+  
+0. Create an Open vSwitch bridge. The following command instructs Open vSwitch to create a bridge named *donut-plains*.
+  
   * `student@beachhead:~$` `sudo ovs-vsctl add-br donut-plains`
+  
+0. Okay, so now let's create two veth pairs for adding into the namespaces.  
+  
   * `student@beachhead:~$` `sudo ip link add eth0-peach type veth peer name veth-peach`
+  
+0. Create another veth pair.  
+  
   * `student@beachhead:~$` `sudo ip link add eth0-bowser type veth peer name veth-bowser`
+
+0. Add the veths into the network namespaces. First set the *eth0-peach* veth into the network namespace *peach*
+
   * `student@beachhead:~$` `sudo ip link set eth0-peach netns peach`
+  
+0. Add the second veth, *eth0-bowser*, into the network namespace *bowser*.  
+  
   * `student@beachhead:~$` `sudo ip link set eth0-bowser netns bowser`
+  
+0. Add the namespace interfaces to the Open vSwitch bridge. First we'll add *veth-peach* to our Open Vswitch bridge named *donut-plains*.
+  
   * `student@beachhead:~$` `sudo ovs-vsctl add-port donut-plains veth-peach`
+
+0. Now add *veth-bowser* to our Open vSwitch bridge named *donut-plains*.
+
   * `student@beachhead:~$` `sudo ovs-vsctl add-port donut-plains veth-bowser`
+  
+  
+  
   * `student@beachhead:~$` `sudo ovs-vsctl set port veth-peach tag=50`
   * `student@beachhead:~$` `sudo ovs-vsctl set port veth-bowser tag=150`
   * `student@beachhead:~$` `sudo ip link set veth-peach up`
@@ -160,12 +184,27 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
   * `student@beachhead:~$` `sudo ovs-appctl show-commands`
   * `student@beachhead:~$` `sudo ovs-appctl fdb/show donut-plains`
   * `student@beachhead:~$` `sudo ovs-vsctl dump flows donut-plains`
+  
+0. Well that was fun! Time to cleanup our system. Running all of the steps from here down will remove all of our configuration.
 
-0. Cleanup 
+0. Trash the network namespace *peach*.
 
-  * `student@beachhead:~$` `sudo ip netns del peach`
-  * `student@beachhead:~$` `sudo ip netns del bowser`
-  * `student@beachhead:~$` `sudo ip link del veth-peach`
-  * `student@beachhead:~$` `sudo ip link del veth-bowser`
-  * `student@beachhead:~$` `ovs-vsctl del-br donut-plains`
- 
+  `student@beachhead:~$` `sudo ip netns del peach`
+
+0. Trash the network namespace *bowser*.
+
+  `student@beachhead:~$` `sudo ip netns del bowser`
+
+0. Trash the L2 interface *veth-peach*.
+
+  `student@beachhead:~$` `sudo ip link del veth-peach`
+
+0. Trash the L2 interface *veth-bowser*.
+
+  `student@beachhead:~$` `sudo ip link del veth-bowser`
+
+0. Finally, trash the bridge *donut-plains*.
+
+  `student@beachhead:~$` `ovs-vsctl del-br donut-plains`
+
+0. You should be right back to the way things were before you started this lab. If anything was unclear, run it again!
