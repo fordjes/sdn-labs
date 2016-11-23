@@ -1,6 +1,22 @@
-# Rocket Scientist lab:
+---
+date: "2016-11-23"
+draft: false
+weight: 40
+title: "Lab 0X - OPTIONAL - Augmenting bash for working with Network Namespaces"
+---
+[Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
 
-Lets add some helpers to bash so we can work with network name spaces even more intuitively.
+### MONDAY - &#x1F680;OPTIONAL&#x1F680;
+
+### Lab Objective
+
+The objective of this lab is to give advanced students some bash helpers so that they might work with network name spaces more intuitively. This lab is not required, and should only be attempted by students who are comfortable changing configuration parameters within the bash environment. ***WARNING:* This lab should not be carelessly copy & pasted!** 
+
+### Procedure
+
+0. Start by backing up a copy of the current *.bashrc* file.
+
+  `student@beachhead:~$` `cp .bashrc old.bashrc` 
 
 0. Open `/home/ubuntu/.bashrc` in your favorite editor and edit the seciton around `"$color_prompt" = yes` to look like below:
 
