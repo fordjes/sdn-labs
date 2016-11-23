@@ -231,5 +231,8 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
 
 
 
+#### Additional Learning / References
 
-http://tldp.org/HOWTO/Traffic-Control-HOWTO/overview.html
+The following is a list of pages we thought might be helpful for our students to know about:
+
+* [The Linux Documentation Project - Traffic Control](http://tldp.org/HOWTO/Traffic-Control-HOWTO/overview.html)
