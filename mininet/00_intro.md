@@ -15,11 +15,12 @@ The objective of this lab is to introduce mininet.
 
 0. From your remote desktop, open a terminal session, and move to the student home directory.
 
-    `student@beachhead:/$` `cd`
+  `student@beachhead:/$` `cd`
 
-0. Let's begin with a basic legacy command used with **net-tools**. The *ifconfig* command will display all conected network interfaces.
+0.
 
-    `student@beachhead:~$` `ifconfig -a`
+  `student@beachhead:~$` `ifconfig -a`
+
 0. Default all the things + investigate
 
   * `student@beachhead:~$` `sudo mn`
