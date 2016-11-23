@@ -72,9 +72,17 @@ The objective of this lab is to introduce mininet.
     mininet> xterm h2
   ```
 
-0.
+0. We currently have two hosts (h1 and h2), connected by a switch (s1). By issuing the mininet *nodes* command, we can see what kind of architecture has been built for us.
 
-* `mininet>` `nodes`
+  mininet>` `nodes`
+  
+  ```
+  available nodes are:
+  h1 h2 s1
+  ```
+
+0. 
+
   * `mininet>` `dump`
   * `mininet>` `net`
 
