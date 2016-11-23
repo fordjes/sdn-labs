@@ -74,17 +74,32 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
 
 0. We currently have two hosts (h1 and h2), connected by a switch (s1). By issuing the mininet *nodes* command, we can see what kind of architecture has been built for us.
 
-  mininet>` `nodes`
+  `mininet>` `nodes`
   
   ```
   available nodes are:
   h1 h2 s1
   ```
 
-0. 
+0. The mininet *dump* command can be employed to display all available information regardining the host(s).
 
-  * `mininet>` `dump`
-  * `mininet>` `net`
+  `mininet>` `dump`
+  
+  ```
+  <Host h1: h1-eth0:10.0.0.1 pid=9307>
+  <Host h2: h2-eth0:10.0.0.2 pid=9310>
+  <OVSBridge s1: lo:127.0.0.1,s1-eth1:None,s1-eth2:None pid=9316>
+  ```
+
+0. The mininet *net* command can be used to list any mininet network connections.
+
+  `mininet>` `net`
+  
+  ```
+  h1 h1-eth0:s1-eth1
+  h2 h2-eth0:s1-eth2
+  s1 lo:  s1-eth1:h1-eth0 s1-eth2:h2-eth0
+  ```
 
 0. We can also issue commands from in these "hosts"
 
