@@ -164,17 +164,51 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
   * `root@beachhead:~#` `ctrl` + `c`
   * `root@beachhead:~#` `exit` 
 
-0. Show performance between nodes
+0. Inter node performance can be demonstrated with the following two commands. To determine TCP performance, use the *iperf* command:
  
-  * `mininet>` `iperf`
-  * `mininet>` `iperfudp`
-   
-0. Exit, cleanup and restart mininet with induced latency 
+  `mininet>` `iperf`
+  
+  ```
+  *** Iperf: testing TCP bandwidth between h1 and h2
+  could not parse iperf output: *** Results: ['', '38.2 Gbits/sec']
+  ```
 
-  * `mininet>` `exit`
-  * `student@beachhead:~$` `sudo mn --clean`
-  * `student@beachhead:~$` `man tc`
-  * `student@beachhead:~$` `sudo mn --link tc,bw=20,delay=20ms`
+0. UDP performance can be determined using the iperfudp command.
+
+  `mininet>` `iperfudp`
+  
+  ```
+  *** Iperf: testing UDP bandwidth between h1 and h2
+  could not parse iperf output: Waiting for server threads to complete. Interrupt again to force quit.
+  *** Results: ['10M', '', '10.0 Mbits/sec']
+  ```
+
+0. Exit the mininet environment., cleanup and restart mininet with induced latency 
+
+  `mininet>` `exit`
+  
+0. Always practice good habits when working with mininet. The --clean command ensures that all processes associated with mininet are shutdown and exited properly.
+
+  `student@beachhead:~$` `sudo mn --clean`
+
+0. There is a Linux tool we're going to play with called *traffic control* (tc), however, 'traffic control' is also the name given to the sets of queuing systems and mechanisms by which packets are received and transmitted on a router.
+
+  >
+  Traffic control includes deciding which (and whether) packets to accept at what rate on the input of an interface and determining which packets to transmit in what order at what rate on the output of an interface. In the overwhelming majority of situations, traffic control consists of a single queue which collects entering packets and dequeues them as quickly as the hardware (or underlying device) can accept them. This sort of queue is a FIFO.
+
+  >
+  Traffic control is the set of tools which allows the user to have granular control over these queues and the queuing mechanisms of a networked device. The power to rearrange traffic flows and packets with these tools is tremendous and can be complicated, but is no substitute for adequate bandwidth.
+  
+  >
+  The term Quality of Service (QoS) is often used as a synonym for traffic control.
+
+0.
+
+  `student@beachhead:~$` `man tc`
+  
+0. The following command will 
+
+  `student@beachhead:~$` `sudo mn --link tc,bw=20,delay=20ms`
 
 0. Show performance between nodes
  
@@ -194,3 +228,8 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
   * `student@beachhead:~$` `sudo mn --topo=tree,5` 
   * `mininet>` `pingall`
   * `mininet>` `exit`
+
+
+
+
+http://tldp.org/HOWTO/Traffic-Control-HOWTO/overview.html
