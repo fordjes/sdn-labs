@@ -13,9 +13,33 @@ title: "Lab 03b - ADVANCED - Open vSwitch (OVS)"
 The objective of this lab is very similar to the Open vSwitch lab, however it takes a much deeper dive into OVS concepts. Only attempt this lab if you have:
 
   - 1) First finished the "BASIC" version of the OVS lab
-  - 2) Have strong CLI skills
+  - 2) Strong CLI skills
 
 ### Procedure
+
+
+0. Close any terminals, and Firefox windows you currently have open within the remote desktop session.
+
+0. From your remote desktop, open a new terminal session, and move to the student home directory.
+
+  `student@beachhead:/$` `cd`
+
+0. We explored this in the last lab, but just to cover all our bases. In this lab, we'll be using a little code snippet we invented called the *a3diff function*. If you tail the .bashrc file, you'll see it at the end. Just something we want you to be aware of, as we'll be using it in this lab to compare the output of some iproute2 commands.
+
+  `student@beachhead:~$` `tail .bashrc`
+
+  ```
+  function a3diff {
+      wdiff -n $1 $2 | colordiff
+  }
+  ```
+  >
+  If you're not a programmer, no big deal. All you have to know is that this little code snippit will save us some keystrokes, and allow us to do two (2) things:
+  >
+  1) Look for within-line differences (`wdiff`)   
+  >
+  2) Display the results in color (`colordiff`)
+
 
 ## OVS bridge, internal interfaces, and network namespace processes
 
