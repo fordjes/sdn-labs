@@ -17,7 +17,6 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
 ### Procedure
 
-
 0. Close any terminals, and Firefox windows you currently have open within the remote desktop session.
 
 0. From your remote desktop, open a new terminal session, and move to the student home directory.
@@ -40,20 +39,55 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
   >
   2) Display the results in color (`colordiff`)
 
+0. While we eventually want to create a OVS Bridge with virtual interfaces, let's first collect information about our current configuration. First display the L2 information.
 
-## OVS bridge, internal interfaces, and network namespace processes
+  `student@beachhead:~$` `ip link list`
+  
+0. Great, now display L3 information.
 
-0. Collect information about your initial configuration
+  `student@beachhead:~$` `ip addr show`
 
-  * `student@beachhead:~$` `ip link list`
-  * `student@beachhead:~$` `ip addr show`
-  * `student@beachhead:~$` `ip route show`
-  * `student@beachhead:~$` `sudo ovs-vsctl show`
+0. Finally, show the current state of the routing table.
 
-  * `student@beachhead:~$` `ip link list > /tmp/ovs2-link-init`
-  * `student@beachhead:~$` `ip addr show > /tmp/ovs2-addr-init`
-  * `student@beachhead:~$` `ip route show > /tmp/ovs2-route-init`
-  * `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs2-show-init`
+  `student@beachhead:~$` `ip route show`
+  
+  ```
+  default via 172.16.1.1 dev ens3
+  169.254.169.254 via 172.16.1.1 dev ens3
+  172.16.1.0/24 dev ens3  proto kernel  scope link  src 172.16.1.4
+  ```
+
+0.  The ovs-vsctl is the utility used for quering and confiruing ovs-vswitchd, so let's start with reviewing usage.
+
+  `student@beachhead:~$` `sudo ovs-vsctl -help`
+
+0. Let's display the version of OVS software we are using, as well as show the state of OVS switches tracked by the OVS database.
+  
+  `student@beachhead:~$` `sudo ovs-vsctl show`
+  
+  ```
+  a00e3ca2-3926-4d0d-9f71-a2105f6c6166
+    ovs_version: "2.5.0"
+  ```
+
+0. Save the current L2 configuration in a file called *ovs-link-init*.
+
+  `student@beachhead:~$` `ip link list > /tmp/ovs2-link-init`
+
+0. Save the current L3 configuration in a file called *ovs-addr-init*.
+
+  `student@beachhead:~$` `ip addr show > /tmp/ovs2-addr-init`
+
+0. Save the current routing information in a file called *ovs-route-init*.
+
+  `student@beachhead:~$` `ip route show > /tmp/ovs2-route-init`
+
+0. Finally, save the current state of OVS confirmation in a file called *ovs-show-init*.
+
+  `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs2-show-init`
+
+
+
 
 0. Basic Setup
 
