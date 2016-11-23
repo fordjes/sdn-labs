@@ -175,11 +175,12 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
   * `student@beachhead:~$` `a3diff /tmp/ovs2-show-init /tmp/ovs2-show-config`
 
-### Setup dhcp for these two interfaces
-
-0. Create new dhcp namespaces (for the dhcp servers)
+0. Let's create two new network namespaces. Eventually we're going to configure DHCP servcies within these spaces, so let's name them appropriately. First, create a new network namespace named, *dhcp-peach*.
 
   * `student@beachhead:~$` `ip netns add dhcp-peach`
+
+0. Great! Now create another network namespace named, *dhcp-bowser*.
+
   * `student@beachhead:~$` `ip netns add dhcp-bowser`
 
 0. Create internal ovs interfaces for the dhcp servers to run on
