@@ -19,13 +19,62 @@ The objective of this lab is to introduce mininet.
 
 0. Let's issue our first mininet command.
 
-  `student@beachhead:~$` ``
+  `student@beachhead:~$` `sudo mn`
 
-0. Default all the things + investigate
+  ```
+  *** No default OpenFlow controller found for default switch!
+  *** Falling back to OVS Bridge
+  *** Creating network
+  *** Adding controller
+  *** Adding hosts:
+  h1 h2
+  *** Adding switches:
+  s1
+  *** Adding links:
+  (h1, s1) (h2, s1)
+  *** Configuring hosts
+  h1 h2
+  *** Starting controller
+  
+  *** Starting 1 switches
+  s1 ...
+  *** Starting CLI:
+  mininet>
+  ```
 
-  * `student@beachhead:~$` `sudo mn`
-  * `mininet>` `help`
-  * `mininet>` `nodes`
+0. So the CLI has changed. We're now in the mininet environment. Start by issuing *help*.
+
+  `mininet>` `help`
+  
+  ```
+  Documented commands (type help <topic>):
+  ========================================
+  EOF    gterm  iperfudp  nodes        pingpair      py      switch
+  dpctl  help   link      noecho       pingpairfull  quit    time
+  dump   intfs  links     pingall      ports         sh      x
+  exit   iperf  net       pingallfull  px            source  xterm
+
+  You may also send a command to a node using:
+    <node> command {args}
+  For example:
+    mininet> h1 ifconfig
+
+  The interpreter automatically substitutes IP addresses
+  for node names when a node is the first arg, so commands
+  like
+    mininet> h2 ping h3
+  should work.
+
+  Some character-oriented interactive commands require
+  noecho:
+    mininet> noecho h2 vi foo.py
+  However, starting up an xterm/gterm is generally better:
+    mininet> xterm h2
+  ```
+
+0.
+
+* `mininet>` `nodes`
   * `mininet>` `dump`
   * `mininet>` `net`
 
