@@ -6,7 +6,7 @@ title: "Lab 03b - ADVANCED - Open vSwitch (OVS)"
 ---
 [Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
 
-### MONDAY - &#x1F680;OPTIONAL&#x1F680;**
+### MONDAY - &#x1F680;OPTIONAL&#x1F680;
 
 ### Lab Objective
 
