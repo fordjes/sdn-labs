@@ -17,9 +17,9 @@ The objective of this lab is to introduce mininet.
 
   `student@beachhead:/$` `cd`
 
-0.
+0. Let's issue our first mininet command.
 
-  `student@beachhead:~$` `ifconfig -a`
+  `student@beachhead:~$` ``
 
 0. Default all the things + investigate
 
