@@ -322,11 +322,11 @@ Some of the commands are presented in a different order than the Linux Bridge la
       ovs_version: "2.5.0"
   ``` 
 
-0. Bring all the interaces up and examine the changes. The following command will place the veth-luigi interface in an UP state.
+0. Bring all the interaces up and examine the changes. The following command will place the *veth-luigi* interface in an UP state.
 
   `student@beachhead:~$` `sudo ip link set veth-luigi up`
 
-0. The following command will place the veth-toad interface in an UP state.
+0. The following command will place the *veth-toad* interface in an UP state.
 
   `student@beachhead:~$` `sudo ip link set veth-toad up`
   
