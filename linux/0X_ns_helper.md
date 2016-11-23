@@ -10,7 +10,7 @@ title: "Lab 0X - OPTIONAL - Augmenting bash for working with Network Namespaces"
 
 ### Lab Objective
 
-The objective of this lab is to give advanced students some bash helpers so that they might work with network name spaces more intuitively. This lab is not required, and should only be attempted by students who are comfortable changing configuration parameters within the bash environment. ***WARNING:* This lab should not be carelessly copy & pasted!** 
+The objective of this lab is to give **advanced** students a documented mechanism for creating some bash helpers that allow working with network namespaces to be more intuitive. The following steps are applicable for use in a production environment, which is why we thought it important to include them. This lab is **not required**, and should only be attempted by students who are comfortable changing configuration parameters within the bash environment. ***WARNING:*It is possible to wreck your environment by incorrectly tampering with the *.bashrc* file, therefore this lab should *not* be carelessly copy & pasted!**
 
 ### Procedure
 
