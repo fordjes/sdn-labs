@@ -10,12 +10,13 @@
 
 0. We can also issue commands from in these "hosts"
 
+  * `mininet>` `py h1.IP()`
+  * `mininet>` `py h2.IP()`
   * `mininet>` `h1 ping -c 2 h2`
   * `mininet>` `h1 lxterminal &`
   * `root@beachhead:~#` `ping -c 2 10.0.0.2` 
   * `root@beachhead:~#` `ip link show` 
-  * `root@beachhead:~#` `exit 
-  * `mininet>`
+  * `root@beachhead:~#` `exit`
 
   > Given these outputs from commands run inside `h1`, what is the likely way in which mininet has setup this environment for us?
 

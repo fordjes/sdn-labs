@@ -11,13 +11,13 @@
 0. Examine ovs-ofctl
 
   * `mininet>` `sh ovs-ofctl help`
-  
+
   > Add a few questions here to make the students read the help
 
 0. Examine ovs-dpctl
 
   * `mininet>` `sh ovs-dpctl help`
-  
+
   > Add a few questions here to make the students read the help
 
 0. Collect ovs information about ports 
@@ -33,11 +33,11 @@
   * `mininet>` `sh ovs-ofctl dump-flows s1`
 
 0. Test pingall again 
-  
+
   * `mininet>` `pingall`
 
 0. Undo the flows we just created 
-  
+
   * `mininet>` `sh ovs-ofctl del-flows s1`
   * `mininet>` `sh ovs-ofctl dump-flows s1`
   * `mininet>` `pingall`
@@ -93,7 +93,7 @@
   >
   > Given nw_proto=1 was allowed how did the reply (nw_proto=2) get back to the requester?
 
-0. Cleanup  
-  
+0. Cleanup
+
   * `mininet>` `exit`
   * `student@beachhead:~$` `sudo mn --clean`
