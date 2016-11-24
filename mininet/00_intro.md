@@ -11,6 +11,12 @@ title: "Lab xx - Introduction to Mininet"
 ### Lab Objective
 The objective of this lab is to introduce the Mininet CLI. Mininet creates a realistic virtual network, running real kernel, switch and application code, on a single machine (VM, cloud or native), in seconds, with a single command. It is easily manipulated with the Mininet CLI, which makes it a great tool for developing, share, and experiment with OpenFlow and Software-Defined Networking systems.
 
+  >
+  Mininet is a network emulator, or perhaps more precisely a network emulation orchestration system. It runs a collection of end-hosts, switches, routers, and links on a single Linux kernel. It uses lightweight virtualization to make a single system look like a complete network, running the same kernel, system, and user code. A Mininet host behaves just like a real machine; you can ssh into it (if you start up sshd and bridge the network to your host) and run arbitrary programs (including anything that is installed on the underlying Linux system.) The programs you run can send packets through what seems like a real Ethernet interface, with a given link speed and delay. Packets get processed by what looks like a real Ethernet switch, router, or middlebox, with a given amount of queueing. When two programs, like an iperf client and server, communicate through Mininet, the measured performance should match that of two (slower) native machines.
+
+  >
+  In short, Mininet's virtual hosts, switches, links, and controllers are the real thing – they are just created using software rather than hardware – and for the most part their behavior is similar to discrete hardware elements. It is usually possible to create a Mininet network that resembles a hardware network, or a hardware network that resembles a Mininet network, and to run the same binary code and applications on either platform.
+
 ### Procedure
 
 0. From your remote desktop, open a terminal session, and move to the student home directory.
@@ -378,5 +384,7 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
 #### Additional Learning / References
 
 The following is a list of pages we thought might be helpful for our students to know about:
+
+* [Introduction to Mininet](https://github.com/mininet/mininet/wiki/Introduction-to-Mininet)
 
 * [The Linux Documentation Project - Traffic Control](http://tldp.org/HOWTO/Traffic-Control-HOWTO/overview.html)
