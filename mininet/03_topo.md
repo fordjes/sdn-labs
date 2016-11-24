@@ -1,54 +1,69 @@
+---
+date: "2016-11-23"
+draft: false
+weight: 230
+title: "Lab xx - "
+---
+[Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
 
+### TUESDAY - &#x2B50;REQUIRED&#x2B50;
+
+### Lab Objective
+The objective of this lab is to...
+
+### Procedure
+
+0. Take a moment to clean up your remote Desktop. For now, close all 
 
 0. Read the below python code `custom-topology.py`
 
-``` python
-"""Custom topology example
+   ``` python
+   """Custom topology example
 
-Two directly connected switches plus a host for each switch:
+   Two directly connected switches plus a host for each switch:
 
-   host --- switch --- switch --- host
+      host --- switch --- switch --- host
 
-Adding the 'topos' dict with a key/value pair to generate our newly defined
-topology enables one to pass in '--topo=mytopo' from the command line.
-"""
+   Adding the 'topos' dict with a key/value pair to generate our newly defined
+   topology enables one to pass in '--topo=mytopo' from the command line.
+   """
 
-from mininet.topo import Topo
+   from mininet.topo import Topo
 
-class MyTopo( Topo ):
-    "Simple topology example."
+   class MyTopo( Topo ):
+       "Simple topology example."
 
-    def __init__( self ):
-        "Create custom topo."
+       def __init__( self ):
+           "Create custom topo."
 
-        # Initialize topology
-        Topo.__init__( self )
+           # Initialize topology
+           Topo.__init__( self )
 
-        # Add hosts and switches
-        leftHost = self.addHost( 'h1' )
-        rightHost = self.addHost( 'h2' )
-        leftSwitch = self.addSwitch( 's3' )
-        rightSwitch = self.addSwitch( 's4' )
+           # Add hosts and switches
+           leftHost = self.addHost( 'h1' )
+           rightHost = self.addHost( 'h2' )
+           leftSwitch = self.addSwitch( 's3' )
+           rightSwitch = self.addSwitch( 's4' )
 
-        # Add links
-        self.addLink( leftHost, leftSwitch )
-        self.addLink( leftSwitch, rightSwitch )
-        self.addLink( rightSwitch, rightHost )
+           # Add links
+           self.addLink( leftHost, leftSwitch )
+           self.addLink( leftSwitch, rightSwitch )
+           self.addLink( rightSwitch, rightHost )
 
 
-topos = { 'mytopo': ( lambda: MyTopo() ) }
-```
+   topos = { 'mytopo': ( lambda: MyTopo() ) }
+   ```
 
 0. Copy this text into a file called topo1.py
 
 0. Run mininet with the custom topology and test the connectivity
 
-`sudo mn --custom topo1.py --topo mytopo`
-`pingall`
+  * `sudo mn --custom topo1.py --topo mytopo`
+  * `pingall`
 
 0. copy topo1.py to topo2.py
  
-  `cp topo1.py topo2.py`
+  * `cp topo1.py topo2.py`
 
 0. make the following modifications to topo2.py:
 
@@ -56,47 +71,48 @@ topos = { 'mytopo': ( lambda: MyTopo() ) }
   * change the topology dictionary name to `newtopo`
   * modify and add links and switches to create the below topology
 
-```
-     h6    h5
-       \  /
-        s1
-       /  \
-      /    \
-h1--s2      s3--h4
-   /          \
- h2            h3
-```
+  ```
+         h6    h5
+           \  /
+            s1
+           /  \
+          /    \
+    h1--s2      s3--h4
+       /          \
+     h2            h3
+  ```
 
 
 0. Run mininet with the new custom topology and test the connectivity
 
-`sudo mn --custom topo2.py --topo newtopo`
-`pingall`
+  * `sudo mn --custom topo2.py --topo newtopo`
+  * `pingall`
 
 0. copy topo2.py to topo3.py and 
 
-  `cp topo2.py topo3.py`
+  * `cp topo2.py topo3.py`
 
 0. make the following modifications to topo3.py:
   * change the class name to `RingTopo`
   * change the topology dictionary name to `ringtopo`
   * modify and add links and switches to create the below topology
 
-	```
-			 h6    h5
-				 \  /
-					s1
-				 /  \
-				/    \
-	h1--s2------s3--h4
-		 /          \
-	 h2            h3
-	```
+  ```
+         h6    h5
+           \  /
+            s1
+           /  \
+          /    \
+    h1--s2------s3--h4
+       /          \
+     h2            h3
+
+  ```
 
 0. Run mininet with the new custom topology and test the connectivity
 
-`sudo mn --custom topo3.py --topo ringtopo`
-`pingall`
+  * `sudo mn --custom topo3.py --topo ringtopo`
+  * `pingall`
 
 > Why did this topology cause an error?
 

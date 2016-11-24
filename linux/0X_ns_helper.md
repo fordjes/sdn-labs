@@ -1,8 +1,28 @@
-# Rocket Scientist lab:
+---
+date: "2016-11-23"
+draft: false
+weight: 40
+title: "Lab 0X - OPTIONAL - Documentation - Augmenting bash for working with Network Namespaces"
+---
+[Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
 
-Lets add some helpers to bash so we can work with network name spaces even more intuitively.
+### MONDAY - &#x1F680;OPTIONAL&#x1F680;
 
-0. Open `/home/ubuntu/.bashrc` in your favorite editor and edit the seciton around `"$color_prompt" = yes` to look like below:
+### Lab Objective
+
+The objective of this lab is to give **advanced** students a documented mechanism for creating some bash helpers that allow working with network namespaces to be more intuitive. The following steps are applicable for use in a production environment, which is why we thought it important to include them. This lab is **not required**, and should only be attempted by students who are comfortable changing configuration parameters within the bash environment. ***WARNING:* It is possible to wreck your environment by incorrectly tampering with the *.bashrc* file, therefore this lab should *not* be carelessly copy & pasted!**
+
+### Procedure
+
+0. Start by backing up a copy of the current *.bashrc* file.
+
+  `student@beachhead:~$` `cp /home/student/.bashrc /home/student/old.bashrc` 
+
+0. Open `/home/student/.bashrc` in vim.
+
+  `student@beachhead:~$` `cp .bashrc old.bashrc` 
+
+0. Edit the seciton around `"$color_prompt" = yes` to look like below:
 
   ``` bash
   namespace=`ip netns identify $$`
