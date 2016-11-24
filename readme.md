@@ -15,9 +15,11 @@
 | Number | Title              | Est. Length | % Complete | Tested |
 |--------|--------------------|-------------|------------|--------|
 | 00     | mininet intro      |             | 100%       |        |
-| 01     | mininet ovs-ofctl  |             | 100%       |        |
-| 02     | mininet vxlan      |             |            |        |
-| 03     | wireshark openflow |             | 0%         |        |
+| 01     | mininet netns      |             | 100%       |        |
+| 02     | mininet ovs-ofctl  |             | 100%       |        |
+| 03     | mininet topology   |             | 100%       |        |
+| 04     | wireshark openflow |             | 0%         |        |
+| 05     | mininet vxlan      |             |            |        |
    > Convert this to labs: http://mininet.org/walkthrough/
 
 ### Ryu
