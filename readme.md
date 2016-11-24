@@ -18,7 +18,7 @@
 | 01     | mininet netns      |             | 100%       |        |
 | 02     | mininet ovs-ofctl  |             | 100%       |        |
 | 03     | mininet topology   |             | 100%       |        |
-| 04     | wireshark openflow |             | 0%         |        |
+| 04     | wireshark openflow |             | 75%        | needs stu things to find        |
 | 05     | mininet vxlan      |             |            |        |
    > Convert this to labs: http://mininet.org/walkthrough/
 
