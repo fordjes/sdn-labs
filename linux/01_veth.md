@@ -179,38 +179,26 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
 0. Answer the following question:
 
     - **Q1: So why didn't the ping command work between the two interfaces?**
-      - A1: If we run TCP dump on 
+      - A1: The objective of this lab, is that this won't ever work.
 
 0. Examine the routing table and run tcpdump whit the previous commands
 
-    > When we force the ICMP packet destine for 172.16.2.12 on veth1 
+  >
+  When we force the ICMP packet destine for 172.16.2.12 on veth1 
 
-    `student@beachhead:~$` `ping -I veth2 172.16.2.11 > /dev/null &` _ping in the background_
+  `student@beachhead:~$` `ping -I veth2 172.16.2.11 > /dev/null &` _ping in the background_
   
-    `student@beachhead:~$` `sudo tcpdump -i veth2` _Ctrl^C to exit_
+  `student@beachhead:~$` `sudo tcpdump -i veth2` _Ctrl^C to exit_
     
-    `student@beachhead:~$` `fg` _bring the ping back into the foreground and press Ctrl^C to quit_
-
-    `student@beachhead:~$` `ip route`
-  
-    ```
-    default via 172.16.1.1 dev ens3 
-    172.16.2.0/24 dev veth1  proto kernel  scope link  src 172.16.2.11 
-    172.16.2.0/24 dev veth2  proto kernel  scope link  src 172.16.2.12 
-    169.254.169.254 via 172.16.1.1 dev ens3 
-    172.16.1.0/24 dev ens3  proto kernel  scope link  src 172.16.1.4 
-    ```
-  
-  * `student@beachhead:~$` `sudo ip route del 172.16.2.0/24 dev veth1`
-  * `student@beachhead:~$` `sudo ip route del 172.16.2.0/24 dev veth2`
-  * `student@beachhead:~$` `sudo ip route add 172.16.2.0/24 via 172.16.2.11 dev veth1`
-  * `student@beachhead:~$` `ip route`
+  `student@beachhead:~$` `fg` _bring the ping back into the foreground and press Ctrl^C to quit_
 
 0. Remove all the virtual interfaces (back to scratch)
 
-  > Why do we only need to run the delete once?
+  `student@beachhead:~$` `sudo ip link del veth1`
 
-  * `student@beachhead:~$` `sudo ip link del veth1`
+  - **Q1: Why do we only need to run the delete once?**
+    - A1: Think of it in terms of a wire. You only need to delete one side of the wire to get rid of the entire wire.
+
   * `student@beachhead:~$` `ip link list`
   
     ```
