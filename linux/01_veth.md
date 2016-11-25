@@ -40,6 +40,9 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
     5: veth0@veth1: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
       link/ether 76:83:83:20:f1:4b brd ff:ff:ff:ff:ff:ff
     ```  
+    
+    - **Q1: How many new interfaces showed up**
+      - A1: Two! veths must appear in pairs!
 
 0. If you'll notice, both of these interfaces are down. Let's bring up both interfaces. First, turn up veth0.
 
@@ -142,7 +145,7 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
     - **Q1: What is the MAC address assigned to the veth0 interface?**
       - A1: The one applied in the example is 76:83:83:20:f1:4b, however yours will be different (MACs are unique)
     - **Q2: Where did this MAC address come from?**
-      - A2: 
+      - A2: This MAC is randomly generated, they do no belong to any OUI (Oganizational Unit Identifer). In the first octet, if the second nibble is a **2, 6, a or an e**, it can be randomly created and used.
     - **Q3: Is it possible to change this MAC address if we wanted to?**
       - A3: Certainly it is. A command like *ip link set dev veth0 addr 00:01:02:aa:bb:cc* would set the MAC associated with veth0 to 00:01:02:aa:bb:cc.
     
@@ -174,7 +177,7 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
 0. Answer the following question:
 
     - **Q1: So why didn't the ping command work between the two interfaces?**
-      - A1:
+      - A1: If we run TCP dump on 
 
 0. Examine the routing table and run tcpdump whit the previous commands
 
