@@ -85,7 +85,7 @@ The objective of this lab is to explore how mininet's unique application of netw
     - A1: One (1); switch2 (s1).
   - **Q2: How many hosts were just deployed?**
     - A2: Two (2); host1 (h1) and host2 (h2).
-    
+
   >
   If you're confused, see the topography diagram below. This is what mininet just created:
   
