@@ -323,18 +323,45 @@ The objective of this lab is to explore briding interfaces.
 
   `student@beachhead:~$` `a3diff /tmp/ip-link-netns /tmp/ip-link-netns-veth2`
 
-0. Configure the namespace ip address
+0. Writeout the current L2 *mario* namespace configuration.
+
+  `student@beachhead:~$` `sudo ip netns exec mario ip link show`
+
+0. Time to configure the namespace L3 IP addressing. First, execute *ip address show* within the *mario* namespace.
+
+  `student@beachhead:~$` `sudo ip netns exec mario ip address show`
+
+0. Writeout the current L2 *mario* namespace configuration.
+
+  `student@beachhead:~$` `sudo ip netns exec mario ip link show > /tmp/mario-ip-link`
   
-  * `student@beachhead:~$` `sudo ip netns exec mario ip link list`
-  * `student@beachhead:~$` `sudo ip netns exec mario ip address show`
-  * `student@beachhead:~$` `sudo ip netns exec mario ip link list > /tmp/mario-ip-link` _save for comparison_
-  * `student@beachhead:~$` `sudo ip netns exec mario ip address show > /tmp/mario-ip-addr` _save for comparison_
-  * `student@beachhead:~$` `sudo ip netns exec mario ip addr add 172.16.2.101/24 dev veth2`
-  * `student@beachhead:~$` `sudo ip netns exec mario ip link set dev veth2 up`
-  * `student@beachhead:~$` `sudo ip netns exec mario ip link list`
-  * `student@beachhead:~$` `sudo ip netns exec mario ip address show`
-  * `student@beachhead:~$` `sudo ip netns exec mario ip link list > /tmp/mario-ip-link-veth2` _save for comparison_
-  * `student@beachhead:~$` `sudo ip netns exec mario ip address show > /tmp/mario-ip-addr-veth2` _save for comparison_
+0. Writeout the current L3 *mario* namespace configuration.
+
+  `student@beachhead:~$` `sudo ip netns exec mario ip address show > /tmp/mario-ip-addr`
+
+0. In this next step, we're going to set the IP address of *172.16.2.101* to *veth2* within the *mario* namespace.
+
+  `student@beachhead:~$` `sudo ip netns exec mario ip addr add 172.16.2.101/24 dev veth2`
+
+0. Bring the *veth2* interface within the *mario* namespace to an UP state.
+
+* `student@beachhead:~$` `sudo ip netns exec mario ip link set dev veth2 up`
+
+0.
+
+* `student@beachhead:~$` `sudo ip netns exec mario ip link show`
+
+0.
+
+* `student@beachhead:~$` `sudo ip netns exec mario ip address show`
+
+0.
+
+* `student@beachhead:~$` `sudo ip netns exec mario ip link list > /tmp/mario-ip-link-veth2` _save for comparison_
+
+0.
+
+* `student@beachhead:~$` `sudo ip netns exec mario ip address show > /tmp/mario-ip-addr-veth2` _save for comparison_
 
 0. Demonstrate connectivity
 
