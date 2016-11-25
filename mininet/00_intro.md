@@ -1,4 +1,3 @@
-
 --
 date: "2016-11-23"
 draft: false
