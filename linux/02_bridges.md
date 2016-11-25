@@ -394,6 +394,6 @@ The objective of this lab is to explore briding interfaces.
 
   `student@beachhead:~$` `ip link show` _expected veth1, veth2, br0 absent_
 
-0. Ensure your L3 information looks like the one shown.
+0. Ensure your network namespace list is empty.
 
-  `student@beachhead:~$` `ip netns list` _expected empty_
+  `student@beachhead:~$` `ip netns list`
