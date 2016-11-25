@@ -367,6 +367,26 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
   s1 s2 s3 s4 s5 s6 s7 s8 s9 s10 s11 s12 s13 s14 s15 s16 s17 s18 s19 s20 s21 s22 s23 s24 s25 s26 s27 s28 s29 s30 s31 ...
   *** Starting CLI:
   ```
+  
+0. Take a moment to think about our current, very basic, topology. Then, answer the questions below:
+
+  ```
+                                --------------------------------(s1)--------------------------------
+                                |                                                                  |
+                  -------------(s2)-------------                                     -------------(s17)-------------
+                  |                            |                                     |                             |
+          --------(s3)--------             ------(s10)------                     ------(s18)------             ------(s25)------
+          |                  |             |               |                     |               |             |               |
+      ---(s4)---          --(s7)--      --(s
+      |        |          |      |
+    -(s5)-   -(s6)-     -(s8)-  -(s9)-
+    |    |   |    |     |    |  |    |
+   (h1) (h2)(h3) (h4)  (h5) (h6)(h7)(h8)
+  ```
+
+(s10, s11) (s10, s14) (s11, s12) (s11, s13) (s12, h9) (s12, h10) (s13, h11) (s13, h12) (s14, s15) (s14, s16) (s15, h13) (s15, h14) (s16, h15) (s16, h16) (s17, s18) (s17, s25) (s18, s19) (s18, s22) (s19, s20) (s19, s21) (s20, h17) (s20, h18) (s21, h19) (s21, h20) (s22, s23) (s22, s24) (s23, h21) (s23, h22) (s24, h23) (s24, h24) (s25, s26) (s25, s29) (s26, s27) (s26, s28) (s27, h25) (s27, h26) (s28, h27) (s28, h28) (s29, s30) (s29, s31) (s30, h29) (s30, h30) (s31, h31) (s31, h32)
+  *** Configuring hosts
+  ```
 
 0. Demonstrate connectivity between all of the deployed hosts. 
 
