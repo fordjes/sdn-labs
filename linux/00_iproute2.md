@@ -175,35 +175,42 @@ The objective of this lab is to learn how to interface with various networking c
   - **Q1: What IPv4 address has been applied to *ens4*?**
     - A1: Once again, back to just one IPv4 address, 172.16.2.10
 
-0. Let's try applying an IPv6 address to the **ens4** network interface. 
-
-**net-tools:**  
+0. Let's try applying an IPv6 address to the **ens4** network interface. First we can use a legacy *net-tools* command, *ifconfig*.
 
   `student@beachhead:~$` `sudo ifconfig ens4 inet6 add 2002:0db5:0:f102::1/64`  
-   `$ sudo ifconfig ens4 inet6 add 2003:0db5:0:f102::1/64`  
 
-**iproute2:** 
-   `$ sudo ip -6 addr add 2002:0db5:0:f102::1/64 dev ens4`  
-   `$ sudo ip -6 addr add 2003:0db5:0:f102::1/64 dev ens4`  
+0. Use the *net-tools* command to display the L3 IPv6 information on dev *ens4*.
 
-#### 8. Show IPv6 address(es) of a Network Interface
+  `student@beachhead:~$` `ifconfig ens4`
+  
+  - **Q1: What IPv6 is applied to the ens4 interface?**
+    - A1: 2002:0db5:0:f102::1/64
 
-**net-tools:**  
-   `$ ifconfig ens4`  
+0. Let's remove an IPv6 address from the **ens4** network interface. Again, use the legacy *net-tools* command, *ifconfig*.
 
-**iproute2:** 
-   `$ ip -6 addr show dev ens4`  
+  `student@beachhead:~$` `sudo ifconfig ens4 inet6 del 2002:0db5:0:f102::1/64`  
 
-#### 9. Remove an IPv6 address from a Network Interface
-**net-tools:**  
-   `$ sudo ifconfig ens4 inet6 del 2002:0db5:0:f102::1/64`  
+0. Use the *net-tools* command to display the L3 IPv6 information on dev *ens4*. There should no longer be an IPv6 address applied.
 
-**iproute2:** 
-   `$ sudo ip -6 addr del 2002:0db5:0:f102::1/64 dev ens4`  
+  `student@beachhead:~$` `ifconfig ens4`
 
-#### 10. Change the MAC Address of a Network Interface
+0. The following command is the updated *iproute2* command, *ip -6 addr*, which eclipses the *ifconfig* command for manipulating IP address on interfaces.
 
-0. First a legacy *net-tools* command.
+  `student@beachhead:~$` `sudo ip -6 addr add 2002:0db5:0:f102::1/64 dev ens4`  
+
+0. Retrieve the IPv6 with an *iproute2* command.
+
+  `student@beachhead:~$` `ip -6 addr show dev ens4`  
+
+0. Remove the IPv6 address with an *iproute2* command.
+
+  `student@beachhead:~$` `sudo ip -6 addr del 2002:0db5:0:f102::1/64 dev ens4`  
+
+0. Confirm that the IPv6 address has been removed.
+
+  `student@beachhead:~$` `ip -6 addr show dev ens4`  
+
+0. Try changing the MAC Address of a Network Interface. First a legacy *net-tools* command.
 
   `student@beachhead:~$` sudo ifconfig ens4 hw ether 08:00:27:75:2a:66`
    
@@ -212,8 +219,13 @@ The objective of this lab is to learn how to interface with various networking c
   - **Q2: Why would you want to modify a MAC address?**
     - A2: Replacing a machine and would prefer to drop in a perfect copy of the one you are replacing (not to bust the ARP table).
 
-**iproute2:** 
-   `$ sudo ip link set dev ens4 address 08:00:27:75:2a:67`
+0. Use the *net-tools* command to confirm that the MAC address on *ens4* has been changed to 08:00:27:75:2a:66.
+
+  `student@beachhead:~$` `ifconfig ens4`
+
+0. Change the MAC on this address again with the *iproute2* toolkit.
+
+  `student@beachhead:~$` `sudo ip link set dev ens4 address 08:00:27:75:2a:67`
 
 0. So now that we've brought manipulation of interfaces a bit more into focus, let's focus on the IP routing table. This next command, which is legacy net-tools, will allow us to view the table.
 
