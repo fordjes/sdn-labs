@@ -2,14 +2,14 @@
 date: "2016-11-23"
 draft: false
 weight: 220
-title: "Lab xx - Mininet Namespaces - Learning about Linux Namespaces"
+title: "Lab xx - Mininet Namespaces - Learning about Linux Network Namespaces"
 ---
 [Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
 
 ### TUESDAY - &#x2B50;REQUIRED&#x2B50;
 
 ### Lab Objective
-The objective of this lab is to explore how mininet uses namespaces, so that we might futher our understanding of the namespace concept.
+The objective of this lab is to explore how mininet's unique application of network namespaces, so that we might futher our understanding of the namespace concept.
 
 ### Procedure
 
@@ -110,19 +110,39 @@ The objective of this lab is to explore how mininet uses namespaces, so that we 
   - **Q1: What changed?**
     - A1:
   - **Q2: What stayed the same?**
-    - Q2:
-  - **Q3: Why does mininet create namespaces?**
-    - Q3:
+    - A:
+  - **Q3: 
+    - A3:
 
-0. Run *ip netns list*. This command will reveal the 
+0. Just a little overlap from yesterday. Create a Linux *network namespace* called, *myspace*. It's so easy!
+
+  `student@beachhead:~$` `sudo ip netns add myspace`
+  
+0. Answer the following question:
+
+  - **Q1: At this point, we have mininet running (h1, h2, & s1), and we just created a network namespace called *myspace*. How many network namespaces do you think are being tracked?**  
+    - A1: Hard to say, since we're new at this, but probably a few. We created one (*myspace*), and then mininet probably created several more in which to run the hosts (h1 & h2), as well as the switch (s1). Afterall, namespaces are *really* easy to make with basic Linux tools!
+    
+0. Alright, run *ip netns list*. This command will reveal the namespaces within */var/run/netns*. Remember, we're thinking there's got to be more than just *myspace*.
 
   `student@beachhead:~$` `ip netns list`
+  
+  ```
+  myspace (id: 0)
+  ```
 
-  > Is this result suprising?  
-  >
-  > Do our veth's that mininet created look like they are connected to a network namespace?
+  - **Q1: Is this result suprising?**  
+    - A1: Yes. Only the **myspace** network namespace was returned. All of this build-up seemed to indicate mininet creates additional network namespaces to make simple virtualization of hosts and networks.
 
-0. Back in the mininet terminal enumerate the host's networking
+0. You're actually understanding everything perfectly! Mininet **does** use network namespaces to make simple virutalization of hosts and networks possible.
+
+0. First, delete that network namespace called, *myspace*. We don't need it.
+
+  `student@beachhead:~$` `sudo ip netns delete myspace`
+
+0. Now, back to our investigation of mininet and network namespaces. Let's double check that the veth's that mininet created look like they are connected to a network namespace.
+
+0. Switch back to the mininet terminal, and enumerate the host's networking.
 
   `mininet>` `h1 ip addr show`
   `mininet>` `h1 ip link list`
