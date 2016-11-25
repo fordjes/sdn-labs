@@ -14,6 +14,7 @@
 ### Mininet
 | Number | Title              | Est. Length | % Complete | Tested |
 |--------|--------------------|-------------|------------|--------|
+| 00     | Wireshark          |             | 95%        | Finish instructions on making live capture       |
 | 00     | mininet intro      |             | 100%       |        |
 | 01     | mininet netns      |             | 100%       |        |
 | 02     | mininet ovs-ofctl  |             | 100%       |        |
