@@ -75,7 +75,11 @@ The objective of this lab is to learn how to interface with various networking c
     - A1: No. It displayed all of the information we wanted (regardless of interfaces being up or down), without any arguments. This is one of many improvements with *iproute2* tools.
   - **Q2: What if I like the old legacy *net-tools* commands? Can I keep using them?**
     - A2: The legacy networking commands are being depricated. In future releases of Linux, it is possibly that legacy commands (such as *ifconfig*) will no longer be supported. There are many limitations with legacy networking commands, such as the inability to create virtual ethernet adapters.
-
+  - **Q3: What is the IPv4 address of ens4?**
+    - There are no IP addresses applied.
+  - **Q4: What is the IPv4 address of ens3?**
+    - A4: 172.16.1.4
+    
 0. Now let's check out the display returned with an updated **iproute2** command.
 
   >
@@ -317,18 +321,11 @@ The objective of this lab is to learn how to interface with various networking c
    `$ sudo ip neigh add 192.168.1.100 lladdr 00:0c:29:c0:5a:ef dev eth0`  
    `$ sudo ip neigh del 192.168.1.100 dev eth0`
 
+0. Great job! That's it for this lab. To be clear, all of the future labs will use **iproute2** commands.
 
 
 
 
-All of the future labs will use iproute2 commands.
-
-0. `ifconfig` and `ip address`
-
-  * What is interface names are connected to your instance?
-  * What is the ip address of your instance?
-  * What is the network mask of the interface?
-  * What is the mac address of the interface? 
 
 0. `route` and `ip route`
 
