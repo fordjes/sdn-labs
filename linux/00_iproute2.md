@@ -25,81 +25,92 @@ The objective of this lab is to learn how to interface with various networking c
 
 0. From your remote desktop, open a terminal session, and move to the student home directory.
 
-    `student@beachhead:/$` `cd`
+  `student@beachhead:/$` `cd`
 
 0. Let's begin with a basic legacy command used with **net-tools**. The *ifconfig* command will display all conected network interfaces, the argument *a* will include even those interfaces that are a state of DOWN.
 
-    `student@beachhead:~$` `ifconfig -a`
+  `student@beachhead:~$` `ifconfig -a`
 
-    ```
-    ens3  Link encap:Ethernet  HWaddr fa:16:3e:6f:47:52  
-          inet addr:172.16.1.4  Bcast:172.16.1.255  Mask:255.255.255.0
-          inet6 addr: fe80::f816:3eff:fe6f:4752/64 Scope:Link
-          UP BROADCAST RUNNING MULTICAST  MTU:1450  Metric:1
-          RX packets:196654 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:144021 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1000 
-          RX bytes:539590824 (539.5 MB)  TX bytes:11101898 (11.1 MB)
+  ```
+  ens3  Link encap:Ethernet  HWaddr fa:16:3e:6f:47:52  
+        inet addr:172.16.1.4  Bcast:172.16.1.255  Mask:255.255.255.0
+        inet6 addr: fe80::f816:3eff:fe6f:4752/64 Scope:Link
+        UP BROADCAST RUNNING MULTICAST  MTU:1450  Metric:1
+        RX packets:196654 errors:0 dropped:0 overruns:0 frame:0
+        TX packets:144021 errors:0 dropped:0 overruns:0 carrier:0
+        collisions:0 txqueuelen:1000 
+        RX bytes:539590824 (539.5 MB)  TX bytes:11101898 (11.1 MB)
 
-    ens4  Link encap:Ethernet  HWaddr fa:16:3e:2b:a7:95  
-          BROADCAST MULTICAST  MTU:1500  Metric:1
-          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1000 
-          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+  ens4  Link encap:Ethernet  HWaddr fa:16:3e:2b:a7:95  
+        BROADCAST MULTICAST  MTU:1500  Metric:1
+        RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+        TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+        collisions:0 txqueuelen:1000 
+        RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
 
-    lo    Link encap:Local Loopback  
-          inet addr:127.0.0.1  Mask:255.0.0.0
-          inet6 addr: ::1/128 Scope:Host
-          UP LOOPBACK RUNNING  MTU:65536  Metric:1
-          RX packets:174 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:174 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1 
-          RX bytes:12904 (12.9 KB)  TX bytes:12904 (12.9 KB)
-    ```
+  lo    Link encap:Local Loopback  
+        inet addr:127.0.0.1  Mask:255.0.0.0
+        inet6 addr: ::1/128 Scope:Host
+        UP LOOPBACK RUNNING  MTU:65536  Metric:1
+        RX packets:174 errors:0 dropped:0 overruns:0 frame:0
+        TX packets:174 errors:0 dropped:0 overruns:0 carrier:0
+        collisions:0 txqueuelen:1 
+        RX bytes:12904 (12.9 KB)  TX bytes:12904 (12.9 KB)
+  ```
 
- - **Q1: What is the MAC address of ens3?**
-    - A1:
- - **Q2: What is ens3?**
-    - A2: eth0 - This is a physical interface on the machine you are on (beachhead).
-  - Q3: What is ens4?**
+  - **Q1: What is the MAC address of ens3?**
+    - A1: The MAC address of ens3 on this example is *fa:16:3e:6f:47:52*, yours will be unique.
+  - **Q2: What is ens3?**
+    - A2: eth0 - This is a physical interface on the machine you are on (beachhead). We have it named uniquely because of an issue caused by [Predictable Interface Naming](https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/).
+  - **Q3: What is ens4?**
     - A3: eth1 - This is a physical interface on the machine you are on (beachhead). This interface will be used to safely execute basic Linux networking commands in this lab.
 
-0. The correlary of ifconfig -a is ip addr show. Run that command now:
+0. The corollary of *ifconfig -a* is *ip addr show*. Run that command now:
 
-    `student@beachhead:~$` `ip addr show`
+  `student@beachhead:~$` `ip addr show`
 
 0. So both commands worked, but to practice good habits, we should use *ip addr show*.
 
-  - **Q1: Why is this *new* way better?**
-    - A1: The legacy networking commands are being depricated. In future releases of Linux, it is possibly that legacy commands (such as *ifconfig*) will no longer be supported. There are many limitations with legacy networking commands, such as the inability to create virtual ethernet adapters.
+  - **Q1: Did the *ip addr show* command require any flags?**
+    - A1: No. It displayed all of the information we wanted (regardless of interfaces being up or down), without any arguments. This is one of many improvements with *iproute2* tools.
+  - **Q2: What if I like the old legacy *net-tools* commands? Can I keep using them?**
+    - A2: The legacy networking commands are being depricated. In future releases of Linux, it is possibly that legacy commands (such as *ifconfig*) will no longer be supported. There are many limitations with legacy networking commands, such as the inability to create virtual ethernet adapters.
 
-0. Now let's check out the display returned with an updated **iproute2** command. The *ip link* command will display all connected network interfaces. The *ip link show* command will fetch characteristics regarding the link layer devices currently available. It is immaterial to *ip link* whether the device is in use by any other higher layer protocols (L3 - IP). The *ip link* tool provides two verbs: *show* and *set*. The *ip link set* command might be used to: de/activate an interface, change link layer state flags, change the MTU, the name of the interface, and even manipulate the Ethernet broadcast address.
+0. Now let's check out the display returned with an updated **iproute2** command.
 
-    `student@beachhead:~$` `ip link show`
+  >
+  The *ip link* command will display all connected network interfaces. The *ip link show* command will fetch characteristics regarding the link layer devices currently available. It is immaterial to *ip link* whether the device is in use by any other higher layer protocols (L3 - IP). The *ip link* tool provides two verbs: *show* and *set*. The *ip link set* command might be used to: de/activate an interface, change link layer state flags, change the MTU, the name of the interface, and even manipulate the Ethernet broadcast address.
 
-    ```
-    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
-        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-        link/ether fa:16:3e:59:a0:b8 brd ff:ff:ff:ff:ff:ff
-    3: ens4: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-        link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
-    ```
-    
-  - **Q1: What is the above MAC address**
-    - A1:
+  `student@beachhead:~$` `ip link show`
+
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+      link/ether fa:16:3e:59:a0:b8 brd ff:ff:ff:ff:ff:ff
+  3: ens4: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+      link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
+  ```
+
+0. Answer the following questions:
+
+  - **Q1: What happens if I start messing with the *ens3* interface?**
+    - A1: The *ens3* interface provides connectivity to your lab environment. Here's a great analogy. You're standing on a branch called *ens3*. That branch is 100' in the air, hanging off a redwood tree in [Muir Woods National Monument](https://en.wikipedia.org/wiki/Muir_Woods_National_Monument). You don't want to mess with *ens3*.
+  - **Q2: What is the MAC on ens4?**
+    - A2: The MAC address on the *ens4* interface, on the above example, is *fa:16:3e:ac:cb:ff*. Yours will be unique. 
+  - **Q3: Is it okay to tamper with ens4?**
+    - A3: Yep! That is why we created *ens4*. All of the labs reference modifications to *ens4* only, so as long as you don't modify any commands in the lab, you'll be fine. 
 
 0. Now let's try to assign an IPv4 address to a network interface. To start, we'll use the legacy (net-tools) command *ifconfig*.
 
-    `student@beachhead:~$` `sudo ifconfig ens4 172.16.2.10 netmask 255.255.255.0`
+  `student@beachhead:~$` `sudo ifconfig ens4 172.16.2.10 netmask 255.255.255.0`
 
 0. There won't be any special output if it worked, so run legacy *ifconfig* to confirm that the IP address was applied to the ens4 interface.
 
   `student@beachhead:~$` `ifconfig`
     
   - **Q1: Was an IP address added to en4?**
-    - A1:
+    - A1: Yes. You should see that the IP address 172.16.2.10 was applied to the interface ens4.
 
 0. To remove the IP address using the legacy command, *ifconfig*, use the following command:
 
@@ -110,31 +121,49 @@ The objective of this lab is to learn how to interface with various networking c
   `student@beachhead:~$` `ifconfig -a`
 
   - **Q1: Does ens4 still have an IP address?**
-    - A1:
+    - A1: No. It appears to have been removed.
 
 0. Let's do the same thing we just did (apply an L3 address to ens4), but with the new iproute2 toolkit. For this we want the command *ip addr add*.
 
   `student@beachhead:~$` `sudo ip addr add 172.16.2.10/24 dev ens4`  
 
-0. Display the L2 and L3 information with the updated *
+0. Display the L2 and L3 information with the updated IP address.
 
   `student@beachhead:~$` `ip addr show`
-
-0. It is possible to assign multiple IPv4 addresses to a network interface. First, we'll use the legacy 
-#### 4. Assign Multiple IPv4 addresses to a Network Interface
-**net-tools:**  (Not shown, possible using alias, but ugly)
-
-**iproute2:**   
-  `$ sudo ip addr add 172.16.2.13/24 dev ens4`  
-  `$ sudo ip addr add 172.16.2.14/24 dev ens4`  
-  `$ sudo ip addr add 172.16.2.15/24 dev ens4`  
   
-#### 5. Remove an IPv4 address from a Network Interface
+  - **Q1: What IP address has been applied to *ens4*?**
+    - A1: 172.16.2.10
 
-**iproute2:**  
-  `$ sudo ip addr del 172.16.2.13/24 dev ens4`
-  `$ sudo ip addr del 172.16.2.13/24 dev ens4`
-  `$ sudo ip addr del 172.16.2.13/24 dev ens4`
+0. It is possible to assign multiple IPv4 addresses to a network interface. While it is possible using legacy *net-tools* commands, we're not even going to bother, as it is ugly and complicated. Instead, let's just learn the proper way using the *ip addr add* command from the *iproute2* toolkit. First, apply a second IP address, 172.16.2.13 to the interface *ens4*.
+
+  `student@beachhead:~$` `sudo ip addr add 172.16.2.13/24 dev ens4`  
+
+0. Apply a third IP address, 172.16.2.14 to the interface *ens4*.
+
+  `student@beachhead:~$` `sudo ip addr add 172.16.2.14/24 dev ens4`  
+
+0. Apply a fourth IP address, 172.16.2.15 to the interface *ens4*.
+
+  `student@beachhead:~$` `sudo ip addr add 172.16.2.15/24 dev ens4`
+  
+0. Display the L2 and L3 information with the updated IP address.
+
+  `student@beachhead:~$` `ip addr show`
+  
+  - **Q1: What IP addresses have been applied to *ens4*?**
+    - A1: 172.16.2.10, 172.16.2.13, 172.16.2.14, 172.16.2.15
+
+0. Remove one of the IP addresses from *ens4*.
+
+  `student@beachhead:~$` `sudo ip addr del 172.16.2.13/24 dev ens4`
+  
+0. Remove a second IP address *ens4*.
+
+  `student@beachhead:~$` `sudo ip addr del 172.16.2.13/24 dev ens4`
+
+0. Take away the last additional IP address from *ens4*.
+
+  `student@beachhead:~$` `sudo ip addr del 172.16.2.13/24 dev ens4`
 
   - **Q1: Why would you want to run multiple IP addresses on the same interface?**
     - A1: Oftentime services will operate on the same default port. Examples include, Apache & WSGI (OpenStack Keystone), or perhaps two SIP servers on the same machine (5060).
