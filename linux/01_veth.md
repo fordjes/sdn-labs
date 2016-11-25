@@ -18,127 +18,127 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
 
 0. From your remote desktop, open a new terminal session, and move to the student home directory.
 
-    `student@beachhead:/$` `cd`
+  `student@beachhead:/$` `cd`
 
 0. Begin by creating a pair of virtual ethernet interfaces. From this lab forward, we will issue all of our commands with the updated iproute2 toolkit.
 
-    `student@beachhead:~$` `ip link add veth0 type veth peer name veth1`
+  `student@beachhead:~$` `ip link add veth0 type veth peer name veth1`
 
 0. Nothing special is displayed to the screen for issuing the previous command. To see the results, use the *ip link* command. The pair of interfaces we just created should be named veth0 and veth1.
 
-    `student@beachhead:~$` `ip link list`
+  `student@beachhead:~$` `ip link list`
 
-    ```
-    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
-      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-      link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
-    3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-      link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-    4: veth1@veth0: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-      link/ether 7a:a9:ff:dd:05:96 brd ff:ff:ff:ff:ff:ff
-    5: veth0@veth1: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-      link/ether 76:83:83:20:f1:4b brd ff:ff:ff:ff:ff:ff
-    ```  
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
+  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
+  4: veth1@veth0: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 7a:a9:ff:dd:05:96 brd ff:ff:ff:ff:ff:ff
+  5: veth0@veth1: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 76:83:83:20:f1:4b brd ff:ff:ff:ff:ff:ff
+  ```  
     
-    - **Q1: How many new interfaces showed up**
-      - A1: Two! veths must appear in pairs!
+  - **Q1: How many new interfaces showed up**
+    - A1: Two! veths must appear in pairs!
 
 0. If you'll notice, both of these interfaces are down. Let's bring up both interfaces. First, turn up veth0.
 
-    `student@beachhead:~$` `ip link set dev veth0 up`
+  `student@beachhead:~$` `ip link set dev veth0 up`
 
 0. Again. Nothing special is displayed. If we want to see the results of our command, we need to issue the *ip link* command once again. Do so, and take notice to the state of the veth0 interface. The state of the interface should now be listed as LOWERLAYERDOWN.
 
-    ```
-    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
-        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-        link/ether fa:16:3e:59:a0:b8 brd ff:ff:ff:ff:ff:ff
-    3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-        link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
-    4: veth1@veth0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-        link/ether 52:71:53:d6:3b:c2 brd ff:ff:ff:ff:ff:ff
-    5: veth0@veth1: <NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN> mtu 1500 qdisc noqueue state LOWERLAYERDOWN mode DEFAULT group default qlen 1000
-        link/ether a6:c7:fa:98:86:af brd ff:ff:ff:ff:ff:ff
-    ```
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether fa:16:3e:59:a0:b8 brd ff:ff:ff:ff:ff:ff
+  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
+  4: veth1@veth0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 52:71:53:d6:3b:c2 brd ff:ff:ff:ff:ff:ff
+  5: veth0@veth1: <NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN> mtu 1500 qdisc noqueue state LOWERLAYERDOWN mode DEFAULT group default qlen 1000
+    link/ether a6:c7:fa:98:86:af brd ff:ff:ff:ff:ff:ff
+  ```
 
 0. The state LOWERLAYERDOWN can be resolved to the more desireable state of UP by turning up the interface peered with veth0, veth1. Let's do that now. 
 
-    `student@beachhead:~$` `ip link set dev veth1 up`
+  `student@beachhead:~$` `ip link set dev veth1 up`
 
 0. Check out your work. Both interfaces should be displaying a state of UP.
 
-    `student@beachhead:~$` `ip link list`
+  `student@beachhead:~$` `ip link list`
 
-    ```
-    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
-      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-      link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
-    3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
-      link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-    4: veth1@veth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
-      link/ether 7a:a9:ff:dd:05:96 brd ff:ff:ff:ff:ff:ff
-    5: veth0@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
-      link/ether 76:83:83:20:f1:4b brd ff:ff:ff:ff:ff:ff
-    ```
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
+  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+    link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
+  4: veth1@veth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether 7a:a9:ff:dd:05:96 brd ff:ff:ff:ff:ff:ff
+  5: veth0@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether 76:83:83:20:f1:4b brd ff:ff:ff:ff:ff:ff
+  ```
   
 0. Let's apply an IP address to each interface. First to the veth0 interface.
 
-    `student@beachhead:~$` `ip addr add 10.0.0.1/24 dev veth0`
+  `student@beachhead:~$` `ip addr add 10.0.0.1/24 dev veth0`
 
 0. There won't be any special print-out from the previous command. Before we review our work, apply an IP address to the veth1 interface.
 
-    `student@beachhead:~$` `ip addr add 10.0.0.2/24 dev veth1`
+  `student@beachhead:~$` `ip addr add 10.0.0.2/24 dev veth1`
 
 0. Issuing *ip addr list* will display the same information as *ip link list*, but will also include the L3 IP information.
 
-    `student@beachhead:~$` `ip addr list`
+  `student@beachhead:~$` `ip addr list`
   
-    ```
-    1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
-        link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-        inet 127.0.0.1/8 scope host lo
-           valid_lft forever preferred_lft forever
-        inet6 ::1/128 scope host
-           valid_lft forever preferred_lft forever
-    2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP group default qlen 1000
-        link/ether fa:16:3e:59:a0:b8 brd ff:ff:ff:ff:ff:ff
-        inet 172.16.1.4/24 brd 172.16.1.255 scope global ens3
-           valid_lft forever preferred_lft forever
-        inet6 fe80::f816:3eff:fe59:a0b8/64 scope link
-           valid_lft forever preferred_lft forever
-    3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
-        link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
-        inet6 fe80::f816:3eff:feac:cbff/64 scope link
-           valid_lft forever preferred_lft forever
-    4: veth1@veth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
-        link/ether 52:71:53:d6:3b:c2 brd ff:ff:ff:ff:ff:ff
-        inet 10.0.0.2/24 scope global veth1
-           valid_lft forever preferred_lft forever
-        inet6 fe80::5071:53ff:fed6:3bc2/64 scope link
-           valid_lft forever preferred_lft forever
-    5: veth0@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
-        link/ether a6:c7:fa:98:86:af brd ff:ff:ff:ff:ff:ff
-        inet 10.0.0.1/24 scope global veth0
-           valid_lft forever preferred_lft forever
-        inet6 fe80::a4c7:faff:fe98:86af/64 scope link
-           valid_lft forever preferred_lft forever
-    ```
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+      valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+      valid_lft forever preferred_lft forever
+  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether fa:16:3e:59:a0:b8 brd ff:ff:ff:ff:ff:ff
+    inet 172.16.1.4/24 brd 172.16.1.255 scope global ens3
+       valid_lft forever preferred_lft forever
+    inet6 fe80::f816:3eff:fe59:a0b8/64 scope link
+       valid_lft forever preferred_lft forever
+  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::f816:3eff:feac:cbff/64 scope link
+      valid_lft forever preferred_lft forever
+  4: veth1@veth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 52:71:53:d6:3b:c2 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.2/24 scope global veth1
+      valid_lft forever preferred_lft forever
+    inet6 fe80::5071:53ff:fed6:3bc2/64 scope link
+      valid_lft forever preferred_lft forever
+  5: veth0@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+      link/ether a6:c7:fa:98:86:af brd ff:ff:ff:ff:ff:ff
+      inet 10.0.0.1/24 scope global veth0
+         valid_lft forever preferred_lft forever
+      inet6 fe80::a4c7:faff:fe98:86af/64 scope link
+         valid_lft forever preferred_lft forever
+   ```
 
 0. Time to examine the results of our work. Issue the following commands, and answer the assocaited questions along the way.
 
-    `student@beachhead:~$` `ip addr show veth0`
+  `student@beachhead:~$` `ip addr show veth0`
   
-    ```
-    4: veth0@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
-      link/ether 76:83:83:20:f1:4b brd ff:ff:ff:ff:ff:ff
-      inet 10.0.0.1/24 scope global veth0
-         valid_lft forever preferred_lft forever
-      inet6 fe80::7483:83ff:fe20:f14b/64 scope link 
-         valid_lft forever preferred_lft forever
-    ```
+  ```
+  4: veth0@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 76:83:83:20:f1:4b brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.1/24 scope global veth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::7483:83ff:fe20:f14b/64 scope link 
+       valid_lft forever preferred_lft forever
+  ```
     
 0. Answer the following questions:
 
@@ -166,7 +166,7 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
 
 0. Let's try using a ping command to create traffic between the two interfaces. Let's first examine the usage of the ping command.
 
-    `student@beachhead:~$` `ping -help`
+  `student@beachhead:~$` `ping -help`
 
 0. So the following command should ask veth1 to ping 10.0.0.1. However, initally, this command will **not** work. Nevertheless, try it to confirm.
 
