@@ -344,16 +344,20 @@ The following is a list of pages we thought might be helpful for our students to
 * [Predictable Interface Naming](https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/)
 
   >
-  Ubuntu and RHEL now ship with systemd which manages among other things network interfaces.
-  Starting with version 197 the way that interface names are generate will change.
+  Ubuntu and RHEL now ship with systemd which manages among other things network interfaces. Starting with version 197 the way that interface names are generate will change.
   
   >
   The goal is to have predicability following these naming mechanisms:
-  1) Names incorporating Firmware/BIOS provided index numbers for on-board devices (example: eno1)
-  2) Names incorporating Firmware/BIOS provided PCI Express hotplug slot index numbers (example: ens1)
-  3) Names incorporating physical/geographical location of the connector of the hardware (example: enp2s0)
-  4) Names incorporating the interfaces's MAC address (example: enx78e7d1ea46da)
-  5) Classic, unpredictable kernel-native ethX naming (example: eth0)
+  >
+  1 - Names incorporating Firmware/BIOS provided index numbers for on-board devices (example: eno1)
+  >
+  2 - Names incorporating Firmware/BIOS provided PCI Express hotplug slot index numbers (example: ens1)
+  >
+  3 - Names incorporating physical/geographical location of the connector of the hardware (example: enp2s0)
+  >
+  4 - Names incorporating the interfaces's MAC address (example: enx78e7d1ea46da)
+  >
+  5 - Classic, unpredictable kernel-native ethX naming (example: eth0)
   
   >
   The reason for this change was that systems with multiple interfaces were not gaurenteed to get the same names after reboot:
