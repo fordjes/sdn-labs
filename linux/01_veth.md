@@ -22,9 +22,9 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
 
 0. Begin by creating a pair of virtual ethernet interfaces. From this lab forward, we will issue all of our commands with the updated iproute2 toolkit.
 
-  `student@beachhead:~$` `ip link add veth0 type veth peer name veth1`
+  `student@beachhead:~$` `ip link add veth1 type veth peer name veth2`
 
-0. Nothing special is displayed to the screen for issuing the previous command. To see the results, use the *ip link* command. The pair of interfaces we just created should be named veth0 and veth1.
+0. Nothing special is displayed to the screen for issuing the previous command. To see the results, use the *ip link* command. The pair of interfaces we just created should be named veth1 and veth2.
 
   `student@beachhead:~$` `ip link list`
 
@@ -35,20 +35,20 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
     link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
   3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
     link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-  4: veth1@veth0: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+  4: veth2@veth1: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
     link/ether 7a:a9:ff:dd:05:96 brd ff:ff:ff:ff:ff:ff
-  5: veth0@veth1: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+  5: veth1@veth2: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
     link/ether 76:83:83:20:f1:4b brd ff:ff:ff:ff:ff:ff
   ```  
     
   - **Q1: How many new interfaces showed up**
     - A1: Two! veths must appear in pairs!
 
-0. If you'll notice, both of these interfaces are down. Let's bring up both interfaces. First, turn up veth0.
+0. If you'll notice, both of these interfaces are down. Let's bring up both interfaces. First, turn up veth1.
 
-  `student@beachhead:~$` `ip link set dev veth0 up`
+  `student@beachhead:~$` `ip link set dev veth1 up`
 
-0. Again. Nothing special is displayed. If we want to see the results of our command, we need to issue the *ip link* command once again. Do so, and take notice to the state of the veth0 interface. The state of the interface should now be listed as LOWERLAYERDOWN.
+0. Again. Nothing special is displayed. If we want to see the results of our command, we need to issue the *ip link* command once again. Do so, and take notice to the state of the veth1 interface. The state of the interface should now be listed as LOWERLAYERDOWN.
 
   ```
   1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
@@ -57,15 +57,15 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
     link/ether fa:16:3e:59:a0:b8 brd ff:ff:ff:ff:ff:ff
   3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
     link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
-  4: veth1@veth0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+  4: veth2@veth1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
     link/ether 52:71:53:d6:3b:c2 brd ff:ff:ff:ff:ff:ff
-  5: veth0@veth1: <NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN> mtu 1500 qdisc noqueue state LOWERLAYERDOWN mode DEFAULT group default qlen 1000
+  5: veth1@veth2: <NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN> mtu 1500 qdisc noqueue state LOWERLAYERDOWN mode DEFAULT group default qlen 1000
     link/ether a6:c7:fa:98:86:af brd ff:ff:ff:ff:ff:ff
   ```
 
-0. The state LOWERLAYERDOWN can be resolved to the more desireable state of UP by turning up the interface peered with veth0, veth1. Let's do that now. 
+0. The state LOWERLAYERDOWN can be resolved to the more desireable state of UP by turning up the interface peered with veth1, veth2. Let's do that now. 
 
-  `student@beachhead:~$` `ip link set dev veth1 up`
+  `student@beachhead:~$` `ip link set dev veth2 up`
 
 0. Check out your work. Both interfaces should be displaying a state of UP.
 
@@ -78,19 +78,19 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
     link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
   3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
     link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-  4: veth1@veth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+  4: veth2@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
     link/ether 7a:a9:ff:dd:05:96 brd ff:ff:ff:ff:ff:ff
-  5: veth0@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+  5: veth1@veth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
     link/ether 76:83:83:20:f1:4b brd ff:ff:ff:ff:ff:ff
   ```
   
-0. Let's apply an IP address to each interface. First to the veth0 interface.
+0. Let's apply an IP address to each interface. First to the veth1 interface.
 
-  `student@beachhead:~$` `ip addr add 10.0.0.1/24 dev veth0`
+  `student@beachhead:~$` `ip addr add 172.16.2.11/24 dev veth1`
 
-0. There won't be any special print-out from the previous command. Before we review our work, apply an IP address to the veth1 interface.
+0. There won't be any special print-out from the previous command. Before we review our work, apply an IP address to the veth2 interface.
 
-  `student@beachhead:~$` `ip addr add 10.0.0.2/24 dev veth1`
+  `student@beachhead:~$` `ip addr add 172.16.2.12/24 dev veth2`
 
 0. Issuing *ip addr list* will display the same information as *ip link list*, but will also include the L3 IP information.
 
@@ -113,15 +113,15 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
     link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
     inet6 fe80::f816:3eff:feac:cbff/64 scope link
       valid_lft forever preferred_lft forever
-  4: veth1@veth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+  4: veth2@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
     link/ether 52:71:53:d6:3b:c2 brd ff:ff:ff:ff:ff:ff
-    inet 10.0.0.2/24 scope global veth1
+    inet 172.16.2.12/24 scope global veth2
       valid_lft forever preferred_lft forever
     inet6 fe80::5071:53ff:fed6:3bc2/64 scope link
       valid_lft forever preferred_lft forever
-  5: veth0@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+  5: veth1@veth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
       link/ether a6:c7:fa:98:86:af brd ff:ff:ff:ff:ff:ff
-      inet 10.0.0.1/24 scope global veth0
+      inet 172.16.2.11/24 scope global veth1
          valid_lft forever preferred_lft forever
       inet6 fe80::a4c7:faff:fe98:86af/64 scope link
          valid_lft forever preferred_lft forever
@@ -129,12 +129,12 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
 
 0. Time to examine the results of our work. Issue the following commands, and answer the assocaited questions along the way.
 
-  `student@beachhead:~$` `ip addr show veth0`
+  `student@beachhead:~$` `ip addr show veth1`
   
   ```
-  4: veth0@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+  4: veth1@veth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
     link/ether 76:83:83:20:f1:4b brd ff:ff:ff:ff:ff:ff
-    inet 10.0.0.1/24 scope global veth0
+    inet 172.16.2.11/24 scope global veth1
        valid_lft forever preferred_lft forever
     inet6 fe80::7483:83ff:fe20:f14b/64 scope link 
        valid_lft forever preferred_lft forever
@@ -142,23 +142,23 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
     
 0. Answer the following questions:
 
-  - **Q1: What is the MAC address assigned to the veth0 interface?**
+  - **Q1: What is the MAC address assigned to the veth1 interface?**
     - A1: The one applied in the example is 76:83:83:20:f1:4b, however yours will be different (MACs are unique)
   - **Q2: Where did this MAC address come from?**
     - A2: This MAC is randomly generated, they do no belong to any OUI (Oganizational Unit Identifer). In the first octet, if the second nibble is a **2, 6, a or an e**, it can be randomly created and used.
   - **Q3: Is it possible to change this MAC address if we wanted to?**
-    - A3: Certainly it is. A command like *ip link set dev veth0 addr 00:01:02:aa:bb:cc* would set the MAC associated with veth0 to 00:01:02:aa:bb:cc.
+    - A3: Certainly it is. A command like *ip link set dev veth1 addr 00:01:02:aa:bb:cc* would set the MAC associated with veth1 to 00:01:02:aa:bb:cc.
   - **Q4: How many namespaces are being utilized in this lab?**
     - A4: Just one (1). The default (root) namespace. By the way, if you don't know what a Linux *namespace* is yet, that's okay. Just getting this concept clearly in everyone's mind.
     
-0. Let's not neglect the other half of our hard work. Use the *ip addr* command to display information regarding the veth1 interface.
+0. Let's not neglect the other half of our hard work. Use the *ip addr* command to display information regarding the veth2 interface.
 
-   `student@beachhead:~$` `ip addr show veth1`
+   `student@beachhead:~$` `ip addr show veth2`
   
   ```
-  5: veth1@veth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+  5: veth2@veth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
     link/ether 7a:a9:ff:dd:05:96 brd ff:ff:ff:ff:ff:ff
-    inet 10.0.0.2/24 scope global veth1
+    inet 172.16.2.12/24 scope global veth2
        valid_lft forever preferred_lft forever
     inet6 fe80::78a9:ffff:fedd:596/64 scope link 
        valid_lft forever preferred_lft forever
@@ -168,13 +168,13 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
 
   `student@beachhead:~$` `ping -help`
 
-0. So the following command should ask veth1 to ping 10.0.0.1. However, initally, this command will **not** work. Nevertheless, try it to confirm.
+0. So the following command should ask veth2 to ping 172.16.2.11. However, initally, this command will **not** work. Nevertheless, try it to confirm.
 
-    `student@beachhead:~$` `ping -I veth1 10.0.0.1`
+    `student@beachhead:~$` `ping -I veth2 172.16.2.11`
 
 0. Now confirm that we cannot ping in either direction.
 
-    `student@beachhead:~$` `ping -I veth0 10.0.0.2`
+    `student@beachhead:~$` `ping -I veth1 172.16.2.12`
 
 0. Answer the following question:
 
@@ -183,11 +183,11 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
 
 0. Examine the routing table and run tcpdump whit the previous commands
 
-    > When we force the ICMP packet destine for 10.0.0.2 on veth0 
+    > When we force the ICMP packet destine for 172.16.2.12 on veth1 
 
-    `student@beachhead:~$` `ping -I veth1 10.0.0.1 > /dev/null &` _ping in the background_
+    `student@beachhead:~$` `ping -I veth2 172.16.2.11 > /dev/null &` _ping in the background_
   
-    `student@beachhead:~$` `sudo tcpdump -i veth1` _Ctrl^C to exit_
+    `student@beachhead:~$` `sudo tcpdump -i veth2` _Ctrl^C to exit_
     
     `student@beachhead:~$` `fg` _bring the ping back into the foreground and press Ctrl^C to quit_
 
@@ -195,22 +195,22 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
   
     ```
     default via 172.16.1.1 dev ens3 
-    10.0.0.0/24 dev veth0  proto kernel  scope link  src 10.0.0.1 
-    10.0.0.0/24 dev veth1  proto kernel  scope link  src 10.0.0.2 
+    172.16.2.0/24 dev veth1  proto kernel  scope link  src 172.16.2.11 
+    172.16.2.0/24 dev veth2  proto kernel  scope link  src 172.16.2.12 
     169.254.169.254 via 172.16.1.1 dev ens3 
     172.16.1.0/24 dev ens3  proto kernel  scope link  src 172.16.1.4 
     ```
   
-  * `student@beachhead:~$` `sudo ip route del 10.0.0.0/24 dev veth0`
-  * `student@beachhead:~$` `sudo ip route del 10.0.0.0/24 dev veth1`
-  * `student@beachhead:~$` `sudo ip route add 10.0.0.0/24 via 10.0.0.1 dev veth0`
+  * `student@beachhead:~$` `sudo ip route del 172.16.2.0/24 dev veth1`
+  * `student@beachhead:~$` `sudo ip route del 172.16.2.0/24 dev veth2`
+  * `student@beachhead:~$` `sudo ip route add 172.16.2.0/24 via 172.16.2.11 dev veth1`
   * `student@beachhead:~$` `ip route`
 
 0. Remove all the virtual interfaces (back to scratch)
 
   > Why do we only need to run the delete once?
 
-  * `student@beachhead:~$` `sudo ip link del veth0`
+  * `student@beachhead:~$` `sudo ip link del veth1`
   * `student@beachhead:~$` `ip link list`
   
     ```
