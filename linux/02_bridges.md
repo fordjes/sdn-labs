@@ -323,11 +323,11 @@ The objective of this lab is to explore briding interfaces.
 
   `student@beachhead:~$` `a3diff /tmp/ip-link-netns /tmp/ip-link-netns-veth2`
 
-0. Writeout the current L2 *mario* namespace configuration.
+0. Show the current L2 *mario* namespace configuration.
 
   `student@beachhead:~$` `sudo ip netns exec mario ip link show`
 
-0. Time to configure the namespace L3 IP addressing. First, execute *ip address show* within the *mario* namespace.
+0. Show the current L3 *mario* namespace configuration.
 
   `student@beachhead:~$` `sudo ip netns exec mario ip address show`
 
@@ -345,30 +345,33 @@ The objective of this lab is to explore briding interfaces.
 
 0. Bring the *veth2* interface within the *mario* namespace to an UP state.
 
-* `student@beachhead:~$` `sudo ip netns exec mario ip link set dev veth2 up`
+  `student@beachhead:~$` `sudo ip netns exec mario ip link set dev veth2 up`
 
-0.
+0. Show the current L2 *mario* namespace configuration (after we've applied an L3 IP address and brought up the interface).
 
-* `student@beachhead:~$` `sudo ip netns exec mario ip link show`
+  `student@beachhead:~$` `sudo ip netns exec mario ip link show`
 
-0.
+0. Show the current L3 *mario* namespace configuration (after we've applied an L3 IP address and brought up the interface).
 
-* `student@beachhead:~$` `sudo ip netns exec mario ip address show`
+  `student@beachhead:~$` `sudo ip netns exec mario ip address show`
 
-0.
+0. Writeout the current L2 *mario* namespace configuration (after we've applied an L3 IP address and brought up the interface).
 
-* `student@beachhead:~$` `sudo ip netns exec mario ip link list > /tmp/mario-ip-link-veth2` _save for comparison_
+  `student@beachhead:~$` `sudo ip netns exec mario ip link show > /tmp/mario-ip-link-veth2`
 
-0.
+0. Writeout the current L3 *mario* namespace configuration (after we've applied an L3 IP address and brought up the interface).
 
-* `student@beachhead:~$` `sudo ip netns exec mario ip address show > /tmp/mario-ip-addr-veth2` _save for comparison_
+  `student@beachhead:~$` `sudo ip netns exec mario ip address show > /tmp/mario-ip-addr-veth2`
 
-0. Demonstrate connectivity
+0. Demonstrate connectivity.
 
-  * `student@beachhead:~$` `ping -c4 172.16.2.101`
-  * `student@beachhead:~$` `sudo ip netns exec mario ping -c4 172.16.2.100`
+  `student@beachhead:~$` `ping -c4 172.16.2.101`
 
-## Cleanup
+0. Demonstrate connectivity.
+
+  `student@beachhead:~$` `sudo ip netns exec mario ping -c4 172.16.2.100`
+
+0. Time to clean-up!
 
   * `student@beachhead:~$` `sudo ip link del dev br0`
   * `student@beachhead:~$` `sudo ip link del dev veth1`
