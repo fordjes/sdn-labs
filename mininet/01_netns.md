@@ -237,6 +237,27 @@ The objective of this lab is to explore how Mininet's unique application of netw
 0. Last but not least, the L2 and L3 of the switch.
 
   `mininet>` `s1 ip link list`
+  
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1450 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+      link/ether fa:16:3e:59:a0:b8 brd ff:ff:ff:ff:ff:ff
+  3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+      link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
+  11: ovs-system: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1
+      link/ether ea:fb:5d:d4:53:b6 brd ff:ff:ff:ff:ff:ff
+  18: veth-luigi@if19: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+      link/ether f6:a9:49:c3:37:b2 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+  20: veth-toad@if21: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+      link/ether a2:d9:bf:53:85:bc brd ff:ff:ff:ff:ff:ff link-netnsid 1
+  196: s1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1
+      link/ether a6:a3:5f:2d:a9:42 brd ff:ff:ff:ff:ff:ff
+  197: s1-eth1@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master ovs-system state UP mode DEFAULT group default qlen 1000
+      link/ether f2:c8:9f:c4:7b:37 brd ff:ff:ff:ff:ff:ff link-netnsid 2
+  198: s1-eth2@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master ovs-system state UP mode DEFAULT group default qlen 1000
+      link/ether da:72:e3:67:ae:e8 brd ff:ff:ff:ff:ff:ff link-netnsid 3
+  ```
 
   `mininet>` `s1 ip addr show`
 
