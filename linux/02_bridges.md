@@ -148,9 +148,9 @@ The objective of this lab is to explore briding interfaces.
     link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
   3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
     link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-  6: veth2@veth1: [-<BROADCAST,MULTICAST,M-DOWN>-] {+<BROADCAST,MULTICAST>+} mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+  6: veth2@veth1: [-<BROADCAST,MULTICAST,M-DOWN>-] {+<BROADCAST,MULTICAST>+} mtu 1500 qdisc [-noop-] {+noqueue+} state [-DOWN-] {+UP+}mode DEFAULT group default qlen 1000
     link/ether 66:22:9b:e1:f4:9b brd ff:ff:ff:ff:ff:ff
-  7: veth1@veth2: [-<BROADCAST,MULTICAST,M-DOWN>-] {+<NO-CARRIER,BROADCAST,MULTICAST,UP,M-DOWN>+} mtu 1500 qdisc [-noop-] {+noqueue+}     state [-DOWN-] {+LOWERLAYERDOWN+} mode DEFAULT group default qlen 1000
+  7: veth1@veth2: [-<BROADCAST,MULTICAST,M-DOWN>-] {+<BROADCAST,MULTICAST>+} mtu 1500 qdisc [-noop-] {+noqueue+}     state [-DOWN-] {+UP+} mode DEFAULT group default qlen 1000
     link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff
   ```
 
