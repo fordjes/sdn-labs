@@ -131,7 +131,7 @@ The objective of this lab is to learn how to interface with various networking c
 
   `student@beachhead:~$` `ip addr show`
   
-  - **Q1: What IP address has been applied to *ens4*?**
+  - **Q1: What IPv4 address has been applied to *ens4*?**
     - A1: 172.16.2.10
 
 0. It is possible to assign multiple IPv4 addresses to a network interface. While it is possible using legacy *net-tools* commands, we're not even going to bother, as it is ugly and complicated. Instead, let's just learn the proper way using the *ip addr add* command from the *iproute2* toolkit. First, apply a second IP address, 172.16.2.13 to the interface *ens4*.
@@ -159,19 +159,27 @@ The objective of this lab is to learn how to interface with various networking c
   
 0. Remove a second IP address *ens4*.
 
-  `student@beachhead:~$` `sudo ip addr del 172.16.2.13/24 dev ens4`
+  `student@beachhead:~$` `sudo ip addr del 172.16.2.14/24 dev ens4`
 
 0. Take away the last additional IP address from *ens4*.
 
-  `student@beachhead:~$` `sudo ip addr del 172.16.2.13/24 dev ens4`
+  `student@beachhead:~$` `sudo ip addr del 172.16.2.15/24 dev ens4`
 
   - **Q1: Why would you want to run multiple IP addresses on the same interface?**
     - A1: Oftentime services will operate on the same default port. Examples include, Apache & WSGI (OpenStack Keystone), or perhaps two SIP servers on the same machine (5060).
-    
-0. Assign an IPv6 address to a Network Interface
+
+0. Display the L2 and L3 information with the updated IP address.
+
+  `student@beachhead:~$` `ip addr show`
+
+  - **Q1: What IPv4 address has been applied to *ens4*?**
+    - A1: Once again, back to just one IPv4 address, 172.16.2.10
+
+0. Let's try applying an IPv6 address to the **ens4** network interface. 
 
 **net-tools:**  
-   `$ sudo ifconfig ens4 inet6 add 2002:0db5:0:f102::1/64`  
+
+  `student@beachhead:~$` `sudo ifconfig ens4 inet6 add 2002:0db5:0:f102::1/64`  
    `$ sudo ifconfig ens4 inet6 add 2003:0db5:0:f102::1/64`  
 
 **iproute2:** 
