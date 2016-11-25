@@ -129,6 +129,10 @@ The objective of this lab is to explore briding interfaces.
 
   `student@beachhead:~$` `sudo ip link set dev veth1 up`
 
+0. Let's also bring up *veth1*.
+
+  `student@beachhead:~$` `sudo ip link set dev veth2 up`
+
 0. Run the command *ip link list*, and output the contents to a few file, *ip-link-veth1up*. 
 
   `student@beachhead:~$` `ip link list > /tmp/ip-link-veth1up`
