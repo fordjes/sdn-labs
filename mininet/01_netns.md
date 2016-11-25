@@ -13,13 +13,24 @@ The objective of this lab is to explore how mininet uses namespaces, so that we 
 
 ### Procedure
 
+0. Let's start off with some basic questions.
+
+ - **Q1: What is a network namespace?**
+   - A1: A network namespace is logically another copy of the network stack, with its own routes, firewall rules, and network devices.
+ - **Q2: Can there be more than one (1) network namespace?**
+   - A2: Yes. By default a process inherits its network namespace from its parent. Initially all the processes share the same default network namespace from the init process.
+ - **Q3: How can I "see" the network namespaces within the system?**
+   - A3: By convention a named network namespace is an object at /var/run/netns/NAME that can be opened. The file descriptor resulting from opening /var/run/netns/NAME refers to the specified network namespace. Holding that file descriptor open keeps the network namespace alive.
+ - **Q4: What do I need to 'install' to work with network namespaces?**
+   - A4: Nothing. Network namespaces entered the Linux Kerenl in 2.6.24 (~Jan 2009). From then it took about a year of futher development before they were actually usable.
+
 0. Take a moment and clean up your remote desktop. Close any terminals, Wireshark windows, or Firefox browser sessions you might have open.
 
 0. From your remote desktop, open a terminal session, and move to the student home directory.
 
   `student@beachhead:/$` `cd`
 
-0. Enumerate the system without mininet running. First, display the current L2 configuration of the system.
+0. Enumerate the system **without** mininet running. First, display the current L2 configuration of the system.
 
   `student@beachhead:~$` `ip link list`
 
@@ -46,25 +57,64 @@ The objective of this lab is to explore how mininet uses namespaces, so that we 
 0. Start a basic mininet topology.
 
   `student@beachhead:~$` `sudo mn`
+  
+  ```
+  *** No default OpenFlow controller found for default switch!
+  *** Falling back to OVS Bridge
+  *** Creating network
+  *** Adding controller
+  *** Adding hosts:
+  h1 h2
+  *** Adding switches:
+  s1
+  *** Adding links:
+  (h1, s1) (h2, s1)
+  *** Configuring hosts
+  h1 h2
+  *** Starting controller
 
-0. 
+  *** Starting 1 switches
+  s1 ...
+  *** Starting CLI:
+  mininet>
+  ```
 
-  `mininet>`
+0. Without closing the current terminal, open a new, second terminal.
 
-0. In a new terminal, examine the changes to your root network namespace
+0. Enumerate the system **with** mininet running. First, display the current L2 configuration of the system.
 
   `student@beachhead:~$` `ip link list`
+
+0. Now the L3 (IP) configuration of our current system with the *ip addr* command.
+
   `student@beachhead:~$` `ip addr show`
+
+0. Finally, display the current state of routing.
+
   `student@beachhead:~$` `ip route show`
-  `student@beachhead:~$` `ip link list > /tmp/mn-ip-link-basic`  
-  `student@beachhead:~$` `ip addr show > /tmp/mn-ip-addr-basic`
+
+0. Save the output we just examined for future comparison. Write the output of *ip link list* to a new file called, *mn-ip-link-basic*.
+
+  `student@beachhead:~$` `ip link list > /tmp/mn-ip-link-init`
+
+0. Write the output of *ip addr show* to a new file called, *mn-ip-addr-basic*.
+
+  `student@beachhead:~$` `ip addr show > /tmp/mn-ip-addr-init`
+
+0. Write the output of *ip route show* to a new file called, *mn-ip-route-basic*.
+
   `student@beachhead:~$` `ip route show > /tmp/mn-ip-route-basic`
 
-  > what changed?
-  >
-  > what didn't change?
+0. Answer the following questions:
 
-0. Run netns
+  - **Q1: What changed?**
+    - A1:
+  - **Q2: What stayed the same?**
+    - Q2:
+  - **Q3: Why does mininet create namespaces?**
+    - Q3:
+
+0. Run *ip netns list*. This command will reveal the 
 
   `student@beachhead:~$` `ip netns list`
 
