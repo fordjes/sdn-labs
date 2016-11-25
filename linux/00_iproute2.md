@@ -92,7 +92,7 @@ The objective of this lab is to learn how to interface with various networking c
 
 0. Now let's try to assign an IPv4 address to a network interface. To start, we'll use the legacy (net-tools) command *ifconfig*.
 
-    `student@beachhead:~$` `sudo ifconfig ens4 172.16.2.10`
+    `student@beachhead:~$` `sudo ifconfig ens4 172.16.2.10 netmask 255.255.255.0`
 
 0. There won't be any special output if it worked, so run legacy *ifconfig* to confirm that the IP address was applied to the ens4 interface.
 
@@ -116,7 +116,7 @@ The objective of this lab is to learn how to interface with various networking c
 
   `student@beachhead:~$` `sudo ip addr add 172.16.2.10/24 dev ens4`  
 
-0.
+0. Display the L2 and L3 information with the updated *
 
   `student@beachhead:~$` `ip addr show`
 
@@ -131,58 +131,52 @@ The objective of this lab is to learn how to interface with various networking c
   
 #### 5. Remove an IPv4 address from a Network Interface
 
-**net-tools:**  
-   `$ sudo ifconfig eth1 0`  
-
 **iproute2:**  
-   `$ sudo ip addr del 10.0.0.1/24 dev eth1`  
+  `$ sudo ip addr del 172.16.2.13/24 dev ens4`
+  `$ sudo ip addr del 172.16.2.13/24 dev ens4`
+  `$ sudo ip addr del 172.16.2.13/24 dev ens4`
 
-xxxxxxxxxxxxxx  BROKEN HERE UP xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-0. Now use a legacy net-tools *ifconfig* command to display the primary address. Unfortunately *ifconfig* will not show the secondary IP addresses.  
-
-    `student@beachhead:~$` `ifconfig ens4`  
-
-0. Here is the analagous command from the iproute2 suite, *ip addr*. The *ip addr show* command will show all IP addresses, primary and secondary, not just the primary address as was the case with *ifconfig*.  
-
-    `student@beachhead:~$` `ip addr show dev ens4`  
-
-xxxxxxxxxxxxxx  BROKEN HERE Down xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+  - **Q1: Why would you want to run multiple IP addresses on the same interface?**
+    - A1: Oftentime services will operate on the same default port. Examples include, Apache & WSGI (OpenStack Keystone), or perhaps two SIP servers on the same machine (5060).
+    
 0. Assign an IPv6 address to a Network Interface
 
 **net-tools:**  
-   `$ sudo ifconfig eth1 inet6 add 2002:0db5:0:f102::1/64`  
-   `$ sudo ifconfig eth1 inet6 add 2003:0db5:0:f102::1/64`  
+   `$ sudo ifconfig ens4 inet6 add 2002:0db5:0:f102::1/64`  
+   `$ sudo ifconfig ens4 inet6 add 2003:0db5:0:f102::1/64`  
 
 **iproute2:** 
-   `$ sudo ip -6 addr add 2002:0db5:0:f102::1/64 dev eth1`  
-   `$ sudo ip -6 addr add 2003:0db5:0:f102::1/64 dev eth1`  
+   `$ sudo ip -6 addr add 2002:0db5:0:f102::1/64 dev ens4`  
+   `$ sudo ip -6 addr add 2003:0db5:0:f102::1/64 dev ens4`  
 
 #### 8. Show IPv6 address(es) of a Network Interface
 
 **net-tools:**  
-   `$ ifconfig eth1`  
+   `$ ifconfig ens4`  
 
 **iproute2:** 
-   `$ ip -6 addr show dev eth1`  
+   `$ ip -6 addr show dev ens4`  
 
 #### 9. Remove an IPv6 address from a Network Interface
 **net-tools:**  
-   `$ sudo ifconfig eth1 inet6 del 2002:0db5:0:f102::1/64`  
+   `$ sudo ifconfig ens4 inet6 del 2002:0db5:0:f102::1/64`  
 
 **iproute2:** 
-   `$ sudo ip -6 addr del 2002:0db5:0:f102::1/64 dev eth1`  
+   `$ sudo ip -6 addr del 2002:0db5:0:f102::1/64 dev ens4`  
 
 #### 10. Change the MAC Address of a Network Interface
 
-**net-tools:** deactivate the interface first!  
-   `$ sudo ifconfig eth1 hw ether 08:00:27:75:2a:66`  
+0. First a legacy *net-tools* command.
 
-**iproute2:**  deactivate the interface first!  
-   `$ sudo ip link set dev eth1 address 08:00:27:75:2a:67`
+  `student@beachhead:~$` sudo ifconfig ens4 hw ether 08:00:27:75:2a:66`
+   
+  - **Q1: What is this process called?**
+    - A1: MAC Address Override
+  - **Q2: Why would you want to modify a MAC address?**
+    - A2: Replacing a machine and would prefer to drop in a perfect copy of the one you are replacing (not to bust the ARP table).
 
-XXXXXXXXXXXXXXXXXXX BROKEN HERE UP XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+**iproute2:** 
+   `$ sudo ip link set dev ens4 address 08:00:27:75:2a:67`
 
 0. So now that we've brought manipulation of interfaces a bit more into focus, let's focus on the IP routing table. This next command, which is legacy net-tools, will allow us to view the table.
 
@@ -216,47 +210,53 @@ XXXXXXXXXXXXXXXXXXX BROKEN HERE UP XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     default via 172.16.1.1 dev ens3 onlink
     172.16.1.0/24 dev ens3  proto kernel  scope link  src 172.16.1.5
     ```
-
-#### 12. Add or Modify a Default Route
-
-0. Legacy manipulation of this table was done with the net-tools command *route*. Try adding a new default route for traffic on the 192.168.1.0/24 network.
+    
+0. Legacy manipulation of this table was done with the net-tools command *route*. Try adding a new route for traffic on the 192.168.1.0/24 network.
 
     `student@beachhead:~$` `sudo route add -net 192.168.1.0 netmask 255.255.255.0 dev ens4`
 
+0. With legacy manipulation of the routing table, we can remove a route as well.
+
+    `$ sudo route del -net 192.168.1.0 netmask 255.255.255.0 dev ens4`  
+
+0. Using the new iproute2 toolkit command ip route, we can add a new route for traffic going to the 192.168.1.0/24 network (just as we did with the legacy command *route add*).
+
+  `student@beachhead:~$` `sudo ip route add 192.168.1.0/24 dev ens4`
+
+0. Remove the route we just created using the iproute2 toolkit.
+
+  `student@beachhead:~$` `sudo ip route del 192.168.1.0/24 dev ens4`
+
+0. Let's examine some socket (port) statistics (active/listening TCP/UDP sockets). We'll start with the legacy *net-tools* that you might be familiar with. Use the man page for the *netstat* command to answer the following questions.
+
+  `student@beachhead:~$` `man netstat`
+
+  - **Q1: What does the n *flag* do?**
+    - A1: This causes only numbers to be shown.
+  - **Q2: What does the o *flag* do?**
+    - A2: This causes information regarding networking timers to be displayed. 
+  - **Q3: What does the t *flag* do?**
+    - A3: This causes only information regarding tcp to be displayed.
+
+0. Use the legacy net-tools, *netstat* to display socket information.
+  
+  `student@beachhead:~$` `netstat -not`
+
+0. The updated analogous *iproute2* command is *ss*. 
+
+  `student@beachhead:~$` `ss -not`  
+
 0. 
-
-    `$ sudo route del default gw 192.168.1.1 eth0`  
-
-**iproute2:**  
-   `$ sudo ip route add default via 192.168.1.2 dev eth0`  
-   `$ sudo ip route replace default via 192.168.1.2 dev eth0`
-
-#### 13. Add or Remove a Static Route
-**With net-tools:**  
-   `$ sudo route add -net 172.16.32.0/24 gw 192.168.1.1 dev eth0`  
-   `$ sudo route del -net 172.16.32.0/24`  
-   
-**iproute2:**  
-   `$ sudo ip route add 172.16.32.0/24 via 192.168.1.1 dev eth0`  
-   `$ sudo ip route del 172.16.32.0/24`
-
-#### 14. View Socket Statistics (active/listening TCP/UDP sockets)
-
-**net-tools:**  
-   `$ netstat`  
-   `$ netstat -l`
-   
-**iproute2:**  
-   `$ ss`  
-   `$ ss -l`  
-
-#### 15. View the ARP Table
 
 **net-tools:**  
    `$ arp -an`  
 
-**iproute2:**  
-   `$ ip neigh`  
+0. **iproute2:**
+
+  `student@beachhead:~$` `ip neigh`  
+
+  - **Q1: Why doesn't the ip neigh command include flags?**
+    - A1: The updated iproute2 command gives us the correct information we want to view the first time.
 
 #### 16. Add or Remove a Static ARP Entry
 
@@ -267,6 +267,10 @@ XXXXXXXXXXXXXXXXXXX BROKEN HERE UP XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 **iproute2:**  
    `$ sudo ip neigh add 192.168.1.100 lladdr 00:0c:29:c0:5a:ef dev eth0`  
    `$ sudo ip neigh del 192.168.1.100 dev eth0`
+
+
+
+
 
 All of the future labs will use iproute2 commands.
 
@@ -304,7 +308,6 @@ The reason for this change was that systems with multiple interfaces were not ga
 
 > The classic naming scheme for network interfaces applied by the kernel is to simply assign names beginning with "eth0", "eth1", ... to all interfaces as they are probed by the drivers. As the driver probing is generally not predictable for modern technology this means that as soon as multiple network interfaces are available the assignment of the names "eth0", "eth1" and so on is generally not fixed anymore and it might very well happen that "eth0" on one boot ends up being "eth1" on the next. This can have serious security implications, for example in firewall rules which are coded for certain naming schemes, and which are hence very sensitive to unpredictable changing names.
 
-[Read more](https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/)
 
 #### Additional Learning / References
 
@@ -316,4 +319,6 @@ The following is a list of pages we thought might be helpful for our students to
 
 * [iproute2 cheatsheet](http://baturin.org/docs/iproute2/)
 
-* [ip route management](http://linux-ip.net/html/tools-ip-route.html)
+* [ip route Management](http://linux-ip.net/html/tools-ip-route.html)
+
+* [Predictable Interface Naming](https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/)
