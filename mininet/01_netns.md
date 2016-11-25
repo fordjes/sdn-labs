@@ -79,6 +79,20 @@ The objective of this lab is to explore how mininet's unique application of netw
   mininet>
   ```
 
+0. Answer the following questions:
+
+  - **Q1: How many virtual switches were just created?**
+    - A1: One (1); switch2 (s1).
+  - **Q2: How many hosts were just deployed?**
+    - A2: Two (2); host1 (h1) and host2 (h2).
+    
+  >
+  If you're confused, see the topography diagram below. This is what mininet just created:
+  
+  ```
+     ----------(s1)----------
+     |                      |
+
 0. Without closing the current terminal, open a new, second terminal.
 
 0. Enumerate the system **with** mininet running. First, display the current L2 configuration of the system.
@@ -182,13 +196,47 @@ The objective of this lab is to explore how mininet's unique application of netw
 
 0. Repeat the same steps for the host2 (h2). First the L2 information associated with host2 (h2)
 
-  `mininet>` `h2 ip addr show`
-
-0.
-
   `mininet>` `h2 ip link list`
-  `mininet>` `s1 ip addr show`
+  
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  2: h2-eth0@if198: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+      link/ether da:de:6a:aa:3e:cd brd ff:ff:ff:ff:ff:ff link-netnsid 0
+  ```
+  
+  - **Q1: Is the L2 interface of the virutal ethernet adapter in an UP state?**
+    - A1: Yes. In this example, *h1-eth0@if198* is listed as 'state UP'.
+  - **Q2: There is also a valid MAC address applied?**
+    - A2: Yes. This one would appear to have da:de:6a:aa:3e:cd, however, expect yours to be different.
+
+0. Now the L3 (IP) information associated with host1 (h2).
+
+  `mininet>` `h2 ip addr show`
+  
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+      inet 127.0.0.1/8 scope host lo
+         valid_lft forever preferred_lft forever
+      inet6 ::1/128 scope host
+         valid_lft forever preferred_lft forever
+  2: h2-eth0@if198: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+      link/ether da:de:6a:aa:3e:cd brd ff:ff:ff:ff:ff:ff link-netnsid 0
+      inet 10.0.0.2/8 brd 10.255.255.255 scope global h2-eth0
+         valid_lft forever preferred_lft forever
+      inet6 fe80::d8de:6aff:feaa:3ecd/64 scope link
+         valid_lft forever preferred_lft forever
+  ```
+  
+  - **Q1: Has there been a L3 (IP) address applied to the virtual interface of host1 (h2)?**
+    - A1: Yes. In this example, h2-eth0@if198 has the address 10.0.0.2.
+
+0. Last but not least, the L2 and L3 of the switch.
+
   `mininet>` `s1 ip link list`
+
+  `mininet>` `s1 ip addr show`
 
   > Does this increase our hunch that these are implemented with network namespaces?
   
