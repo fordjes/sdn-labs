@@ -142,25 +142,27 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
     
 0. Answer the following questions:
 
-    - **Q1: What is the MAC address assigned to the veth0 interface?**
-      - A1: The one applied in the example is 76:83:83:20:f1:4b, however yours will be different (MACs are unique)
-    - **Q2: Where did this MAC address come from?**
-      - A2: This MAC is randomly generated, they do no belong to any OUI (Oganizational Unit Identifer). In the first octet, if the second nibble is a **2, 6, a or an e**, it can be randomly created and used.
-    - **Q3: Is it possible to change this MAC address if we wanted to?**
-      - A3: Certainly it is. A command like *ip link set dev veth0 addr 00:01:02:aa:bb:cc* would set the MAC associated with veth0 to 00:01:02:aa:bb:cc.
+  - **Q1: What is the MAC address assigned to the veth0 interface?**
+    - A1: The one applied in the example is 76:83:83:20:f1:4b, however yours will be different (MACs are unique)
+  - **Q2: Where did this MAC address come from?**
+    - A2: This MAC is randomly generated, they do no belong to any OUI (Oganizational Unit Identifer). In the first octet, if the second nibble is a **2, 6, a or an e**, it can be randomly created and used.
+  - **Q3: Is it possible to change this MAC address if we wanted to?**
+    - A3: Certainly it is. A command like *ip link set dev veth0 addr 00:01:02:aa:bb:cc* would set the MAC associated with veth0 to 00:01:02:aa:bb:cc.
+  - **Q4: How many namespaces are being utilized in this lab?**
+    - A4: Just one (1). The default (root) namespace. By the way, if you don't know what a Linux *namespace* is yet, that's okay. Just getting this concept clearly in everyone's mind.
     
 0. Let's not neglect the other half of our hard work. Use the *ip addr* command to display information regarding the veth1 interface.
 
-    `student@beachhead:~$` `ip addr show veth1`
+   `student@beachhead:~$` `ip addr show veth1`
   
-    ```
-    5: veth1@veth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
-      link/ether 7a:a9:ff:dd:05:96 brd ff:ff:ff:ff:ff:ff
-      inet 10.0.0.2/24 scope global veth1
-         valid_lft forever preferred_lft forever
-      inet6 fe80::78a9:ffff:fedd:596/64 scope link 
-         valid_lft forever preferred_lft forever
-    ``` 
+  ```
+  5: veth1@veth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 7a:a9:ff:dd:05:96 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.2/24 scope global veth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::78a9:ffff:fedd:596/64 scope link 
+       valid_lft forever preferred_lft forever
+  ``` 
 
 0. Let's try using a ping command to create traffic between the two interfaces. Let's first examine the usage of the ping command.
 
