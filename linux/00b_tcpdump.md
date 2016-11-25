@@ -59,11 +59,14 @@ When tcpdump finishes capturing packets, it will report counts of:
 
 0. The next fields are the sequence and acknowledgement numbers. TCPDUMP by default uses relative numbers here. Lets look at an example:
 
-  `student@beachhead:~$` `sudo tcpdump -i any -c 20 -n tcp and dst port 22 -t`
+  `student@beachhead:~$` `sudo tcpdump -i any -c 20 -n tcp and dst port 5900 -t`
+  
+  - **Q1: What is port 5900?**
+    - A1: Port 5900 is used for the VNC client that you are using to view the remote desktop session.
 
 0. Relative sequence numbers can be turned off with the uppercase S option
 
-  `student@beachhead:~$` `sudo tcpdump -i any -c 20 -n tcp and dst port 22 -S`
+  `student@beachhead:~$` `sudo tcpdump -i any -c 20 -n tcp and dst port 5900 -S`
 
 0. Lets look at sample output for DNS requests. Here is a capture on all interfaces (-i any), port 53 (port 53), displaying IP addresses in lieu of names (-n), and capturing only 50 packets (-c 50):
 
