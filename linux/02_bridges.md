@@ -371,13 +371,25 @@ The objective of this lab is to explore briding interfaces.
 
   `student@beachhead:~$` `sudo ip netns exec mario ping -c4 172.16.2.100`
 
-0. Time to clean-up!
+0. Time to clean-up! Delete the bridge interface.
 
-  * `student@beachhead:~$` `sudo ip link del dev br0`
-  * `student@beachhead:~$` `sudo ip link del dev veth1`
-  * `student@beachhead:~$` `sudo ip netns del mario`
-  * `student@beachhead:~$` `ip link show` _expected veth1, veth2, br0 absent_
-  * `student@beachhead:~$` `ip netns list` _expected empty_
+  `student@beachhead:~$` `sudo ip link del dev br0`
+
+0. Delete the veth pair (veth1)
+
+  `student@beachhead:~$` `sudo ip link del dev veth1`
+
+0. Delete the namespace *mario*. 
+  
+  `student@beachhead:~$` `sudo ip netns del mario`
+  
+0. Ensure your L2 information looks like the one shown.
+
+  `student@beachhead:~$` `ip link show` _expected veth1, veth2, br0 absent_
+
+0. Ensure your L3 information looks like the one shown.
+
+  `student@beachhead:~$` `ip netns list` _expected empty_
 
 
 
