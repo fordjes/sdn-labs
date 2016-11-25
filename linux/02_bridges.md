@@ -180,6 +180,13 @@ The objective of this lab is to explore briding interfaces.
 0. Add the veth1 interface to the bridging interface.
  
   `student@beachhead:~$` `sudo ip link set dev veth1 master br0`
+  
+0. Let's show the interfaces on the bridge, (so far)
+
+  `student@beachhead:~$` `brctl show`
+  
+  - **Q1: What is the name of the connected interface(s)**
+    - A1: veth1
 
 0. Make a copy of the current link layer with the *ip link list* command, and write the output to the file *ip-link-bridge-veth1*
 
