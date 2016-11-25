@@ -58,6 +58,22 @@ The objective of this lab is to learn how to interface with various networking c
           RX bytes:12904 (12.9 KB)  TX bytes:12904 (12.9 KB)
     ```
 
+ - **Q1: What is the MAC address of ens3?**
+    - A1:
+ - **Q2: What is ens3?
+    - A2: eth0 - This is a physical interface on the machine you are on (beachhead).
+  - Q3: What is ens4?
+    - A3: eth1 - This is a physical interface on the machine you are on (beachhead). This interface will be used to safely execute basic Linux networking commands in this lab.
+
+0. The correlary of ifconfig -a is ip addr show. Run that command now:
+
+    `student@beachhead:~$` `ip addr show`
+
+0. So both commands worked, but to practice good habits, we should use *ip addr show*.
+
+  - **Q1: Why is this *new* way better?**
+    - A1: The legacy networking commands are being depricated. In future releases of Linux, it is possibly that legacy commands (such as *ifconfig*) will no longer be supported. There are many limitations with legacy networking commands, such as the inability to create virtual ethernet adapters.
+
 0. Now let's check out the display returned with an updated **iproute2** command. The *ip link* command will display all connected network interfaces. The *ip link show* command will fetch characteristics regarding the link layer devices currently available. It is immaterial to *ip link* whether the device is in use by any other higher layer protocols (L3 - IP). The *ip link* tool provides two verbs: *show* and *set*. The *ip link set* command might be used to: de/activate an interface, change link layer state flags, change the MTU, the name of the interface, and even manipulate the Ethernet broadcast address.
 
     `student@beachhead:~$` `ip link show`
@@ -71,17 +87,18 @@ The objective of this lab is to learn how to interface with various networking c
         link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
     ```
     
-0. So both commands worked, but to practice good habits, we should use *ip link show*.
-
-xxxxxxxxxxxxxx  BROKEN here down xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  - **Q1: What is the above MAC address**
+    - A1:
 
 0. Now let's try to assign an IPv4 address to a network interface. To start, we'll use the legacy (net-tools) command *ifconfig*.
 
-    `student@beachhead:~$` `ifconfig ens4 add 10.0.0.1`
+    `student@beachhead:~$` `sudo ifconfig add ens4 10.0.0.1`
 
 0. There won't be any special output if it worked, so run legacy *ifconfig* to confirm that the IP address was applied to the ens4 interface.
 
-    `student@beachhead:~$` `ifconfig`
+  `student@beachhead:~$` `ifconfig`
+    
+
 
 0. free
 
