@@ -165,7 +165,7 @@ When tcpdump finishes capturing packets, it will report counts of:
 
   `student@beachhead:~$` `sudo tcpdump -i any -c 5 -vvv`
 
-0. Just a few final thoughts. The queit option (-q) can be used to provide a minimal 'quiet display' output:
+0. Just a few final thoughts. The quiet option (-q) can be used to provide a minimal 'quiet display' output:
 
   `student@beachhead:~$` `sudo tcpdump -i eth1 -c 15 -q`
 
@@ -185,27 +185,25 @@ When tcpdump finishes capturing packets, it will report counts of:
 
   `student@beachhead:~$` `sudo tcpdump -i any "tcp[tcpflags] & tcp-syn !=0"`
 
-`nc 10.0.0.3 80`
-`nc 10.0.0.3 801`
-`nc 10.0.0.3 802`
+  - **Q1: What does the above command do?**
+    - A1: TCP Dump, and look for a TCP flag that indicates a TCP-SYN message (creating a connection).
 
-Similarly, here is an example to look for only tcp resets:
-`sudo tcpdump -i any "tcp[tcpflags] \
-& tcp-rst !=0"`
+0. Without closing your current terminal, open a second terminal, and run *nc* (netcat) to create a connection to the indicated port.
+
+  `student@beachhead:/$` `nc 10.0.0.3 80`
+  `student@beachhead:~$` `nc 10.0.0.3 801`
+  `student@beachhead:~$` `nc 10.0.0.3 802`
+
+0. Similarly, here is an example to look for only tcp resets:
+`sudo tcpdump -vnni any "tcp[tcpflags] & tcp-rst !=0"`
 
 `nc 10.0.0.3 803`
 `nc 10.0.0.3 804`
 
-Adjusting tcp dumps output:
-TCPDUMP has some options to adjust the output seen while looking at captured data:
-`sudo tcpdump -i eth0 port 80 -c7 -XX`
-
-`wget youtube.com`
-
-Often the hex is not needed, so the -A option can be used instead:
-`sudo tcpdump -i eth0 port 80 -c7 -A`
-
-`wget youtube.com`
+  - **Q1: What do the vnni flags do?**
+    - A1: No name resolutions. No port resolutions. A bit more verbosity (time to live, protocol, and length).
+  - **Q2: Where could I go to confirm this?**
+    - A2: Type *man tcpdump*
 
 #### Additional Learning / References
 
