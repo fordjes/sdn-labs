@@ -142,11 +142,50 @@ The objective of this lab is to explore how mininet's unique application of netw
 
 0. Now, back to our investigation of mininet and network namespaces. Let's double check that the veth's that mininet created look like they are connected to a network namespace.
 
-0. Switch back to the mininet terminal, and enumerate the host's networking.
+0. Switch back to the mininet terminal, and enumerate the host's networking. First L2 information associated with host1 (h1).
+
+  `mininet>` `h1 ip link list`
+
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  2: h1-eth0@if197: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+      link/ether de:5b:4a:82:0d:a8 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+  ```
+
+  - **Q1: Is the L2 interface of the virutal ethernet adapter in an UP state?**
+    - A1: Yes. In this example, *h1-eth0@if197* is listed as 'state UP'.
+  - **Q2: There is also a valid MAC address applied?**
+    - A2: Yes. This one would appear to have de:5b:4a:82:0d:a8, however, expect yours to be different.
+
+0. Now the L3 (IP) information associated with host1 (h1).
 
   `mininet>` `h1 ip addr show`
-  `mininet>` `h1 ip link list`
+  
+  ```
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+      inet 127.0.0.1/8 scope host lo
+         valid_lft forever preferred_lft forever
+      inet6 ::1/128 scope host
+         valid_lft forever preferred_lft forever
+  2: h1-eth0@if197: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+      link/ether de:5b:4a:82:0d:a8 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+      inet 10.0.0.1/8 brd 10.255.255.255 scope global h1-eth0
+         valid_lft forever preferred_lft forever
+      inet6 fe80::dc5b:4aff:fe82:da8/64 scope link
+         valid_lft forever preferred_lft forever
+  ```
+  
+  - **Q1: Has there been a L3 (IP) address applied to the virtual interface of host1 (h1)?**
+    - A1: Yes. In this example, h1-eth0@if197 has the address 10.0.0.1.
+
+0. Repeat the same steps for the host2 (h2). First the L2 information associated with host2 (h2)
+
   `mininet>` `h2 ip addr show`
+
+0.
+
   `mininet>` `h2 ip link list`
   `mininet>` `s1 ip addr show`
   `mininet>` `s1 ip link list`
