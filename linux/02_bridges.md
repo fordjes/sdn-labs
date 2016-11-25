@@ -181,7 +181,7 @@ The objective of this lab is to explore briding interfaces.
  
   `student@beachhead:~$` `sudo ip link set dev veth1 master br0`
   
-0. Let's show the interfaces on the bridge, (so far)
+0. Let's show the interfaces on the bridge, (so far). The *brctl* command is from the legacy *net-tools* toolkit.
 
   `student@beachhead:~$` `brctl show`
   
@@ -294,7 +294,7 @@ The objective of this lab is to explore briding interfaces.
   {+172.16.2.0/24 dev br0  proto kernel  scope link  src 172.16.2.100 linkdown+} 
   ```
 
-0. Use the *bridge link show* command to display information regarding *br0*. 
+0. Use the *bridge link show* command to display information regarding *br0*. The *bridge* command is the updated *iproute2* command that eclipses the *brctl* command.
 
   `student@beachhead:~$` `bridge link show br0`
   
@@ -317,7 +317,7 @@ The objective of this lab is to explore briding interfaces.
 0. Make a copy of the current L2 state, prior to adding veth2 to the mario namespace.
 
   `student@beachhead:~$` `ip link list > /tmp/ip-link-netns`
-  
+
 0. Move the 2nd veth into the mario namespace.
 
   `student@beachhead:~$` `sudo ip link set veth2 netns mario`
@@ -329,6 +329,9 @@ The objective of this lab is to explore briding interfaces.
 0. Run the *a3diff* function on the two L2 files we just created to see how adding the veth2 interface to the mario namespace changed L2 configuration.
 
   `student@beachhead:~$` `a3diff /tmp/ip-link-netns /tmp/ip-link-netns-veth2`
+  
+  - **Q1: What is the state of your veth1?**
+    - A1: The state is down. Interfaces are always down after they are moved.
 
 0. Show the current L2 *mario* namespace configuration.
 
