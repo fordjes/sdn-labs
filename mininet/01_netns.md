@@ -9,35 +9,46 @@ title: "Lab xx - Mininet Namespaces - Learning about Linux Namespaces"
 ### TUESDAY - &#x2B50;REQUIRED&#x2B50;
 
 ### Lab Objective
-The objective of this lab is to...
+The objective of this lab is to explore how mininet uses namespaces, so that we might futher our understanding of the namespace concept.
 
 ### Procedure
+
+0. Take a moment and clean up your remote desktop. Close any terminals, Wireshark windows, or Firefox browser sessions you might have open.
 
 0. From your remote desktop, open a terminal session, and move to the student home directory.
 
   `student@beachhead:/$` `cd`
 
-0. Let's issue our first mininet command.
-
-  `student@beachhead:~$` `sudo mn`
-
-# mininet namespaces
-
-0. Enumerate the system without mininet running
+0. Enumerate the system without mininet running. First, display the current L2 configuration of the system.
 
   `student@beachhead:~$` `ip link list`
+
+0. Now the L3 (IP) configuration of our current system with the *ip addr* command.
+
   `student@beachhead:~$` `ip addr show`
+
+0. Finally, display the current state of routing.
+
   `student@beachhead:~$` `ip route show`
 
-0. Save files for future comparison
+0. Save the output we just examined for future comparison. Write the output of *ip link list* to a new file called, *mn-ip-link-init*.
 
-  `student@beachhead:~$` `ip link list > /tmp/mn-ip-link-init`  
+  `student@beachhead:~$` `ip link list > /tmp/mn-ip-link-init`
+
+0. Write the output of *ip addr show* to a new file called, *mn-ip-addr-init*.
+
   `student@beachhead:~$` `ip addr show > /tmp/mn-ip-addr-init`
+
+0. Write the output of *ip route show* to a new file called, *mn-ip-route-init*.
+
   `student@beachhead:~$` `ip route show > /tmp/mn-ip-route-init`
 
-0. Start a basic mininet topology
+0. Start a basic mininet topology.
 
   `student@beachhead:~$` `sudo mn`
+
+0. 
+
   `mininet>`
 
 0. In a new terminal, examine the changes to your root network namespace
