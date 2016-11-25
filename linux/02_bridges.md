@@ -245,7 +245,7 @@ The objective of this lab is to explore briding interfaces.
   
 0. Examine the L3 changes that occured by applying an IP address to the bridge interface (br0).
 
-  * `student@beachhead:~$` `a3diff /tmp/ip-addr-init /tmp/ip-addr-bridge`
+  `student@beachhead:~$` `a3diff /tmp/ip-addr-init /tmp/ip-addr-bridge`
   
   ```
   1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
@@ -390,8 +390,3 @@ The objective of this lab is to explore briding interfaces.
 0. Ensure your L3 information looks like the one shown.
 
   `student@beachhead:~$` `ip netns list` _expected empty_
-
-
-
-
-
