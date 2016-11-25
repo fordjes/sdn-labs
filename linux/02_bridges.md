@@ -363,13 +363,13 @@ The objective of this lab is to explore briding interfaces.
 
   `student@beachhead:~$` `sudo ip netns exec mario ip address show > /tmp/mario-ip-addr-veth2`
 
+0. Demonstrate connectivity. The following command asks for four (4) packets (-c 4) to be sent to the IP address *172.16.2.101*.
+
+  `student@beachhead:~$` `ping -c 4 172.16.2.101`
+
 0. Demonstrate connectivity.
 
-  `student@beachhead:~$` `ping -c4 172.16.2.101`
-
-0. Demonstrate connectivity.
-
-  `student@beachhead:~$` `sudo ip netns exec mario ping -c4 172.16.2.100`
+  `student@beachhead:~$` `sudo ip netns exec mario ping -c 4 172.16.2.100`
 
 0. Time to clean-up! Delete the bridge interface.
 
