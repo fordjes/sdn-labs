@@ -89,7 +89,7 @@ The objective of this lab is to explore how mininet's unique application of netw
   >
   If you're confused, see the topography diagram below. This is what mininet just created:
   
-  ``` Basic Deployment
+  ```
    --------(s1)--------
    |                  |
   (h1)               (h2)
