@@ -27,7 +27,7 @@ The objective of this lab is to learn how to interface with various networking c
 
     `student@beachhead:/$` `cd`
 
-0. Let's begin with a basic legacy command used with **net-tools**. The *ifconfig* command will display all conected network interfaces.
+0. Let's begin with a basic legacy command used with **net-tools**. The *ifconfig* command will display all conected network interfaces, the argument *a* will include even those interfaces that are a state of DOWN.
 
     `student@beachhead:~$` `ifconfig -a`
 
@@ -60,9 +60,9 @@ The objective of this lab is to learn how to interface with various networking c
 
  - **Q1: What is the MAC address of ens3?**
     - A1:
- - **Q2: What is ens3?
+ - **Q2: What is ens3?**
     - A2: eth0 - This is a physical interface on the machine you are on (beachhead).
-  - Q3: What is ens4?
+  - Q3: What is ens4?**
     - A3: eth1 - This is a physical interface on the machine you are on (beachhead). This interface will be used to safely execute basic Linux networking commands in this lab.
 
 0. The correlary of ifconfig -a is ip addr show. Run that command now:
@@ -92,26 +92,42 @@ The objective of this lab is to learn how to interface with various networking c
 
 0. Now let's try to assign an IPv4 address to a network interface. To start, we'll use the legacy (net-tools) command *ifconfig*.
 
-    `student@beachhead:~$` `sudo ifconfig add ens4 10.0.0.1`
+    `student@beachhead:~$` `sudo ifconfig ens4 172.16.2.10`
 
 0. There won't be any special output if it worked, so run legacy *ifconfig* to confirm that the IP address was applied to the ens4 interface.
 
   `student@beachhead:~$` `ifconfig`
     
+  - **Q1: Was an IP address added to en4?**
+    - A1:
 
+0. To remove the IP address using the legacy command, *ifconfig*, use the following command:
 
-0. free
+  `student@beachhead:~$` `sudo ifconfig ens4 0.0.0.0`
 
-**iproute2:**  
-   `$ sudo ip addr add 10.0.0.1/24 dev eth1`  
+0. There won't be any special output if it worked, so run legacy *ifconfig* to confirm that the IP address was applied to the ens4 interface.
 
+  `student@beachhead:~$` `ifconfig -a`
+
+  - **Q1: Does ens4 still have an IP address?**
+    - A1:
+
+0. Let's do the same thing we just did (apply an L3 address to ens4), but with the new iproute2 toolkit. For this we want the command *ip addr add*.
+
+  `student@beachhead:~$` `sudo ip addr add 172.16.2.10/24 dev ens4`  
+
+0.
+
+  `student@beachhead:~$` `ip addr show`
+
+0. It is possible to assign multiple IPv4 addresses to a network interface. First, we'll use the legacy 
 #### 4. Assign Multiple IPv4 addresses to a Network Interface
 **net-tools:**  (Not shown, possible using alias, but ugly)
 
 **iproute2:**   
-  `$ sudo ip addr add 10.0.0.1/24 broadcast 10.0.0.255 dev eth1`  
-  `$ sudo ip addr add 10.0.0.2/24 broadcast 10.0.0.255 dev eth1`  
-  `$ sudo ip addr add 10.0.0.3/24 broadcast 10.0.0.255 dev eth1`  
+  `$ sudo ip addr add 172.16.2.13/24 dev ens4`  
+  `$ sudo ip addr add 172.16.2.14/24 dev ens4`  
+  `$ sudo ip addr add 172.16.2.15/24 dev ens4`  
   
 #### 5. Remove an IPv4 address from a Network Interface
 
