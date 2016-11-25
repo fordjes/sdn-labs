@@ -234,7 +234,7 @@ The objective of this lab is to explore how Mininet's unique application of netw
   - **Q1: Has there been a L3 (IP) address applied to the virtual interface of host1 (h2)?**
     - A1: Yes. In this example, h2-eth0@if198 has the address 10.0.0.2.
 
-0. Last but not least, the L2 and L3 of the switch.
+0. Almost done! Display the L2 of the switch (s1).
 
   `mininet>` `s1 ip link list`
   
@@ -247,10 +247,6 @@ The objective of this lab is to explore how Mininet's unique application of netw
       link/ether fa:16:3e:ac:cb:ff brd ff:ff:ff:ff:ff:ff
   11: ovs-system: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1
       link/ether ea:fb:5d:d4:53:b6 brd ff:ff:ff:ff:ff:ff
-  18: veth-luigi@if19: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
-      link/ether f6:a9:49:c3:37:b2 brd ff:ff:ff:ff:ff:ff link-netnsid 0
-  20: veth-toad@if21: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
-      link/ether a2:d9:bf:53:85:bc brd ff:ff:ff:ff:ff:ff link-netnsid 1
   196: s1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1
       link/ether a6:a3:5f:2d:a9:42 brd ff:ff:ff:ff:ff:ff
   197: s1-eth1@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master ovs-system state UP mode DEFAULT group default qlen 1000
@@ -258,6 +254,8 @@ The objective of this lab is to explore how Mininet's unique application of netw
   198: s1-eth2@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master ovs-system state UP mode DEFAULT group default qlen 1000
       link/ether da:72:e3:67:ae:e8 brd ff:ff:ff:ff:ff:ff link-netnsid 3
   ```
+
+0. Last but not least, the L3 of the switch (s1).
 
   `mininet>` `s1 ip addr show`
 
