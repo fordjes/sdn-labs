@@ -9,7 +9,7 @@ title: "Lab xx - Mininet Namespaces - Learning about Linux Network Namespaces"
 ### TUESDAY - &#x2B50;REQUIRED&#x2B50;
 
 ### Lab Objective
-The objective of this lab is to explore how mininet's unique application of network namespaces, so that we might futher our understanding of the namespace concept.
+The objective of this lab is to explore how Mininet's unique application of network namespaces, so that we might futher our understanding of the namespace concept.
 
 ### Procedure
 
@@ -95,7 +95,7 @@ The objective of this lab is to explore how mininet's unique application of netw
   (h1)               (h2)
   ```
   
-0. Without closing the current terminal, open a new, second terminal.
+0. **Without** closing the current terminal, open a new, second terminal.
 
 0. Enumerate the system **with** mininet running. First, display the current L2 configuration of the system.
 
