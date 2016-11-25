@@ -20,7 +20,7 @@ The objective of this lab is to explore how mininet uses namespaces, so that we 
  - **Q2: Can there be more than one (1) network namespace?**
    - A2: Yes. By default a process inherits its network namespace from its parent. Initially all the processes share the same default network namespace from the init process.
  - **Q3: How can I "see" the network namespaces within the system?**
-   - A3: By convention a named network namespace is an object at /var/run/netns/NAME that can be opened. The file descriptor resulting from opening /var/run/netns/NAME refers to the specified network namespace. Holding that file descriptor open keeps the network namespace alive.
+   - A3: By convention a named network namespace is an object at */var/run/netns/NAME* that can be opened. The file descriptor resulting from opening */var/run/netns/NAME* refers to the specified network namespace. Holding that file descriptor open keeps the network namespace alive.
  - **Q4: What do I need to 'install' to work with network namespaces?**
    - A4: Nothing. Network namespaces entered the Linux Kerenl in 2.6.24 (~Jan 2009). From then it took about a year of futher development before they were actually usable.
 
