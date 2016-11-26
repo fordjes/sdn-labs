@@ -88,9 +88,9 @@ The objective of this lab is to explore briding interfaces.
   172.16.1.0/24 dev ens3  proto kernel  scope link  src 172.16.1.4 
   ```
 
-0. The next three steps we run will create three files; (1) *ip-link-list-init*, (2) *ip-addr*, and (3) *ip-route*. Each of these files will be a copy of the current configuation of our machine. First we will write the output of *ip link list* to a file called *ip-link-list-init*.
+0. The next three steps we run will create three files; (1) *ip-link-init*, (2) *ip-addr-init*, and (3) *ip-route-init*. Each of these files will be a copy of the current configuation of our machine. First we will write the output of *ip link list* to a file called *ip-link-list-init*.
 
-  `student@beachhead:~$` `ip link list > /tmp/ip-link-init`  
+  `student@beachhead:~$` `ip link show > /tmp/ip-link-init`  
 
 0. Now write the output of the command *ip addr show* to a file we create called *ip-addr-init*.
 
@@ -106,7 +106,7 @@ The objective of this lab is to explore briding interfaces.
   
 0. Now write the output of *ip link show* to a new file called *ip-link-veth1*
 
-  `student@beachhead:~$` `ip link list > /tmp/ip-link-veth1`
+  `student@beachhead:~$` `ip link show > /tmp/ip-link-veth1`
 
 0. We can now demo how the Alta3 Research *a3diff* fuction behaves. Try using it to compare *ip-link-init* and *ip-link-veth1*. Any of the green text represents additions. These changes will also be surrounded by "**{+**" and "**+}**" symbols.
 
@@ -133,9 +133,9 @@ The objective of this lab is to explore briding interfaces.
 
   `student@beachhead:~$` `sudo ip link set dev veth2 up`
 
-0. Run the command *ip link list*, and output the contents to a few file, *ip-link-veth1up*. 
+0. Run the command *ip link show*, and output the contents to a few file, *ip-link-veth1up*. 
 
-  `student@beachhead:~$` `ip link list > /tmp/ip-link-veth1up`
+  `student@beachhead:~$` `ip link show > /tmp/ip-link-veth1up`
 
 0. Examine the changes that occured by turning up the *veth1* interface. Any of the red text represents deletions. These changes will also be surrounded by "**[-**" and "**-]**" symbols.
 
@@ -158,9 +158,9 @@ The objective of this lab is to explore briding interfaces.
 
   `student@beachhead:~$` `sudo ip link add name br0 type bridge`
 
-0. Make a copy of the current link layer with the *ip link list* command, and write the output to the file *ip-link-bridge*
+0. Make a copy of the current link layer with the *ip link show* command, and write the output to the file *ip-link-bridge*
 
-  `student@beachhead:~$` `ip link list > /tmp/ip-link-bridge`
+  `student@beachhead:~$` `ip link show > /tmp/ip-link-bridge`
 
 0. Examine the changes that occured by creating a bridge interface.
 
@@ -192,9 +192,9 @@ The objective of this lab is to explore briding interfaces.
   - **Q1: What is the name of the connected interface(s)**
     - A1: veth1
 
-0. Make a copy of the current link layer with the *ip link list* command, and write the output to the file *ip-link-bridge-veth1*
+0. Make a copy of the current link layer with the *ip link show* command, and write the output to the file *ip-link-bridge-veth1*
 
-  `student@beachhead:~$` `ip link list > /tmp/ip-link-bridge-veth1`
+  `student@beachhead:~$` `ip link show > /tmp/ip-link-bridge-veth1`
 
 0. Examine the changes that occured by adding veth1 to the bridge interface.
 
@@ -223,9 +223,9 @@ The objective of this lab is to explore briding interfaces.
 
   `student@beachhead:~$` `sudo ip link set dev br0 up`
 
-0. Just as before, write the link layer information to a new file, *ip-link-list-bridge*.
+0. Just as before, write the link layer information to a new file, *ip-link-bridge*.
     
-  `student@beachhead:~$` `ip link show > /tmp/ip-link-list-bridge`
+  `student@beachhead:~$` `ip link show > /tmp/ip-link-bridge`
 
 0. Since we also applied an IP address, let's also check out the L3 information with the *ip address show* command. Write the output to a file called, *ip-addr-bridge*.
 
@@ -237,7 +237,7 @@ The objective of this lab is to explore briding interfaces.
 
 0. Examine the changes that occured at the link layer by using the *a3diff* command.
   
-  `student@beachhead:~$` `a3diff /tmp/ip-link-bridge-veth1 /tmp/ip-link-list-bridge`
+  `student@beachhead:~$` `a3diff /tmp/ip-link-bridge-veth1 /tmp/ip-link-bridge`
   
   ```
   1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
