@@ -23,6 +23,11 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
 0. Begin by creating a pair of virtual ethernet interfaces. From this lab forward, we will issue all of our commands with the updated iproute2 toolkit.
 
   `student@beachhead:~$` `ip link add veth1 type veth peer name veth2`
+  
+  >
+  This networking stuff is hard enough without having to visualize it in our heads. The illustration below is a depiction of the command you just issued:
+  
+    ![Alta3 Research Wireshark Openflow veth Creation](https://alta3.com/labs/images/alta3_sdn_veth01.png)
 
 0. Nothing special is displayed to the screen for issuing the previous command. To see the results, use the *ip link* command. The pair of interfaces we just created should be named veth1 and veth2.
 
