@@ -196,7 +196,7 @@ The objective of this lab is to explore briding interfaces.
   ![Alta3 Research Wireshark Openflow Add veth](https://alta3.com/labs/images/alta3_sdn_linuxbridge02.png)
   
   **Q1: Have we applied any L3 (IP addressing) to our bridge or veth interfaces?**
-    A1: No. At this time there is no L3 connectivity.
+    - A1: No. At this time there is no L3 connectivity.
   
 0. Let's show the interfaces on the bridge, (so far). The *brctl* command is from the legacy *net-tools* toolkit.
 
