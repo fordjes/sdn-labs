@@ -69,7 +69,7 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
 
 0. Check out your work. Both interfaces should be displaying a state of UP.
 
-  `student@beachhead:~$` `ip link list`
+  `student@beachhead:~$` `ip link show`
 
   ```
   1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
@@ -92,7 +92,7 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
 
   `student@beachhead:~$` `ip addr add 172.16.2.12/24 dev veth2`
 
-0. Issuing *ip addr list* will display the same information as *ip link list*, but will also include the L3 IP information.
+0. Issuing *ip addr list* will display the same information as *ip link show*, but will also include the L3 IP information.
 
   `student@beachhead:~$` `ip addr list`
   
@@ -199,7 +199,7 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
   - **Q1: Why do we only need to run the delete once?**
     - A1: Think of it in terms of a wire. You only need to delete one side of the wire to get rid of the entire wire.
 
-  * `student@beachhead:~$` `ip link list`
+0. `student@beachhead:~$` `ip link show`
   
     ```
     1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
