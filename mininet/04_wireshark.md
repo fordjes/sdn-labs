@@ -38,9 +38,9 @@ The objective of this lab is
 
   `student@beachhead:~$` `sudo mn --controller=remote,ip=127.0.0.1,port=6653`
 
-0. Start a ryu controller with the below file saved as l2.py
+0. Start a ryu controller with the below file saved as ss13.py
 
-  `wget -O ss13.py https://raw.githubusercontent.com/osrg/ryu/master/ryu/app/simple_switch_13.py`
+  `student@beachhead:~$` `wget -O ss13.py https://raw.githubusercontent.com/osrg/ryu/master/ryu/app/simple_switch_13.py`
   `ryu-manager ss13.py`
 
 0. Run the *pingall* command in Mininet.
