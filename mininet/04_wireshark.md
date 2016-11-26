@@ -29,6 +29,9 @@ The objective of this lab is
 
 0. In the *Enter a capture filter ...* box, type `port 6653`.
 
+  - **Q1: What is running on port 6653?**
+    - A1: The port of the control interface.
+
 0. Click the Start button.
 
 0. Start a Mininet basic topology with connection to a 'remote' controller
