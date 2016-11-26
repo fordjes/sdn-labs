@@ -229,16 +229,21 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
     - **Q1: So why didn't the ping command work between the two interfaces?**
       - A1: It won't ever work. We created a dumb cable called an 'veth', and we're watching it ARP for itself. Take away is that the veth can be used to make a connection. Other than that, it's really dumb (just like a cat-6e cable).
 
-0. Examine the routing table and run tcpdump whit the previous commands
+0. We did learn how to use TCPdump. Let's see if we can't use those skils to see unaswered ARPs going out one end of our veth. Run this next command, which once again asks *veth2* to send an ICMP packet to IP address *172.16.2.11*. As this one half of a veth, we expect it to 'exit' via its connected interface *veth1*, which has been assigned the IP address *172.16.2.11*. The second half of the command will allow the ping to run in the background (* > /dev/null &*).
 
-  >
-  When we force the ICMP packet destine for 172.16.2.12 on veth1 
+  `student@beachhead:~$` `ping -I veth2 172.16.2.11 > /dev/null &`
 
-  `student@beachhead:~$` `ping -I veth2 172.16.2.11 > /dev/null &` _ping in the background_
+0. Now run TCPdump, and capture traffic on the *veth2* interface.
+
+  `student@beachhead:~$` `sudo tcpdump -i veth2`
   
-  `student@beachhead:~$` `sudo tcpdump -i veth2` _Ctrl^C to exit_
+0. You should see a long list of unanswered ARPs. Press **CTRL + C** to stop TCPdump.
+
+0. Type the following command to bring the *ping* tool back into the foreground.
     
-  `student@beachhead:~$` `fg` _bring the ping back into the foreground and press Ctrl^C to quit_
+  `student@beachhead:~$` `fg`
+  
+0. Press **CTRL + C** to stop the *ping* command.
 
 0. Remove all the virtual interfaces (back to scratch)
 
@@ -257,4 +262,5 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
     3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
         link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
     ```
-
+    
+0. Good job! That's it for this lab.
