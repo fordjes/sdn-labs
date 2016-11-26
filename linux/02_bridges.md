@@ -42,7 +42,7 @@ The objective of this lab is to explore briding interfaces.
 
 0. While we eventually want to create a traditional Linux bridge with virtual interfaces, let's first collect information about our current configuration.
 
-  `student@beachhead:~$` `ip link list`
+  `student@beachhead:~$` `ip link show`
   
   ```
   1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1
@@ -157,6 +157,11 @@ The objective of this lab is to explore briding interfaces.
 0. Now let's create a bridge interface.
 
   `student@beachhead:~$` `sudo ip link add name br0 type bridge`
+  
+  >
+  To help us visualize our progress in lab, below is an illustration of the bridge interface (br0) we just created.
+  
+  ![Alta3 Research Wireshark Openflow Bridge Creation](https://alta3.com/labs/images/alta3_sdn_linuxbridge01.png)
 
 0. Make a copy of the current link layer with the *ip link show* command, and write the output to the file *ip-link-bridge*
 
