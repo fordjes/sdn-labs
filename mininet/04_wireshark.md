@@ -59,7 +59,7 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
 0. Find the first packet in your OpenFlow capture, and answer the following questions:
 
   - **Q1: What is the first message in your OpenFlow capture?**
-    - A1: HELLO
+    - A1: OFPT_HELLO
   - **Q2: Who contacts who first?**
     - A2: Based on the OpenFlow, the Controller contacted the switch first! Well, that's wrong. Continue on to find out why.
 
