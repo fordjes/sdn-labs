@@ -1,8 +1,29 @@
-0. Open Wireshark
+---
+date: "2016-11-25"
+draft: false
+weight: 200
+title: "Lab xx - Using Wireshark to Capture OpenFlow v1.3 Traffic"
+---
+[Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
 
-  `sudo wireshark &`
+### TUESDAY - &#x2B50;REQUIRED&#x2B50;
 
-0. Start a new capture on `any` with a capture filter `port 6653`
+### Lab Objective
+The objective of this lab is
+
+### Procedure
+
+0. Take a moment to clean up your remote Desktop. For now, close all other terminal spaces or windows you might have open.
+
+0. Open a new terminal, then *cd* to the home student directory
+
+  `student@beachhead:/$` `cd`
+
+0. Launch Wireshark.
+
+  `student@beachhead:~$` `sudo wireshark &`
+
+0. Start a new capture on `any` with a capture filter `port 6653`.
 
 0. Start a mininet basic topology with connection to a 'remote' controller
 
