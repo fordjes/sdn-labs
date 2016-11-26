@@ -206,9 +206,14 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
 
   `student@beachhead:~$` `ping -help`
 
-0. So the following command should ask veth2 to ping 172.16.2.11. However, initally, this command will **not** work. Nevertheless, try it to confirm.
+0. So the following command should ask veth2 to ping 172.16.2.11. However, this command will **not** work! And that's the point. We're trying to emphasize that *veth* we created is just a dumb cable. If what you're doing is unclear, check out the included illustration below for clarity.
 
-    `student@beachhead:~$` `ping -I veth2 172.16.2.11`
+  `student@beachhead:~$` `ping -I veth2 172.16.2.11`
+  
+  >
+  The illustration below should reveal why we would never expect this experiment to 'work'.
+  
+  ![Alta3 Research Wireshark Openflow veth Ping](https://alta3.com/labs/images/alta3_sdn_veth05.png)
 
 0. Now confirm that we cannot ping in either direction.
 
