@@ -20,6 +20,20 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
 
   `student@beachhead:/$` `cd`
 
+0. We're about to create a virtal ethernet interface (veth). Think of a veth interface like a cat-6e cable. When you create a veth, think of it like creating one cable, with two interfaces.
+
+  >
+  Before we go issuing commands, make sure this is the picture you have in your mind.
+  
+  ![Alta3 Research Wireshark Openflow veth Creation](https://alta3.com/labs/images/alta3_sdn_veth02.png) 
+
+  - **Q1: Suppose I hand you a cat-6e cable. How many cables did I just hand you?**
+    - A1: Just one.
+  - **Q2: How many interfaces are on that cable?**
+    - A2: Assuming the cable is going to be useful, it needs two (2) ends. So two interfaces.
+  - **Q3: So you could name both interfaces differently (both ends of the wire)?**
+    - A3: Sure! We could name it something really creative, like *left-end* and *right-end*, or maybe *veth1* and *veth2*.
+
 0. Begin by creating a pair of virtual ethernet interfaces. From this lab forward, we will issue all of our commands with the updated iproute2 toolkit.
 
   `student@beachhead:~$` `ip link add veth1 type veth peer name veth2`
@@ -27,7 +41,16 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
   >
   This networking stuff is hard enough without having to visualize it in our heads. The illustration below is a depiction of the command you just issued:
   
-    ![Alta3 Research Wireshark Openflow veth Creation](https://alta3.com/labs/images/alta3_sdn_veth01.png)
+  ![Alta3 Research Wireshark Openflow veth Creation](https://alta3.com/labs/images/alta3_sdn_veth01.png)
+    
+  - **Q1: How many *veths* did you just create?**
+    - A1: Just one! Because I'm thinking of a *veth* like I think of a cat-6e cable.
+  - **Q2: When one veth is created, how many interfaces are created along with it?**
+    - Q2: Two. Just like the cat-6e cable.
+  - **Q3: If someone 'deleted' one half of your cat-6e cable (smashed one of the RJ-45 boots), what would you do with the cable?**
+    - A3: Throw it in the trash.
+  - **Q4: So later on, when we 'delete' one of these veth interfaces, what will happen to the other interface?**
+    - A4: Both interfaces will be *deleted*, just like the cable being thrown in the trash if one boot is broken.
 
 0. Nothing special is displayed to the screen for issuing the previous command. To see the results, use the *ip link* command. The pair of interfaces we just created should be named veth1 and veth2.
 
