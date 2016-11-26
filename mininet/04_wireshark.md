@@ -139,6 +139,13 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
   - **Q4: What is the resulting action?**
     - A4: Send a packet to the flood port (all the ports except the ingress port). This can seen two places: The first describes the *what* to do. We can see this in the packet at *OpenFlow v1.3 > Action > Type > OFPAT_OUTPUT (0)*. The second describes the *where* to do it. We can see this in the packet at *OpenFlow v1.3 > Action > Port > OFPP_FLODD (oxfffffffb)*
 
+0. Find the second or third *OFPT_FLOW_MOD*. Answer the following questions:
+
+  - **Q1: What are the two match conditions applied to this flow mod?**
+    - A1: To find the answer, navigate to: *OpenFlow 1.3 > Match > OXM field* (you'll find two OXM fields)
+  - **Q2: What is the action?**
+    - A2: The action described will be to send traffic out port 1 or 2. To find out which, navigate to: *OpenFlow 1.3 > Instruction > Action > Type & Port* 
+
 0. Find a packet labeled *OFPT_ECHO_REQUEST*. *Left-click* the packet.
 
 0. Open the OpenFlow 1.3 header.
