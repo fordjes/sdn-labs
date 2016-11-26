@@ -206,13 +206,39 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
   `student@beachhead:~$` `a3diff /tmp/ovs-addr-init /tmp/ovs-addr-br`
 
-0. Okay, so now let's create two veth pairs for adding into the namespaces.
+0. Okay, so now let's create a veth pair. One end will be called, *eth0-luigi*, and the other end *veth-luigi*.
 
   `student@beachhead:~$` `sudo ip link add eth0-luigi type veth peer name veth-luigi`
   
-0. Create another veth pair.
+  >
+  The illustration below shows the current state of our L2 network. An ovs-bridge has been created, along with a veth. One veth interface is named veth-luigi, and the other eht0-luigi. By default, both interfaces will be in a DOWN state when they are created.
+
+  ![Alta3 Research OVS veth Pair](https://alta3.com/labs/images/alta3_sdn_ovsbridge02.png)
+
+0. Look at the L2 networking to confirm that you understand the above illustration, and help you with the associated questions.
+
+  `student@beachhead:~$` `ip link show`
+  
+  - **Q1: Does it matter what the veth interfaces are named?**
+    - A1: No. One is named *veth-luigi*, and the other is named *eth0-luigi*.
+  
+0. Create another veth pair. One end will be called, *eth0-toad*, and the other end *veth-toad*.
 
   `student@beachhead:~$` `sudo ip link add eth0-toad type veth peer name veth-toad`
+
+  >
+  The illustration below shows the result of our command above.
+
+  ![Alta3 Research OVS veth Pair2](https://alta3.com/labs/images/alta3_sdn_ovsbridge03.png)
+
+0. Look at the L2 networking to confirm that you understand the above illustration, and help you with the associated questions.
+
+  `student@beachhead:~$` `ip link show`
+  
+  - **Q1: What state is *veth-toad* and *eth0-toad*?**
+    - A1: The state is DOWN. When veths are created, their state is always down.
+  - **Q2: Are either of the veth pairs connected to the bridge, *yoshis-island*?**
+    - Q2: No. Not yet.
 
 0. Write out the current L2 state to a file called *ovs-link-veths*
 
