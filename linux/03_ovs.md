@@ -101,7 +101,7 @@ Some of the commands are presented in a different order than the Linux Bridge la
   toad
   luigi
   ```
-  
+
 0. Network namespaces, like the two we just created, are tracked in the following location.
 
   `student@beachhead:~$` `ls /var/run/netns -ll`
@@ -111,10 +111,14 @@ Some of the commands are presented in a different order than the Linux Bridge la
   -r--r--r-- 1 root root 0 Nov 22 15:52 luigi
   -r--r--r-- 1 root root 0 Nov 22 15:53 toad
   ```
-  
+
+0. Below is an illustration to give you a visual on the changes we're making to the system. By default, there is always a *root* namespace. So far, you've also created a *namspace* called *luigi*, and another, *toad*.
+
+  ![Alta3 Research OVS Bridge Namespaces](https://alta3.com/labs/images/alta3_sdn_ovsbridge04.png)
+
 0. Examine network namespaces. The following command will reveal the network devices within the luigi namespace.
 
-  * `student@beachhead:~$` `sudo ip netns exec luigi ip link`
+  `student@beachhead:~$` `sudo ip netns exec luigi ip link`
   
   ```
   1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default qlen 1
@@ -247,6 +251,26 @@ Some of the commands are presented in a different order than the Linux Bridge la
 0. Examine how L2 configuration changed with the creation of these two veth pairs.
 
   `student@beachhead:~$` `a3diff /tmp/ovs-link-br /tmp/ovs-link-veths`
+  
+0. Normally, we wouldn't care about brining up the veths, but we want to prove a point. Bring all the veth interfaces to an UP state. First turn the veth-luigi interface UP.
+
+  `student@beachhead:~$` `sudo ip link set veth-luigi up`
+
+0. Turn the eth0-luigi interface UP.
+
+  `student@beachhead:~$` `sudo ip link set eth0-luigi up`
+
+0. Turn the veth-toad interface UP.
+
+  `student@beachhead:~$` `sudo ip link set veth-toad up`
+
+0. Turn the eth0-toad interface UP.
+
+  `student@beachhead:~$` `sudo ip link set eth0-toad up`
+  
+0. So the reason we executed the last four steps will become clear in a moment. For now, execute an *ip link show* command, and confirm that your veth pair configuration matches the illustration below.
+
+  ![Alta3 Research OVS veth Pair UP](https://alta3.com/labs/images/alta3_sdn_ovsbridge05.png)  
 
 0. Add the veths into the network namespaces. First set the *eth0-luigi* veth into the network namespace *luigi*
 
@@ -255,6 +279,19 @@ Some of the commands are presented in a different order than the Linux Bridge la
 0. Add the second veth, *eth0-toad*, into the network namespace *toad*.
 
   `student@beachhead:~$` `sudo ip link set eth0-toad netns toad`
+
+0. We will use the *a3diff* function to clearly display how the L2 networking has changed when you moved the veth pairs into namespaces in a moment. For now, issue the *ip link show* command, and answer the following question.
+
+  `student@beachhead:~$` `ip link show`
+
+  - **Q1: What is the state of the veth interfaces?**
+    - A1: LINKLAYERDOWN
+  - **Q2: What state were they in before we moved them into the namesapces?**
+    - A2: UP
+
+0. The illustration below reflects the current state of our network. Make sure you agree with its assessment.
+
+  ![Alta3 Research OVS veth Pair into Namesapces](https://alta3.com/labs/images/alta3_sdn_ovsbridge06.png)
 
 0. Write out the current L2 state to a file called *ovs-link-vethmove*
 
