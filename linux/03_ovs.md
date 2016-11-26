@@ -141,6 +141,11 @@ Some of the commands are presented in a different order than the Linux Bridge la
 0. Create an Open vSwitch bridge. The following command instructs Open vSwitch to create a bridge named *yoshis-island*.
 
   `student@beachhead:~$` `sudo ovs-vsctl add-br yoshis-island`
+  
+  >
+  Just as in the previous lab, we'll illustrate the effect your commands are having on the system.
+  
+  ![Alta3 Research OVS Bridge Create](https://alta3.com/labs/images/alta3_sdn_ovsbridge01.png)
 
 0. Great. Now check out the current state of the Open vSwitch.
 
