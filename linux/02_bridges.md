@@ -360,7 +360,8 @@ The objective of this lab is to explore briding interfaces.
   
   - **Q1: What is the state of your veth1?**
     - A1: The state is down. Interfaces are always down after they are moved.
-
+  >
+  
   >
   Hopefully everything is clear up to this point, but here's another update to our ongoing illustration. Right now we're investigating the state changes to veths when they are moved into new namespaces. 
   
