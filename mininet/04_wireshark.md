@@ -42,6 +42,10 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
 
   `student@beachhead:~$` `wget -O ss13.py https://raw.githubusercontent.com/osrg/ryu/master/ryu/app/simple_switch_13.py`
 
+0. Print out the screen the code we just downloaded.
+
+  `student@beachhead:~$` `cat ss13.py`
+
 0. Start a Ryu controller with the file *ss13.py*.
 
   `student@beachhead:~$` `ryu-manager ss13.py`
@@ -56,7 +60,14 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
 
 0. In your resulting capture, click around to find the following types of OpenFlow packets.
 
-0. Find the first packet in your OpenFlow capture, and answer the following questions:
+0. Find the first packet in your OpenFlow capture. Expand the OpenFlow v1.3 tree in *window 2*.
+
+  >
+  If you're lost, see the screenshot below:
+  
+  ![Alta3 Research Wireshark Openflow Details](https://alta3.com/labs/images/alta3_sdn_wireshark_openflow01.png)
+
+0. and answer the following questions:
 
   - **Q1: What is the first message in your OpenFlow capture?**
     - A1: OFPT_HELLO
