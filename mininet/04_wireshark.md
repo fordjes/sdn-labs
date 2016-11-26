@@ -45,6 +45,8 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
 0. Print out the screen the code we just downloaded.
 
   `student@beachhead:~$` `cat ss13.py`
+  
+0. This is the code that makes a learning L2 switch
 
 0. Start a Ryu controller with the file *ss13.py*.
 
@@ -67,7 +69,7 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
   
   ![Alta3 Research Wireshark Openflow Details](https://alta3.com/labs/images/alta3_sdn_wireshark_openflow01.png)
 
-0. and answer the following questions:
+0. Answer the following questions based off of this first OpenFlow capture:
 
   - **Q1: What is the first message in your OpenFlow capture?**
     - A1: OFPT_HELLO
@@ -172,4 +174,19 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
 
 0. The difference between the *REF* and next number, is the time to Send / Recieve the ECHO REQUEST & ECHO REPLY.
 
+0. Start a new Wireshark capture. Don't save this one.
+
+0. Once again, run the *pingall* command in Mininet.
+
+  `mininet>` `pingall`
+
+0. Go back to Wireshark, *stop* the capture.
+
+0. Look at Wireshark, and notice that there are no new OpenFlow packets!
+
+  - **Q1: Why is this? Why no new OpenFlow packets?**
+    A1: We didn't stop the relationship between the switch and the Ryu controller. The switch still knows how to deal with incomming ICMP packets.
+  - **Q2: Any exceptions to this rule?**
+    A2: You might occasionally see an *OFPT_ECHO_REQUEST* and an *OFPT_ECHO_REPLY* to measure roundtrip delay, but no. If you keep running ping tests, you'll see no new traffic.
+    
 0. Good job! That's it for this lab. Congradulations if this is your first time checking out OpenFlow message flows.
