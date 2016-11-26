@@ -215,8 +215,8 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
 0. Look at Wireshark, and notice that there are no new OpenFlow packets!
 
   - **Q1: Why is this? Why no new OpenFlow packets?**
-    A1: We didn't stop the relationship between the switch and the Ryu controller. The switch still knows how to deal with incomming ICMP packets.
+    - A1: We didn't stop the relationship between the switch and the Ryu controller. The switch still knows how to deal with incomming ICMP packets.
   - **Q2: Any exceptions to this rule?**
-    A2: You might occasionally see an *OFPT_ECHO_REQUEST* and an *OFPT_ECHO_REPLY* to measure roundtrip delay, but no. If you keep running ping tests, you'll see no new traffic.
+    - A2: You might occasionally see an *OFPT_ECHO_REQUEST* and an *OFPT_ECHO_REPLY* to measure roundtrip delay, but no. If you keep running ping tests, you'll see no new traffic.
     
 0. Good job! That's it for this lab. Congradulations if this is your first time checking out OpenFlow message flows.
