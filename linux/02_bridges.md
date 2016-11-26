@@ -148,10 +148,11 @@ The objective of this lab is to explore briding interfaces.
     link/ether fa:16:3e:6f:47:52 brd ff:ff:ff:ff:ff:ff
   3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
     link/ether 08:00:27:75:2a:67 brd ff:ff:ff:ff:ff:ff
-  6: veth2@veth1: [-<BROADCAST,MULTICAST,M-DOWN>-] {+<BROADCAST,MULTICAST>+} mtu 1500 qdisc [-noop-] {+noqueue+} state [-DOWN-] {+UP+}mode DEFAULT group default qlen 1000
-    link/ether 66:22:9b:e1:f4:9b brd ff:ff:ff:ff:ff:ff
-  7: veth1@veth2: [-<BROADCAST,MULTICAST,M-DOWN>-] {+<BROADCAST,MULTICAST>+} mtu 1500 qdisc [-noop-] {+noqueue+}     state [-DOWN-] {+UP+} mode DEFAULT group default qlen 1000
-    link/ether f2:2c:90:ca:99:c7 brd ff:ff:ff:ff:ff:ff
+  6: veth2@veth1: [-<BROADCAST,MULTICAST,M-DOWN>-] {+<BROADCAST,MULTICAST,UP,LOWER_UP>+} mtu 1500 qdisc [-noop-] {+noqueue+} state [-DOWN-] {+UP+} mode DEFAULT group default qlen 1000
+    link/ether 46:ba:72:93:32:0e brd ff:ff:ff:ff:ff:ff
+  7: veth1@veth2: [-<BROADCAST,MULTICAST,M-DOWN>-] {+<BROADCAST,MULTICAST,UP,LOWER_UP>+} mtu 1500 qdisc [-noop-] {+noqueue+} state [-DOWN-] {+UP+} mode DEFAULT group default qlen 1000
+    link/ether 22:11:43:47:9f:28 brd ff:ff:ff:ff:ff:ff
+
   ```
 
 0. Now let's create a bridge interface.
@@ -161,7 +162,7 @@ The objective of this lab is to explore briding interfaces.
   >
   To help us visualize our progress in lab, below is an illustration of the bridge interface (br0) we just created.
   
-  ![Alta3 Research Wireshark Openflow Bridge Creation](https://alta3.com/labs/images/alta3_sdn_linuxbridge01.png)
+  ![Alta3 Research Linux Bridge Creation](https://alta3.com/labs/images/alta3_sdn_linuxbridge01.png)
 
 0. Make a copy of the current link layer with the *ip link show* command, and write the output to the file *ip-link-bridge*
 
@@ -193,7 +194,7 @@ The objective of this lab is to explore briding interfaces.
   >
   Below is our illustration, updated to reflect the changes brought on by our last command.
   
-  ![Alta3 Research Wireshark Openflow Add veth](https://alta3.com/labs/images/alta3_sdn_linuxbridge02.png)
+  ![Alta3 Research Linux Bridge Add veth](https://alta3.com/labs/images/alta3_sdn_linuxbridge02.png)
   
   **Q1: Have we applied any L3 (IP addressing) to our bridge or veth interfaces?**
     - A1: No. At this time there is no L3 connectivity.
@@ -235,7 +236,7 @@ The objective of this lab is to explore briding interfaces.
   >
   Again, we've updated our drawing to reflect the changes brought on by our last command:
   
-  ![Alta3 Research Wireshark Openflow Bridge Interface IP](https://alta3.com/labs/images/alta3_sdn_linuxbridge03.png)  
+  ![Alta3 Research Linux Bridge Interface IP](https://alta3.com/labs/images/alta3_sdn_linuxbridge03.png)  
   
 0. Change the state of the new bridge interface to UP.
 
@@ -336,7 +337,10 @@ The objective of this lab is to explore briding interfaces.
   mario
   ```
   
+  >
+  Again, we've updated our drawing to reflect the changes brought on by our last command:
   
+  ![Alta3 Research Linux Bridge Mario Namespace](https://alta3.com/labs/images/alta3_sdn_linuxbridge04.png)
   
 0. Make a copy of the current L2 state, prior to adding veth2 to the mario namespace.
 
@@ -345,7 +349,7 @@ The objective of this lab is to explore briding interfaces.
 0. Move the 2nd veth into the mario namespace.
 
   `student@beachhead:~$` `sudo ip link set veth2 netns mario`
-  
+    
 0. Now that veth2 has been moved into the mario namespace, again, copy the state of L2 configuration within the system.
 
   `student@beachhead:~$` `ip link list > /tmp/ip-link-netns-veth2`
@@ -356,6 +360,12 @@ The objective of this lab is to explore briding interfaces.
   
   - **Q1: What is the state of your veth1?**
     - A1: The state is down. Interfaces are always down after they are moved.
+
+  >
+  Hopefully everything is clear up to this point, but here's another update to our ongoing illustration. Right now we're investigating the state changes to veths when they are moved into new namespaces. 
+  
+  ![Alta3 Research Linux Bridge Move veth2 to Mario NS](https://alta3.com/labs/images/alta3_sdn_linuxbridge05.png)
+
 
 0. Show the current L2 *mario* namespace configuration.
 
