@@ -89,8 +89,7 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
  - **Q2: What is this message asking?**
    - A2: This is the controller asking the switch to describe all of its ports.
  - **Q3: What message type (number) is this?**
-   - A3: 
-   
+   - A3: The type is (18).
    
 0. Click on the *OFPT_MULTIPART_REPLY, OFPMP_PORT_DESC*. Answer the following questions:
 
@@ -106,7 +105,7 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
 0. Click on the first *OFPT_FLOW_MOD*. Answer the following questions:
 
  - **Q1: What is this message doing?**
-   - A1: This is putting a Flow Miss rule in place with ultra low priority. This teaches the switch that the switch will take commands from the controller.
+   - A1: This is putting a *flow miss* rule in place with ultra low priority. This teaches the switch that the switch will take commands from the controller, and to send packets to the controller if it doesn't know how to route them.
  - **Q2: What is the *priroity* of this message?**
    - A2: 0 (This represents highest priority)
  - **Q3: What is the matching rule?**
@@ -116,21 +115,35 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
  - **Q5: What port to be associated with the action?**
    - Q5: OFPP_CONTROLLER (0xfffffffd)
 
-0. Click on the first *OFPT_PACKET_IN*. Answer the following questions:
+0. Click on the first *OFPT_PACKET_IN*. Answer the following questions based on what you are seeing in this packet:
 
- - **Q1: ?**
-   - A1:
-   
+ - **Q1: What is the Buffer ID?**
+   - A1: We'll need this number so we can compare it to the next one. Yours will be unique!
+ - **Q2: What was the total length?**
+   - A2: Yours is likely 90, or somewhere close to that.
+ - **Q3: What is the reason that this packet is being sent to the controller?**
+   - A3: OFPR_NO_MATCH (0) - This is the switches way of reporting to the controller that it doesn't know what to do with the packet.
+ - **Q4: What type of packet is this?**
+   - A4: Expand the data tree to find this information. There you'll see Internet C M Protocol IPv6.
+ - **Q5: What port did it come in?**
+   - A5: OpenFlow v1.3 > Match > OXM field > IN_PORT > Value: "X" *where X is the port this packet came in on*
+
+0. Click on the first *OFPT_PACKET_OUT*. Answer the following questions based on what you are seeing in this packet:
+
+  - **Q1: What is the Buffer ID?**
+    - A1: This should match the value you recoreded in the previous *OFPT_PACKET_IN*
+  - **Q2: Who is sending this packet?**
+    - A2: The controller is sending it to the switch.
+  - **Q3: What is the *In port*?**
+    - A3: This should match the port you found in the last question.
+  - **Q4: What is the resulting action?
+    - A4: Send a packet to the flood port (all the ports except the ingress port). This can seen two places: The first describes the *what* to do. We can see this in the packet at *OpenFlow v1.3 > Action > Type > OFPAT_OUTPUT (0)*. The second describes the *where* to do it. We can see this in the packet at *OpenFlow v1.3 > Action > Port > OFPP_FLODD (oxfffffffb)*
+
 0. Find a packet labeled *OFPT_ECHO_REQUEST*. *Left-click* the packet.
 
 0. Open the OpenFlow 1.3 header.
-
-  >
-  If you're lost, see the screenshot below.
   
-  
-  
-0. Answer the following quesiton based on what you're seeing displayed:
+0. Answer the following quesiton based on what you're seeing displayed in the packet *OFPT_ECHO_REQUEST*:
 
   - **Q1: What is the type of message is this?**
     - A1: Type 2
@@ -141,4 +154,4 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
 
 0. The difference between the *REF* and next number, is the time to Send / Recieve the ECHO REQUEST & ECHO REPLY.
 
-0.
+0. Good job! That's it for this lab. Congradulations if this is your first time checking out OpenFlow message flows.
