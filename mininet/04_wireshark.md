@@ -74,7 +74,7 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
   - **Q2: Who contacts who first?**
     - A2: Based on the OpenFlow, the Controller contacted the switch first! Well, that's wrong. Continue on to find out why.
 
-0. Change your *Display filter...* to: *((openflow_v4) or (tcp.flags.syn == 1 && tcp.flags.ack == 0))*
+0. Change your *Display filter...* to: `((openflow_v4) or (tcp.flags.syn == 1 && tcp.flags.ack == 0))`
 
   - **Q1: What does the above filter do?**
     - A1: TCP sessions are always preceeded by a *SYN* message, the above filter will let us see that.
