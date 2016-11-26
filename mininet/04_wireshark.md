@@ -136,7 +136,7 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
     - A2: The controller is sending it to the switch.
   - **Q3: What is the *In port*?**
     - A3: This should match the port you found in the last question.
-  - **Q4: What is the resulting action?
+  - **Q4: What is the resulting action?**
     - A4: Send a packet to the flood port (all the ports except the ingress port). This can seen two places: The first describes the *what* to do. We can see this in the packet at *OpenFlow v1.3 > Action > Type > OFPAT_OUTPUT (0)*. The second describes the *where* to do it. We can see this in the packet at *OpenFlow v1.3 > Action > Port > OFPP_FLODD (oxfffffffb)*
 
 0. Find a packet labeled *OFPT_ECHO_REQUEST*. *Left-click* the packet.
