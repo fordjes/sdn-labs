@@ -333,11 +333,11 @@ The objective of this lab is to learn how to interface with various networking c
 
 The following is a list of pages we thought might be helpful for our students to know about:
 
-* [iproute2 wiki](https://en.wikipedia.org/wiki/Iproute2)
+* [iproute2 Wiki](https://en.wikipedia.org/wiki/Iproute2)
 
-* [net-tools deprecated - mailing list](https://lists.debian.org/debian-devel/2009/03/msg00780.html)
+* [net-tools Deprecated - Mailing List](https://lists.debian.org/debian-devel/2009/03/msg00780.html)
 
-* [iproute2 cheatsheet](http://baturin.org/docs/iproute2/)
+* [iproute2 Cheatsheet](http://baturin.org/docs/iproute2/)
 
 * [ip route Management](http://linux-ip.net/html/tools-ip-route.html)
 
