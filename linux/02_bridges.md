@@ -190,6 +190,14 @@ The objective of this lab is to explore briding interfaces.
  
   `student@beachhead:~$` `sudo ip link set dev veth1 master br0`
   
+  >
+  Below is our illustration, updated to reflect the changes brought on by our last command.
+  
+  ![Alta3 Research Wireshark Openflow Add veth](https://alta3.com/labs/images/alta3_sdn_linuxbridge02.png)
+  
+  **Q1: Have we applied any L3 (IP addressing) to our bridge or veth interfaces?**
+    A1: No. At this time there is no L3 connectivity.
+  
 0. Let's show the interfaces on the bridge, (so far). The *brctl* command is from the legacy *net-tools* toolkit.
 
   `student@beachhead:~$` `brctl show`
@@ -220,9 +228,14 @@ The objective of this lab is to explore briding interfaces.
       link/ether [-2e:1e:c7:1d:8d:6e-] {+82:74:39:11:e1:ec+} brd ff:ff:ff:ff:ff:ff
   ```
 
-0. Add an ip address to the bridge interface.
+0. Add the IP address *172.16.2.100* to the bridge interface *br0*.
 
   `student@beachhead:~$` `sudo ip address add 172.16.2.100/24 dev br0`
+  
+  >
+  Again, we've updated our drawing to reflect the changes brought on by our last command:
+  
+  ![Alta3 Research Wireshark Openflow Bridge Interface IP](https://alta3.com/labs/images/alta3_sdn_linuxbridge03.png)  
   
 0. Change the state of the new bridge interface to UP.
 
