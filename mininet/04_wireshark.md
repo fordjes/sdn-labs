@@ -66,13 +66,13 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
 
 0. Columns can be added, or removed, with the **+** and **-** buttons at the bottom of the screen.
 
-0. Use the **-** button to remove the columns that display:
+0. Use the **-** button (minus) to remove the columns that display:
 
   - Protocol - Protocol
   - Source - Source address
   - Destination - Destination address
 
-0. The columns will appear in order that they appear in this list. Use the **+** button to add a column for **Source Port** and **Destination Port**. The objective is to have the following columns displayed (in this order):
+0. The columns will appear in order that they appear in this list. Use the **+** button (plus) to add a column for **Source Port** and **Destination Port**. The objective is to have the following columns displayed, **in this order**:
 
   - No. - Number
   - Time - Time (format as specified)
