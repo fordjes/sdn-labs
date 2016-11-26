@@ -43,7 +43,7 @@ The objective of this lab is
   `wget -O ss13.py https://raw.githubusercontent.com/osrg/ryu/master/ryu/app/simple_switch_13.py`
   `ryu-manager ss13.py`
 
-0. Pingall
+0. Run the *pingall* command in Mininet.
 
   `mininet>` `pingall`
 
@@ -53,9 +53,12 @@ The objective of this lab is
 
 0. In your resulting capture, click around to find the following types of OpenFlow packets.
 
-  0. Lots of 
-  0. Items
-  0. which stu
-  0. will provide
-  0. for discovery
-  0. and learning
+0. Find the first message in your OpenFlow capture, answer the following questions:
+
+  - **Q1: What is the first message in your OpenFlow capture?**
+    - A1: HELLO
+  - **Q2: In which direction is the *HELLO* it sent?**
+    - A2: This message can be sent in either direction.
+  - **Q3: **
+
+0. 
