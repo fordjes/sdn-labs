@@ -215,14 +215,19 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
   
   ![Alta3 Research Wireshark Openflow veth Ping](https://alta3.com/labs/images/alta3_sdn_veth05.png)
 
-0. Now confirm that we cannot ping in either direction.
+0. Now confirm that we **cannot** ping in either direction. If you're lost, again, the illustration below should help clear things up.
 
-    `student@beachhead:~$` `ping -I veth1 172.16.2.12`
+  `student@beachhead:~$` `ping -I veth1 172.16.2.12`
+
+  >
+  This second illustration should reveal why we would never expect this experiment to 'work' in either direction.
+  
+  ![Alta3 Research Wireshark Openflow veth Ping](https://alta3.com/labs/images/alta3_sdn_veth06.png)
 
 0. Answer the following question:
 
     - **Q1: So why didn't the ping command work between the two interfaces?**
-      - A1: The objective of this lab, is that this won't ever work.
+      - A1: It won't ever work. We created a dumb cable called an 'veth', and we're watching it ARP for itself. Take away is that the veth can be used to make a connection. Other than that, it's really dumb (just like a cat-6e cable).
 
 0. Examine the routing table and run tcpdump whit the previous commands
 
