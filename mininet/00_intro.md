@@ -384,8 +384,12 @@ The objective of this lab is to introduce the Mininet CLI. Mininet creates a rea
   (h1) (h2)(h3)(h4)  (h5) (h6)(h7)(h8)  (h9) (h10)(h11)(h12)(h13)(h14)(h15)(h16)     (h17) (h18)(h19)(h20)(h21)(h22)(h23)(h24)(h25)(h26) (h27)(h28) (h29)(h30)(h31)(h32)
   ```
 
-  - **Q1: **
-    - A1:
+  - **Q1: Is there any way to get a visual on what Mininet is building?**
+    - A1: Yes! That is the role of many controllers. We'll deploy that soon (Ryu), but for now we can keep using the CLI.
+  - **Q2: What is the purpose of learning to use Mininet?**
+    - A2: That will likely become more clear when we deploy it with the Ryu controller, but now that we know what it does, we can use it to study Linux network namespaces and principles of SDN.
+  - **Q3: Is there a reason anyone might use Mininet in production?**
+    - A3: Aboslutely! It is usually possible to create a Mininet network that resembles a hardware network, or a hardware network that resembles a Mininet network, and to run the same binary code and applications on either platform. Mininet can be a useful tool for researchers and developers (such as, over-the-top telecom applications). 
 
 0. Demonstrate connectivity between all of the deployed hosts. 
 
