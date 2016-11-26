@@ -25,7 +25,7 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
   >
   Before we go issuing commands, make sure this is the picture you have in your mind.
   
-  ![Alta3 Research Wireshark Openflow veth Creation](https://alta3.com/labs/images/alta3_sdn_veth02.png) 
+  ![Alta3 Research Wireshark Openflow veth is a cat-6e Cable](https://alta3.com/labs/images/alta3_sdn_veth02.png) 
 
   - **Q1: Suppose I hand you a cat-6e cable. How many cables did I just hand you?**
     - A1: Just one.
@@ -115,10 +115,20 @@ The objective of this lab is to explore virtual interfaces (veth) within Linux. 
 0. Let's apply an IP address to each interface. First to the veth1 interface.
 
   `student@beachhead:~$` `ip addr add 172.16.2.11/24 dev veth1`
+  
+  >
+  If you're lost, the following illustration should put you back on track. The previous command applied an IP address (L3) to one side of our veth (cat-6e cable) named *veth1*.
+
+  ![Alta3 Research Wireshark Openflow veth IP application 01](https://alta3.com/labs/images/alta3_sdn_veth03.png) 
 
 0. There won't be any special print-out from the previous command. Before we review our work, apply an IP address to the veth2 interface.
 
   `student@beachhead:~$` `ip addr add 172.16.2.12/24 dev veth2`
+  
+  >
+  So once again, if you're lost, the following illustration should put you back on track. The previous command applied an IP address (L3) to the other side of our veth (cat-6e cable) named *veth2*.
+
+  ![Alta3 Research Wireshark Openflow veth IP application 02](https://alta3.com/labs/images/alta3_sdn_veth04.png) 
 
 0. Issuing *ip addr list* will display the same information as *ip link show*, but will also include the L3 IP information.
 
