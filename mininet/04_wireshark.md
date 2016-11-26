@@ -75,6 +75,8 @@ The objective of this lab is
 
 0. Stop the Wireshark capture by *left-clicking* the red square *stop* button.
 
+0. In the *Display filter...* box, type: `openflow_v4` and then press *Enter* to apply the filter.
+
 0. In your resulting capture, click around to find the following types of OpenFlow packets.
 
   0. Lots of 
