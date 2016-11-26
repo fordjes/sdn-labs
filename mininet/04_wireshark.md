@@ -72,11 +72,9 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
 0. Answer the following questions based off of this first OpenFlow capture:
 
   - **Q1: What is the first message in your OpenFlow capture?**
-    - A1: OFPT_HELLO
+    - A1: OFPT_HELLO type (0)
   - **Q2: Who contacts who first?**
-    - A2: Based on the OpenFlow, the Controller contacted the switch first! Well, that's wrong. Continue on to find out why.
-  - **Q3: What type of message is this?**
-    - A3: Type (0)
+    - A2: Based on the OpenFlow, it is possible that it looks like the Controller contacted the switch first! Well, that's wrong. Continue on to find out why.
 
 0. Change your *Display filter...* to: `((openflow_v4) or (tcp.flags.syn == 1 && tcp.flags.ack == 0))`
 
