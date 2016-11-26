@@ -360,15 +360,13 @@ The objective of this lab is to explore briding interfaces.
   
   - **Q1: What is the state of your veth1?**
     - A1: The state is down. Interfaces are always down after they are moved.
-  >
-  
+
   >
   Hopefully everything is clear up to this point, but here's another update to our ongoing illustration. Right now we're investigating the state changes to veths when they are moved into new namespaces. 
   
   ![Alta3 Research Linux Bridge Move veth2 to Mario NS](https://alta3.com/labs/images/alta3_sdn_linuxbridge05.png)
 
-
-0. Show the current L2 *mario* namespace configuration.
+0. The follow command runs the *ip link show* command within the *mario* namespace. Show the current L2 *mario* namespace configuration:
 
   `student@beachhead:~$` `sudo ip netns exec mario ip link show`
 
@@ -391,6 +389,11 @@ The objective of this lab is to explore briding interfaces.
 0. Bring the *veth2* interface within the *mario* namespace to an UP state.
 
   `student@beachhead:~$` `sudo ip netns exec mario ip link set dev veth2 up`
+  
+  >
+  The illustration below shows the current state of our Linux Bridge (*br0*), and our veth pair (*veth1 and veth2*).
+  
+  ![Alta3 Research Linux Bridge Apply IP to veth2](https://alta3.com/labs/images/alta3_sdn_linuxbridge06.png)
 
 0. Show the current L2 *mario* namespace configuration (after we've applied an L3 IP address and brought up the interface).
 
