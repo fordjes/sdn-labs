@@ -9,7 +9,7 @@ title: "Lab xx - Using Wireshark to Capture OpenFlow v1.3 Traffic"
 ### TUESDAY - &#x2B50;REQUIRED&#x2B50;
 
 ### Lab Objective
-The objective of this lab is to use Wireshark to capture OpenFlow protocol as used by Mininet. We'll pass custom configurations to Mininet using the Ryu controller, operating on port 6653. Ryu is a component-based software defined networking framework. Ryu provides software components with well defined API that make it easy for developers to create new network management and control applications. Ryu supports various protocols for managing network devices, such as OpenFlow, Netconf, OF-config, etc
+The objective of this lab is to use Wireshark to capture OpenFlow protocol as used by Mininet. We'll pass custom configurations to Mininet using the Ryu controller, operating on port 6653. Ryu is a component-based software defined networking framework. Ryu provides software components with well defined API that make it easy for developers to create new network management and control applications. Ryu supports various protocols for managing network devices, such as OpenFlow, Netconf, OF-config, etc.
 
 ### Procedure
 
