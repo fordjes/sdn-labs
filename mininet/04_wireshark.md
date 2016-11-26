@@ -23,11 +23,17 @@ The objective of this lab is
 
   `student@beachhead:~$` `sudo wireshark &`
 
-0. Start a new capture on `any` with a capture filter `port 6653`.
+0. Select **Capture > Options**
 
-0. Start a mininet basic topology with connection to a 'remote' controller
+0. In the *Wirshark - Capture Interfaces* screen that pops up, *left-click* on the **any** interface.
 
-  `sudo mn --controller=remote,ip=127.0.0.1,port=6653`
+0. In the *Enter a capture filter ...* box, type `port 6653`.
+
+0. Click the Start button.
+
+0. Start a Mininet basic topology with connection to a 'remote' controller
+
+  `student@beachhead:~$` `sudo mn --controller=remote,ip=127.0.0.1,port=6653`
 
 0. Start a ryu controller with the below file saved as l2.py
 
@@ -64,9 +70,9 @@ The objective of this lab is
 
   `mininet>` `pingall`
 
-0. stop the capture.
+0. Stop the Wireshark capture by *left-clicking* the red square *stop* button.
 
-0. Find the following items in the pcap
+0. In your resulting capture, click around to find the following types of OpenFlow packets.
 
   0. Lots of 
   0. Items
@@ -74,4 +80,3 @@ The objective of this lab is
   0. will provide
   0. for discovery
   0. and learning
-
