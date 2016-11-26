@@ -9,7 +9,7 @@ title: "Lab xx - Using Wireshark to Capture OpenFlow v1.3 Traffic"
 ### TUESDAY - &#x2B50;REQUIRED&#x2B50;
 
 ### Lab Objective
-The objective of this lab is
+The objective of this lab is to use Wireshark to capture OpenFlow protocol as used by Mininet. We'll pass custom configurations to Mininet using the Ryu controller, operating on port 6653. Ryu is a component-based software defined networking framework. Ryu provides software components with well defined API that make it easy for developers to create new network management and control applications. Ryu supports various protocols for managing network devices, such as OpenFlow, Netconf, OF-config, etc
 
 ### Procedure
 
@@ -30,7 +30,7 @@ The objective of this lab is
 0. In the *Enter a capture filter ...* box, type `port 6653`.
 
   - **Q1: What is running on port 6653?**
-    - A1: The port of the control interface.
+    - A1: The port of the Ryu control interface.
 
 0. Click the Start button.
 
@@ -82,13 +82,27 @@ The objective of this lab is
   - **Q2: What was learned in the *OFPT_FEATURES_REPLY*?**
     - A2: Amount of buffers, amount of tables, along with statistics that may be available (flow, table, port, group, IP reasm, queue, port blocked). 
 
-0. Click on the *MULTIPART_REQUEST*. Answer the following questions:
+0. Click on the *OFPT_MULTIPART_REQUEST, OFPMP_PORT_DESC*. Answer the following questions:
 
- - **Q1: **
-   - A1:
- - **Q2: **
-   - A2: 
+ - **Q1: Who is sending this message?**
+   - A1: The controller.
+ - **Q2: What is this message asking?**
+   - A2: This is the controller asking the switch to describe all of its ports.
+ - **Q3: What message type (number) is this?**
+   - A3: 
+   
+   
+0. Click on the *OFPT_MULTIPART_REPLY, OFPMP_PORT_DESC*. Answer the following questions:
 
+ - **Q1: How many ports are there?**
+   - A1: 3. Two are two physical ports, and one reserved port.
+ - **Q2: What are the ports names?**
+   - A2: s1, s1-eth1, s1-eth2 
+ - **Q3: What are the ports numbers?**
+   - A3: The reserved port is `port no: OFPP LOCAL 0xfffffffe`, whereas the physical ports are `port no: 1`, and `port no: 2`.
+ - **Q4: What does `port no: OFPP LOCAL 0xfffffffe` mean?**
+   - A4: The reserved port is numbered, `port no: OFPP LOCAL 0xfffffffe`, which is the port on which the switch will get OpenFlow commands from the controller. 
+   
 0. Click on the first *OFPT_FLOW_MOD*. Answer the following questions:
 
  - **Q1: What is this message doing?**
@@ -97,8 +111,15 @@ The objective of this lab is
    - A2: 0 (This represents highest priority)
  - **Q3: What is the matching rule?**
    - A3: OFPMT_OXM (1)
- - **Q4: What is the action rule?**
-   - A4: OFPAT_OUTPUT (0) - This means forward to the controller
+ - **Q4: What is the type of action rule?**
+   - A4: OFPAT_OUTPUT (0) - Output to switchport
+ - **Q5: What port to be associated with the action?**
+   - Q5: OFPP_CONTROLLER (0xfffffffd)
+
+0. Click on the first *OFPT_PACKET_IN*. Answer the following questions:
+
+ - **Q1: ?**
+   - A1:
    
 0. Find a packet labeled *OFPT_ECHO_REQUEST*. *Left-click* the packet.
 
