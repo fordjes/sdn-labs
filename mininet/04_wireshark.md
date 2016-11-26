@@ -58,7 +58,37 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
 
 0. Stop the Wireshark capture by *left-clicking* the red square *stop* button.
 
+0. There is only one IP address involved in this capture (127.0.0.1). So we want to set up Wireshark to display source port and destination port, *not* source IP and destination IP.
+
+0. *Left-click* **Edit > Preferences**
+
+0. In the resulting pop-up window, click **Appearance > Columns**
+
+0. Columns can be added, or removed, with the **+** and **-** buttons at the bottom of the screen.
+
+0. Use the **-** button to remove the columns that display:
+
+  - Protocol - Protocol
+  - Source - Source address
+  - Destination - Destination address
+
+0. The columns will appear in order that they appear in this list. Use the **+** button to add a column for **Source Port** and **Destination Port**. The objective is to have the following columns displayed (in this order):
+
+  - No. - Number
+  - Time - Time (format as specified)
+  - src port - Source port
+  - dst port - Destination port
+  - Info - Information
+
+0. When you're done adjusting this window, it should look like the screenshot below:
+
+  ![Alta3 Research Wireshark Openflow Column Setup](https://alta3.com/labs/images/alta3_sdn_wireshark_openflow02.png)
+
 0. In the *Display filter...* box, type: `openflow_v4` and then press *Enter* to apply the filter.
+
+0. At this time, your *Wireshark* should look similar to the one below.
+
+  ![Alta3 Research Wireshark Openflow Screen Setup](https://alta3.com/labs/images/alta3_sdn_wireshark_openflow03.png)
 
 0. In your resulting capture, click around to find the following types of OpenFlow packets.
 
