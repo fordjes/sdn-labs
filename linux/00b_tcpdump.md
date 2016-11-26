@@ -188,22 +188,37 @@ When tcpdump finishes capturing packets, it will report counts of:
   - **Q1: What does the above command do?**
     - A1: TCP Dump, and look for a TCP flag that indicates a TCP-SYN message (creating a connection).
 
-0. Without closing your current terminal, open a second terminal, and run *nc* (netcat) to create a connection to the indicated port.
+0. **Without** closing your current terminal, open a second terminal, and run *nc* (netcat) to create a connection to the indicated port. First target port 80.
 
   `student@beachhead:/$` `nc 10.0.0.3 80`
-  `student@beachhead:~$` `nc 10.0.0.3 801`
-  `student@beachhead:~$` `nc 10.0.0.3 802`
+  
+0. Press **CTRL + C** To quit. Now target port 801.
 
-0. Similarly, here is an example to look for only tcp resets:
-`sudo tcpdump -vnni any "tcp[tcpflags] & tcp-rst !=0"`
+  `student@beachhead:/$` `nc 10.0.0.3 801`
 
-`nc 10.0.0.3 803`
-`nc 10.0.0.3 804`
+0. Press **CTRL + C** To quit. Now target port 802.
+
+  `student@beachhead:/$` `nc 10.0.0.3 802`
+
+0. Back on your first terminal, press **CTRL + C** to quit *tcpdump*. Run this next command, which only looks for TCP resets:
+
+  `student@beachhead:~$` `sudo tcpdump -vnni any "tcp[tcpflags] & tcp-rst !=0"`
 
   - **Q1: What do the vnni flags do?**
     - A1: No name resolutions. No port resolutions. A bit more verbosity (time to live, protocol, and length).
   - **Q2: Where could I go to confirm this?**
     - A2: Type *man tcpdump*
+
+0. Once again, **without** closing your current terminal, open a second terminal, and run *nc* (netcat) to create a connection to the indicated port. First, target port 803.
+
+  `student@beachhead:/$` `nc 10.0.0.3 803`
+  
+0. Press **CTRL + C** To quit. Now target port 804.
+
+  `student@beachhead:/$` `nc 10.0.0.3 804`
+  
+0. Good job! That's it for this lab! Close all the open windows within your remote desktop environment.
+
 
 #### Additional Learning / References
 
