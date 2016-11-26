@@ -124,9 +124,9 @@ The objective of this lab is to use Wireshark to capture OpenFlow protocol as us
  - **Q3: What is the reason that this packet is being sent to the controller?**
    - A3: OFPR_NO_MATCH (0) - This is the switches way of reporting to the controller that it doesn't know what to do with the packet.
  - **Q4: What type of packet is this?**
-   - A4: Expand the data tree to find this information. There you'll see Internet C M Protocol IPv6.
+   - A4: Expand the data tree to find this information. There you'll see Internet Control Message Protocol IPv6.
  - **Q5: What port did it come in?**
-   - A5: OpenFlow v1.3 > Match > OXM field > IN_PORT > Value: "X" *where X is the port this packet came in on*
+   - A5: You can find this information by navigating to, *OpenFlow v1.3 > Match > OXM field > IN_PORT > Value:* "X" (where X is the port this packet came in on)
 
 0. Click on the first *OFPT_PACKET_OUT*. Answer the following questions based on what you are seeing in this packet:
 
