@@ -1,0 +1,78 @@
+0. make a copy of `fi.py` called `hub.py` and replace the stub of the `packet_in_handler` with the skeleton provided 
+
+  `cp fi.py hub.py`
+
+  ``` python
+		# Handle packet in event
+		@set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
+		def packet_in_handler(self, ev):
+
+				# register values into shorter variable names
+
+				# create flood action
+
+				# create response to packetin
+
+				# actually send the packet to the requesting switch
+  ```
+
+0. We will add the below python sections to `hub.py` in order to create a simple flooding hub.  For each section below, find the comment from the skeleton and add the python code.
+
+0. Create a set of shortened variable names for future use
+
+  ```
+				# register values into shorter variable names
+				msg = ev.msg
+				dp = msg.datapath
+				ofp = dp.ofproto
+				ofp_parser = dp.ofproto_parser
+  ```
+
+0. Create a flood action.  This tells the switch to send the packet which it asked the controller about to all ports on the switch except the one it came in on.
+
+  ```
+				# create flood action
+				actions = [ofp_parser.OFPActionOutput(ofp.OFPP_FLOOD)]
+	```
+
+0. Create the response packet which will get sent to the switch containing all the values we setup
+
+  ```
+				# create response to packetin
+				out = ofp_parser.OFPPacketOut(
+						datapath=dp,
+						buffer_id=msg.buffer_id,
+						in_port=msg.match['in_port'],
+						actions=actions
+				)
+  ```
+
+0. Send the resulting `PacketOut` 
+
+  ```
+				# actually send the packet to the requesting switch
+				dp.send_msg(out)
+  ```
+
+0. Startup wireshark and capture the packets which flow to/from the controller in this setup.
+
+  Terminal1: `sudo wireshark &`
+  
+  Terminal2: `ryu-manager base.py`
+
+  Terminal3: `sudo mn --controller=remote,ip=127.0.0.1,port=6653`
+
+0. Answer the below questions about the wireshark capture:
+
+  * What openflow packets were sent / received from the controller?
+  * What new packets are coming fromt he switch as a result of the changes we made?
+  * If we ran `pingall` inside mininet would we see a PacketIn/PacketOut message to the controller?
+  * Why or why not?
+  * Why is this method of packet handeling inefficient? 
+  * How could we make a better hub (without any mac address learning)?
+
+0. Tear down
+
+  * `mininet> exit`
+  * quit wireshark
+  * Ctrl+C from ryu-manager

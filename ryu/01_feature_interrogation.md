@@ -1,0 +1,92 @@
+0. make a copy of `base.py` called `fi.py` and replace the stub of the `switch_features_handler` with the skeleton provided 
+
+  `cp base.py fi.py`
+
+  ``` python
+      # Handle switch feature interrogation event
+      @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
+      def switch_features_handler(self, ev):
+
+          # define shortened variables
+
+          # match all packets
+
+          # highest priority == lowest priority number
+
+          # set action (forward packet to controller)
+
+          # set the instruction to apply the action
+
+          # formulate the final openflow packet
+
+          # install the table-miss flow entry.
+
+  ```
+
+0. We will add the below python sections to `fi.py` in order to create a function feature interrogation event handler.  For each section below, find the comment from the skeleton and add the python code.
+
+0. Create a set of shortened variable names for future use
+
+  ```
+        # define shortened variables
+        msg = ev.msg
+        dp = msg.datapath
+        ofp = dp.ofproto
+        ofp_parser = dp.ofproto_parser
+  ```
+
+0. Create a match rule that will be the default match for any packet  
+
+  ```
+        # match all packets
+        match = ofp_parser.OFPMatch()
+
+        # highest priority == lowest priority number
+        pri = 0
+	```
+
+0. Set the action which we want the switches to take.  In this case, send a non-buffered copy of the packet to the controller.
+
+  ```
+        # set action (forward packet to controller)
+        actions = [ofp_parser.OFPActionOutput(ofp.OFPP_CONTROLLER, ofp.OFPCML_NO_BUFFER)]
+
+        # set the instruction to apply the action
+        inst = [ofp_parser.OFPInstructionActions(ofp.OFPIT_APPLY_ACTIONS, actions)]
+  ```
+
+0. Create a new flow modification type containing all the previously generated values
+ 
+  ```
+        # formulate the final openflow packet
+        mod = ofp_parser.OFPFlowMod(datapath=dp, priority=pri, match=match, instructions=inst)
+  ```
+
+0. Send the resulting flow modificaiton to the switch which just registered / interrogated the controller
+
+  ```
+        # install the table-miss flow entry.
+        dp.send_msg(mod)
+  ```
+
+0. Startup wireshark and capture the packets which flow to/from the controller in this setup.
+
+  Terminal1: `sudo wireshark &`
+  
+  Terminal2: `ryu-manager base.py`
+
+  Terminal3: `sudo mn --controller=remote,ip=127.0.0.1,port=6653`
+
+0. Answer the below questions about the wireshark capture:
+
+  * What openflow packets were sent / received from the controller?
+  * What new packets are coming fromt he switch as a result of the changes we made?
+  * If we ran `pingall` inside mininet would we see a PacketIn message to the controller?
+  * Why or why not?
+  * Why does the `pingall` fail?
+
+0. Tear down
+
+  * `mininet> exit`
+  * quit wireshark
+  * Ctrl+C from ryu-manager
