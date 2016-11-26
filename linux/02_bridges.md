@@ -336,6 +336,8 @@ The objective of this lab is to explore briding interfaces.
   mario
   ```
   
+  
+  
 0. Make a copy of the current L2 state, prior to adding veth2 to the mario namespace.
 
   `student@beachhead:~$` `ip link list > /tmp/ip-link-netns`
