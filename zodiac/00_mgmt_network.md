@@ -1,3 +1,18 @@
+---
+date: "2016-11-27"
+draft: true
+weight: 00
+title: "Lab XX - Zodiac IP Configuration"
+---
+[Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
+### ??? - &#x2B50;REQUIRED&#x2B50;
+
+### Lab Objective
+The objective of this lab is to...
+
+### Procedure
+
+
 # Zodiac FX - IP Configuration
 
 ### Connecting to a Zodiac FX via Raspberry Pi
