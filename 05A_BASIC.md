@@ -626,5 +626,8 @@ Some of the commands are presented in a different order than the Linux Bridge la
 0. You should be right back to the way things were before you started this lab. If anything was unclear, run it again!
 
 
+#### Additional Learning / References
+
+The following is a list of pages we thought might be helpful for our students to know about:
 
 * [Introduction to Linux Namespaces](https://blog.yadutaf.fr/2013/12/22/introduction-to-linux-namespaces-part-1-uts/)
