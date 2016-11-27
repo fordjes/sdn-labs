@@ -126,6 +126,8 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 0. Apply *VLAN tag 150* to *veth-bowser*.
 
     `student@beachhead:~$` `sudo ovs-vsctl set port veth-bowser tag=150`
+    
+0. All of the steps you just executed are the ones from the *basic* version of this lab. Still, here is a visual of what you have setup so far.
   
     ![Alta3 Research OVS Advanced Setup](https://alta3.com/labs/images/alta3_sdn_ovs_advanced01.png)
 
