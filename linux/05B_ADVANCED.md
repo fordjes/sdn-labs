@@ -1,8 +1,8 @@
 ---
 date: "2016-11-22"
 draft: false
-weight: 30
-title: "Lab 03b - ADVANCED - Open vSwitch (OVS)"
+weight: 155
+title: "Lab 05 - ADVANCED - Open vSwitch (OVS)"
 ---
 [Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
 
