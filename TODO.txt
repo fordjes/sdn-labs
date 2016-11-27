@@ -7,6 +7,7 @@ Make student users on beachhead able to run sudo commands:
 * wireshark
 * ifconfig
 * route
+* ask about tshark for neutron labs?
 
 add to bashrc:
   function a3diff(){
