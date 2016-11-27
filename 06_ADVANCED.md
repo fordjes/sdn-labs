@@ -57,11 +57,16 @@ The objective of this lab is to give **advanced** students a documented mechanis
 0. You can add the alias to your .bashrc file if you want it to persist across sessions
 
 
-#### Resources
+#### Additional Learning / References
 
-  * [LWN.net - Namespaces in operaton](https://lwn.net/Articles/531114/#series_index)
-  * [Scott Lowe - Introducing Linux Network Namespaces](http://blog.scottlowe.org/2013/09/04/introducing-linux-network-namespaces/) 
-  * [Interconnecting Namespaces](http://www.opencloudblog.com/?p=66)
-  * [Which interfaces are connected by a veth pair?](http://blog.abhijeetr.com/2014/06/veth-pair-how-to-know-what-interfaces.html)
+The following is a list of pages we thought might be helpful for our students to know about:
+
+* [LWN.net - Namespaces in operaton](https://lwn.net/Articles/531114/#series_index)
+
+* [Scott Lowe - Introducing Linux Network Namespaces](http://blog.scottlowe.org/2013/09/04/introducing-linux-network-namespaces/) 
+
+* [Interconnecting Namespaces](http://www.opencloudblog.com/?p=66)
+
+* [Which interfaces are connected by a veth pair?](http://blog.abhijeetr.com/2014/06/veth-pair-how-to-know-what-interfaces.html)
 
 
