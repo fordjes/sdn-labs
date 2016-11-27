@@ -203,87 +203,91 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
     `student@beachhead:~$` `sudo ovs-vsctl set port dhcp-bowser tag=150`
 
-0.
+0. OVS interal interfaces can exist in their own namespace, and maintain connectivity without the creation of a veth pair. To proove this, try moving the OVS interface into the dhcp-peach namespace.
 
-  * `student@beachhead:~$` `sudo ip link set dhcp-peach netns dhcp-peach`
+    `student@beachhead:~$` `sudo ip link set dhcp-peach netns dhcp-peach`
 
-0.
+0. Again, OVS interal interfaces can exist in their own namespace, and maintain connectivity without the creation of a veth pair. To proove this, try moving the OVS interface into the dhcp-bowser namespace.
 
-  * `student@beachhead:~$` `sudo ip link set dhcp-bowser netns dhcp-bowser`
+    `student@beachhead:~$` `sudo ip link set dhcp-bowser netns dhcp-bowser`
 
 0. Writeout the current Open vSwitch configuration to a file called, *ovs-show-dhcp*.
 
-  `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs-show-dhcp`
+    `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs-show-dhcp`
 
 0. Run the *a3diff* function to see how the OVS configuration has changed since the internal interfaces were created and VLAN tags applied. 
 
-  `student@beachhead:~$` `a3diff /tmp/ovs2-show-config /tmp/ovs-show-dhcp`
+    `student@beachhead:~$` `a3diff /tmp/ovs2-show-config /tmp/ovs-show-dhcp`
 
 0. Writeout the L2 configuration to a file called, *ovs-link-dhcp*.
 
-  `student@beachhead:~$` `ip link show > /tmp/ovs-link-dhcp`
+    `student@beachhead:~$` `ip link show > /tmp/ovs-link-dhcp`
 
 0. Run the *a3diff* function to see how the L2 configuration has changed since the internal interfaces were created and VLAN tags applied. 
 
-  `student@beachhead:~$` `a3diff /tmp/ovs-link-config /tmp/ovs-link-dhcp`
+    `student@beachhead:~$` `a3diff /tmp/ovs-link-config /tmp/ovs-link-dhcp`
 
 0. Bring up DHCP interface *dhcp-peach* within the network namespace *dhcp-peach*.  
 
-  `student@beachhead:~$` `sudo ip netns exec dhcp-peach ip link set dev dhcp-peach up`
+    `student@beachhead:~$` `sudo ip netns exec dhcp-peach ip link set dev dhcp-peach up`
 
 0. Apply the IP address *172.16.2.50* to the *dhcp-peach* interface.
 
-  `student@beachhead:~$` `sudo ip netns exec dhcp-peach ip addr add 172.16.2.50/24 dev dhcp-peach`
+    `student@beachhead:~$` `sudo ip netns exec dhcp-peach ip addr add 172.16.2.50/24 dev dhcp-peach`
 
 0. Bring up DHCP interface *dhcp-bowser* within the network namespace *dhcp-bowser*.
 
-  `student@beachhead:~$` `sudo ip netns exec dhcp-bowser ip link set dev dhcp-bowser up`
+    `student@beachhead:~$` `sudo ip netns exec dhcp-bowser ip link set dev dhcp-bowser up`
 
 0. Apply the IP address *172.16.2.150* to the *dhcp-bowser* interface.
 
-  `student@beachhead:~$` `sudo ip netns exec dhcp-bowser ip addr add 172.16.2.150/24 dev dhcp-bowser`
+    `student@beachhead:~$` `sudo ip netns exec dhcp-bowser ip addr add 172.16.2.150/24 dev dhcp-bowser`
+    
+0. Seems like a good time for an illustration. 
+
+    ![Alta3 Research OVS Advanced DHCP Setup](https://alta3.com/labs/images/alta3_sdn_ovs_advanced02.png)
 
 0. A lightweight DHCP and caching DNS server, *dnsmasq* service provides network infrastructure for small networks: DNS, DHCP, router advertisement and network boot. It is designed to be lightweight and have a small footprint, suitable for resource constrained routers and firewalls. It has also been widely used for tethering on smartphones and portable hotspots, and to support virtual networking in virtualization frameworks. Supported platforms include Linux (with glibc and uclibc), Android, BSD, and Mac OS X. In the next step, start the *dnsmasq* service in the *dhcp-peach* network namespace.
   
-  `student@beachhead:~$` `sudo ip netns exec dhcp-peach dnsmasq --interface=dhcp-peach --dhcp-range=172.16.2.51,172.16.2.149,255.255.255.0`
+    `student@beachhead:~$` `sudo ip netns exec dhcp-peach dnsmasq --interface=dhcp-peach --dhcp-range=172.16.2.51,172.16.2.149,255.255.255.0`
 
 0. Start the *dnsmasq* service in the *dhcp-peach* network namespace.
 
-  `student@beachhead:~$` `sudo ip netns exec dhcp-bowser dnsmasq --interface=dhcp-bowser --dhcp range=172.16.2.151,172.16.2.249,255.255.255.0`
+    `student@beachhead:~$` `sudo ip netns exec dhcp-bowser dnsmasq --interface=dhcp-bowser --dhcp range=172.16.2.151,172.16.2.249,255.255.255.0`
 
 0. DHCPDISCOVER 
 
-  * `student@beachhead:~$` `sudo ip netns exec dhcp-peach dhclient eth0-peach`
-  * `student@beachhead:~$` `sudo ip netns exec dhcp-peach ip addr`
-  * `student@beachhead:~$` `sudo ip netns exec dhcp-bowser dhclient eth0-bowser`
-  * `student@beachhead:~$` `sudo ip netns exec dhcp-bowser ip addr`
+    `student@beachhead:~$` `sudo ip netns exec dhcp-peach dhclient eth0-peach`
+    `student@beachhead:~$` `sudo ip netns exec dhcp-peach ip addr`
+    `student@beachhead:~$` `sudo ip netns exec dhcp-bowser dhclient eth0-bowser`
+    `student@beachhead:~$` `sudo ip netns exec dhcp-bowser ip addr`
  
 0. OVS additional commands
 
-  * `student@beachhead:~$` `sudo ovs-appctl show-commands`
-  * `student@beachhead:~$` `sudo ovs-appctl fdb/show donut-plains`
-  * `student@beachhead:~$` `sudo ovs-vsctl dump flows donut-plains`
+    `student@beachhead:~$` `sudo ovs-appctl show-commands`
+    `student@beachhead:~$` `sudo ovs-appctl fdb/show donut-plains`
+    `student@beachhead:~$` `sudo ovs-vsctl dump flows donut-plains`
   
 0. Well that was fun! Time to clean up our system. Running all of the steps from here down will remove all of our configuration.
 
 0. Trash the network namespace *peach*.
 
-  `student@beachhead:~$` `sudo ip netns del peach`
+    `student@beachhead:~$` `sudo ip netns del peach`
 
 0. Trash the network namespace *bowser*.
 
-  `student@beachhead:~$` `sudo ip netns del bowser`
+    `student@beachhead:~$` `sudo ip netns del bowser`
 
 0. Trash the L2 interface *veth-peach*.
 
-  `student@beachhead:~$` `sudo ip link del veth-peach`
+    `student@beachhead:~$` `sudo ip link del veth-peach`
 
 0. Trash the L2 interface *veth-bowser*.
 
-  `student@beachhead:~$` `sudo ip link del veth-bowser`
+    `student@beachhead:~$` `sudo ip link del veth-bowser`
 
 0. Finally, trash the bridge *donut-plains*.
 
-  `student@beachhead:~$` `ovs-vsctl del-br donut-plains`
+    `student@beachhead:~$` `ovs-vsctl del-br donut-plains`
 
 0. You should be right back to the way things were before you started this lab. If anything was unclear, run it again!
