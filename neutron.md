@@ -1,7 +1,7 @@
 1. Check out a freshly booted OVS-based Neutron network
   `sudo ovs-vsctl show`
 
-2. Build the enternal network. OVS environments call this "ext-net" rather than "provider-net" like we often see in Liniu Bridge Networks
+2. Build the enternal network. OVS environments call this "ext-net" rather than "provider-net" like we often see in Liniu Bridge Networks  
   `neutron net-create --shared --provider:physical_network external --router:external --provider:network_type flat ext-net`
   
 3. What changed?  
