@@ -16,39 +16,45 @@ The objective of this lab is to give **advanced** students a documented mechanis
 
 0. Start by backing up a copy of the current *.bashrc* file.
 
-  `student@beachhead:~$` `cp /home/student/.bashrc /home/student/old.bashrc` 
+    `student@beachhead:~$` `cp /home/student/.bashrc /home/student/old.bashrc` 
 
 0. Open `/home/student/.bashrc` in vim.
 
-  `student@beachhead:~$` `cp .bashrc old.bashrc` 
+    `student@beachhead:~$` `cp .bashrc old.bashrc` 
 
 0. Edit the seciton around `"$color_prompt" = yes` to look like below:
 
-  ``` bash
-  namespace=`ip netns identify $$`
-  if [ "$color_prompt" = yes ]; then
-      if [[ -z "${namespace}" ]]; then
-          PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-      else
-          PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] ($namespace) \$ '
-      fi
-  else
-      PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-  fi
-  unset color_prompt force_color_prompt
-  ```
+    ``` bash
+    namespace=`ip netns identify $$`
+    if [ "$color_prompt" = yes ]; then
+        if [[ -z "${namespace}" ]]; then
+            PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+        else
+            PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] ($namespace) \$ '
+        fi
+    else
+        PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    fi
+    unset color_prompt force_color_prompt
+    ```
 
 0. Now re-source the bashrc and re-enter the namespace to see the difference in your prompt.
   
-	* `ubutnu@beachhead:~$` `sudo ip netns exec mario bash`
-  * `ubutnu@beachhead:~ (mario) #` `exit # or press Ctl^D` 
+    `ubutnu@beachhead:~$` `sudo ip netns exec mario bash`
+
+0. Great! Now exit.
+
+    `ubutnu@beachhead:~ (mario) #` `exit # or press Ctl^D` 
 
 0. Next let's add an alias for `sudo ip netns exec [namespace] [command]`
 
-  * `ubutnu@beachhead:~$` `alias nse='sudo ip netns exec'`
-  * `ubutnu@beachhead:~$` `nse mario ip link list`
+    `ubutnu@beachhead:~$` `alias nse='sudo ip netns exec'`
 
-  You can add the alias to your .bashrc file if you want it to persist across sessions
+0. Look how easy our commands have become!
+
+    `ubutnu@beachhead:~$` `nse mario ip link list`
+
+0. You can add the alias to your .bashrc file if you want it to persist across sessions
 
 
 #### Resources
