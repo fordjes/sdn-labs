@@ -14,9 +14,9 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
 ### Procedure
 
-0. Close any terminals, and Firefox windows you currently have open within the remote desktop session.
+0. Close any terminals and Firefox windows you currently have open within the remote desktop session.
 
-0. From your remote desktop, open a new terminal session, and move to the student home directory.
+0. From your remote desktop, open a new terminal session and move to the student home directory.
 
   `student@beachhead:/$` `cd`
 
@@ -30,13 +30,13 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
   }
   ```
   >
-  If you're not a programmer, no big deal. All you have to know is that this little code snippit will save us some keystrokes, and allow us to do two (2) things:
+  If you're not a programmer, no big deal. All you have to know is that this little code snippit will save us some keystrokes and allow us to do two (2) things:
   >
   1) Look for within-line differences (`wdiff`)   
   >
   2) Display the results in color (`colordiff`)
 
-0. While we eventually want to create a OVS Bridge with virtual interfaces, let's first collect information about our current configuration. First display the L2 information.
+0. While we eventually want to create an OVS Bridge with virtual interfaces, let's first collect information about our current configuration. First display the L2 information.
 
   `student@beachhead:~$` `ip link list`
   
@@ -54,11 +54,11 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
   172.16.1.0/24 dev ens3  proto kernel  scope link  src 172.16.1.4
   ```
 
-0.  The ovs-vsctl is the utility used for quering and confiruing ovs-vswitchd, so let's start with reviewing usage.
+0.  The ovs-vsctl is the utility used for querying and configuring ovs-vswitchd, so let's start with reviewing usage.
 
   `student@beachhead:~$` `sudo ovs-vsctl -help`
 
-0. Let's display the version of OVS software we are using, as well as show the state of OVS switches tracked by the OVS database.
+0. Let's display the version of OVS software we are using as well as show the state of OVS switches tracked by the OVS database.
   
   `student@beachhead:~$` `sudo ovs-vsctl show`
   
@@ -127,7 +127,7 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
   `student@beachhead:~$` `sudo ovs-vsctl set port veth-bowser tag=150`
 
-0. Bring all the interaces up and examine the changes. The following command will place the *veth-peach* interface in an UP state.
+0. Bring all the interfaces up and examine the changes. The following command will place the *veth-peach* interface in an UP state.
 
   `student@beachhead:~$` `sudo ip link set veth-peach up`
   
@@ -175,7 +175,7 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
   `student@beachhead:~$` `a3diff /tmp/ovs2-show-init /tmp/ovs2-show-config`
 
-0. Let's create two new network namespaces. Eventually we're going to configure DHCP servcies within these spaces, so let's name them appropriately. First, create a new network namespace named, *dhcp-peach*.
+0. Let's create two new network namespaces. Eventually we're going to configure DHCP servcies within these spaces, so let's name them appropriately. First, create a new network namespace named *dhcp-peach*.
 
   `student@beachhead:~$` `ip netns add dhcp-peach`
 
@@ -211,7 +211,7 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
   `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs-show-dhcp`
 
-0. Run the *a3diff* function to see how the OVS configuration has changed since the internal interfaces were created, and VLAN tags applied. 
+0. Run the *a3diff* function to see how the OVS configuration has changed since the internal interfaces were created and VLAN tags applied. 
 
   `student@beachhead:~$` `a3diff /tmp/ovs2-show-config /tmp/ovs-show-dhcp`
 
@@ -219,7 +219,7 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
   `student@beachhead:~$` `ip link show > /tmp/ovs-link-dhcp`
 
-0. Run the *a3diff* function to see how the L2 configuration has changed since the internal interfaces were created, and VLAN tags applied. 
+0. Run the *a3diff* function to see how the L2 configuration has changed since the internal interfaces were created and VLAN tags applied. 
 
   `student@beachhead:~$` `a3diff /tmp/ovs-link-config /tmp/ovs-link-dhcp`
 
@@ -239,7 +239,7 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
   `student@beachhead:~$` `sudo ip netns exec dhcp-bowser ip addr add 172.16.2.150/24 dev dhcp-bowser`
 
-0. A lightweight DHCP and caching DNS server, *dnsmasq* service provides network infrastructure for small networks: DNS, DHCP, router advertisement and network boot. It is designed to be lightweight and have a small footprint, suitable for resource constrained routers and firewalls. It has also been widely used for tethering on smartphones and portable hotspots, and to support virtual networking in virtualisation frameworks. Supported platforms include Linux (with glibc and uclibc), Android, BSD, and Mac OS X. In the next step, start the *dnsmasq* service in the *dhcp-peach* network namespace.
+0. A lightweight DHCP and caching DNS server, *dnsmasq* service provides network infrastructure for small networks: DNS, DHCP, router advertisement and network boot. It is designed to be lightweight and have a small footprint, suitable for resource constrained routers and firewalls. It has also been widely used for tethering on smartphones and portable hotspots, and to support virtual networking in virtualization frameworks. Supported platforms include Linux (with glibc and uclibc), Android, BSD, and Mac OS X. In the next step, start the *dnsmasq* service in the *dhcp-peach* network namespace.
   
   `student@beachhead:~$` `sudo ip netns exec dhcp-peach dnsmasq --interface=dhcp-peach --dhcp-range=172.16.2.51,172.16.2.149,255.255.255.0`
 
@@ -260,7 +260,7 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
   * `student@beachhead:~$` `sudo ovs-appctl fdb/show donut-plains`
   * `student@beachhead:~$` `sudo ovs-vsctl dump flows donut-plains`
   
-0. Well that was fun! Time to cleanup our system. Running all of the steps from here down will remove all of our configuration.
+0. Well that was fun! Time to clean up our system. Running all of the steps from here down will remove all of our configuration.
 
 0. Trash the network namespace *peach*.
 
