@@ -12,7 +12,7 @@ title: "Lab 05 - BASIC - Open vSwitch (OVS)"
 
 The objective of this lab is very similar to the Linux Bridge lab, except we will use an Open vSwitch (OVS bridge).
 
-Some of the commands are presented in a different order than the Linux Bridge lab.
+Some of the commands are presented in a different order than the Linux Bridge lab, however just like the previous lab, illustrations have been included to further your understanding of the commands you are issuing.
 
 ### Procedure
 
