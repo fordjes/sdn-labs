@@ -369,6 +369,10 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
   `student@beachhead:~$` `sudo ovs-vsctl add-port yoshis-island veth-toad`
 
+0. The following illustration is a reflection of how the last two commands changed the nature of our L2 networking.
+
+  ![Alta3 Research OVS veth Pair add-port yoshis-island](https://alta3.com/labs/images/alta3_sdn_ovsbridge07.png)
+
 0. Make a copy of the current Open vSwitch configuration in a file called, *ovs-show-veth*.
 
   `student@beachhead:~$` `sudo ovs-vsctl show > /tmp/ovs-show-veth`
