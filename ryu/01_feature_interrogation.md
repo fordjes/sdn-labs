@@ -1,3 +1,18 @@
+---
+date: "2016-11-26"
+draft: false
+weight: 310
+title: "Lab 15 - Controller Feature Interrogation (Ryu)"
+---
+[Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
+
+### WEDNESDAY - &#x2B50;REQUIRED&#x2B50;
+
+### Lab Objective
+The objective of this lab is to 
+
+### Procedure
+
 0. make a copy of `base.py` called `fi.py` and replace the stub of the `switch_features_handler` with the skeleton provided 
 
   `cp base.py fi.py`
