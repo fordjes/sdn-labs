@@ -20,7 +20,7 @@ The objective of this lab is to give **advanced** students a documented mechanis
 
 0. Open `/home/student/.bashrc` in vim.
 
-    `student@beachhead:~$` `cp .bashrc old.bashrc` 
+    `student@beachhead:~$` `vim /home/student/.bashrc` 
 
 0. Edit the seciton around `"$color_prompt" = yes` to look like below:
 
