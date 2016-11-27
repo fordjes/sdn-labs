@@ -255,18 +255,28 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
     `student@beachhead:~$` `sudo ip netns exec dhcp-bowser dnsmasq --interface=dhcp-bowser --dhcp range=172.16.2.151,172.16.2.249,255.255.255.0`
 
-0. DHCPDISCOVER 
+0. This performs DHCP discovery within the L2 broadcast domain. This command demonstrates connectivity across the veth, across the bridge (inside the VLAN), and into the *dhcp-peach* namespace via an OVS internal port.
 
     `student@beachhead:~$` `sudo ip netns exec dhcp-peach dhclient eth0-peach`
+
+0. Return the L3 (IP address) information within the *dhcp-peach* namespace. You should see an IP address applied between 172.16.2.51 and 172.16.2.149 applied to the *eth0-peach* interface.
+
     `student@beachhead:~$` `sudo ip netns exec dhcp-peach ip addr`
+    
+0. This performs DHCP discovery within the L2 broadcast domain. This command demonstrates connectivity across the veth, across the bridge (inside the VLAN), and into the *dhcp-bowser* namespace via an OVS internal port.  
+    
     `student@beachhead:~$` `sudo ip netns exec dhcp-bowser dhclient eth0-bowser`
+    
+0. Return the L3 (IP address) information within the *dhcp-bowser* namespace. You should see an IP address applied between 172.16.2.151 and 172.16.2.249 applied to the *eth0-bowser* interface. 
+    
     `student@beachhead:~$` `sudo ip netns exec dhcp-bowser ip addr`
  
-0. OVS additional commands
-
-    `student@beachhead:~$` `sudo ovs-appctl show-commands`
-    `student@beachhead:~$` `sudo ovs-appctl fdb/show donut-plains`
+0. In later labs, we're going to start studying Open vSwitch OpenFlow tables. Let's show these 'flows' from the OVS switch, *donut-plains*.
+    
     `student@beachhead:~$` `sudo ovs-vsctl dump flows donut-plains`
+    
+    >
+    If very little, or nothing is displayed. That's okay! We didn't really agument the Open vSwitch to do anything more than the baseline configuration.
   
 0. Well that was fun! Time to clean up our system. Running all of the steps from here down will remove all of our configuration.
 
