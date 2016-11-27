@@ -440,6 +440,14 @@ Some of the commands are presented in a different order than the Linux Bridge la
       link/ether 5e:9b:e9:d9:66:f8 brd ff:ff:ff:ff:ff:ff link-netnsid 0
   ```
 
+0. Run the *ip link show* command in the default namespace (root namespace) to reveal the state of *veth-luigi* and *veth-toad*.
+
+  `student@beachhead:~$` `ip link show`
+  
+0. Once again we've advanced the illustration so that you have can a clear visual on how we're manipulating network interfaces.
+
+  ![Alta3 Research OVS veth Pair UP state in Namespaces](https://alta3.com/labs/images/alta3_sdn_ovsbridge08.png)
+
 0. Add IP addresses to the internal interaces. First apply the IP address to 172.16.2.100 to the dev *eth0-luigi*.
 
   `student@beachhead:~$` `sudo ip netns exec luigi ip addr add 172.16.2.100/24 dev eth0-luigi`
