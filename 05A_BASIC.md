@@ -456,6 +456,10 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
   `student@beachhead:~$` `sudo ip netns exec toad ip addr add 172.16.2.101/24 dev eth0-toad`
 
+0. The next few commands will confirm the illustration below. Just want you to be aware of what you're confirming!
+
+  ![Alta3 Research OVS veth with IP](https://alta3.com/labs/images/alta3_sdn_ovsbridge09.png)
+
 0. Run the *ip addr* in the *luigi* network namespace to reveal the current L3 (IP) configuration.
 
   `student@beachhead:~$` `sudo ip netns exec luigi ip addr`
