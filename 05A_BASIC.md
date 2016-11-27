@@ -624,3 +624,7 @@ Some of the commands are presented in a different order than the Linux Bridge la
   `student@beachhead:~$` `ovs-vsctl del-br yoshis-island`
 
 0. You should be right back to the way things were before you started this lab. If anything was unclear, run it again!
+
+
+
+* [Introduction to Linux Namespaces](https://blog.yadutaf.fr/2013/12/22/introduction-to-linux-namespaces-part-1-uts/)
