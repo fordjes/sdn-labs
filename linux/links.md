@@ -1,4 +1,3 @@
-* http://baturin.org/docs/iproute2/#Create a dummy interface
 * http://superuser.com/questions/764986/howto-setup-a-veth-virtual-network
 * http://lukego.github.io/blog/2013/04/13/routing-traffic-between-local-applications-on-linux/
 * http://unix.stackexchange.com/questions/122468/how-does-one-capture-traffic-on-virtual-interfaces
