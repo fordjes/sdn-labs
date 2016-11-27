@@ -2,7 +2,7 @@
 date: "2016-11-23"
 draft: false
 weight: 160
-title: "Lab 06 - OPTIONAL - Documentation - Augmenting bash for working with Network Namespaces"
+title: "Lab 06 - ADVANCED - Augmenting bash for working with Network Namespaces"
 ---
 [Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
 
