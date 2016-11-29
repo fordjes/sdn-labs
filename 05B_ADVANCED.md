@@ -257,7 +257,7 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
 0. This performs DHCP discovery within the L2 broadcast domain. This command demonstrates connectivity across the veth, across the bridge (inside the VLAN), and into the *dhcp-peach* namespace via an OVS internal port.
 
-    `student@beachhead:~$` `sudo ip netns exec dhcp-peach dhclient eth0-peach`
+    `student@beachhead:~$` `sudo ip netns exec peach dhclient eth0-peach`
 
 0. Return the L3 (IP address) information within the *dhcp-peach* namespace. You should see an IP address applied between 172.16.2.51 and 172.16.2.149 applied to the *eth0-peach* interface.
 
