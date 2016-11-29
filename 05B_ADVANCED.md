@@ -189,11 +189,11 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
 0. Open vSwtich *internal* interfaces, like *dhcp-peach*, can appear as “physical” interfaces to the Linux host, and therefore can be assigned IP addresses and used for communication. We'll assign IP addresses to these interfaces a bit later. For now, create the internal OVS interfaces for a pair of DHCP servers to run on. This first command creates the *dhcp-peach* OVS internal interface.
 
-    `student@beachhead:~$` `sudo ocs-vsctl add-port yoshi-island dhcp-peach -- set interface dhcp-peach type=internal`
+    `student@beachhead:~$` `sudo ovs-vsctl add-port yoshi-island dhcp-peach -- set interface dhcp-peach type=internal`
 
 0. Now create the *dhcp-bowser* OVS internal interface.
   
-    `student@beachhead:~$` `sudo ocs-vsctl add-port yoshi-island dhcp-bowser -- set interface dhcp-bowser type=internal`
+    `student@beachhead:~$` `sudo ovs-vsctl add-port yoshi-island dhcp-bowser -- set interface dhcp-bowser type=internal`
 
 0. Apply VLAN tag 50 to the *dhcp-peach* interface.
 
