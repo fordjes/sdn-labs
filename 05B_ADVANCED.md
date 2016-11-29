@@ -225,7 +225,7 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
 0. Run the *a3diff* function to see how the L2 configuration has changed since the internal interfaces were created and VLAN tags applied. 
 
-    `student@beachhead:~$` `a3diff /tmp/ovs-link-config /tmp/ovs-link-dhcp`
+    `student@beachhead:~$` `a3diff /tmp/ovs2-link-config /tmp/ovs-link-dhcp`
 
 0. Bring up DHCP interface *dhcp-peach* within the network namespace *dhcp-peach*.  
 
