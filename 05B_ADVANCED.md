@@ -181,11 +181,11 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
 0. Let's create two new network namespaces. Eventually we're going to configure DHCP servcies within these spaces, so let's name them appropriately. First, create a new network namespace named *dhcp-peach*.
 
-    `student@beachhead:~$` `ip netns add dhcp-peach`
+    `student@beachhead:~$` `sudo ip netns add dhcp-peach`
 
 0. Great! Now create another network namespace named, *dhcp-bowser*.
 
-    `student@beachhead:~$` `ip netns add dhcp-bowser`
+    `student@beachhead:~$` `sudo ip netns add dhcp-bowser`
 
 0. Open vSwtich *internal* interfaces, like *dhcp-peach*, can appear as “physical” interfaces to the Linux host, and therefore can be assigned IP addresses and used for communication. We'll assign IP addresses to these interfaces a bit later. For now, create the internal OVS interfaces for a pair of DHCP servers to run on. This first command creates the *dhcp-peach* OVS internal interface.
 
