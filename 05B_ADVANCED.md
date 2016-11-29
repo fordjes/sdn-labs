@@ -253,7 +253,7 @@ The objective of this lab is very similar to the Open vSwitch lab, however it ta
 
 0. Start the *dnsmasq* service in the *dhcp-peach* network namespace.
 
-    `student@beachhead:~$` `sudo ip netns exec dhcp-bowser dnsmasq --interface=dhcp-bowser --dhcp range=172.16.2.151,172.16.2.249,255.255.255.0`
+    `student@beachhead:~$` `sudo ip netns exec dhcp-bowser dnsmasq --interface=dhcp-bowser --dhcp-range=172.16.2.151,172.16.2.249,255.255.255.0`
 
 0. This performs DHCP discovery within the L2 broadcast domain. This command demonstrates connectivity across the veth, across the bridge (inside the VLAN), and into the *dhcp-peach* namespace via an OVS internal port.
 
