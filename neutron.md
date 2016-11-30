@@ -6,10 +6,10 @@ title: "Lab 0X - Neutron Networking"
 ---
 [Click here to find out more about Alta3 Research's SDN Training](https://alta3.com/courses/sdn)
 
-### Thursday - &#x2B50;REQUIRED&#x2B50;
+### THURSDAY - &#x2B50;REQUIRED&#x2B50;
 
 ### Lab Objective
-The objective of this lab is
+The objective of this lab is explore OpenStack Neutron networking with Open vSwitch.
 
 ### Procedure
 
