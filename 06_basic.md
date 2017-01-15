@@ -122,7 +122,7 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
 0. Below is an illustration to give you a visual on the changes we're making to the system. By default, there is always a *root* namespace. So far, you've also created a *namspace* called *luigi*, and another, *toad*.
 
-    ![Alta3 Research OVS Bridge Namespaces](https://alta3.com/labs/images/alta3_sdn_ovsbridge04.png)
+    ![Alta3 Research OVS Bridge Namespaces](https://alta3.com/static/images/alta3_sdn_ovsbridge04.png)
 
 0. Examine network namespaces. The following command will reveal the network devices within the luigi namespace.
 
@@ -157,7 +157,7 @@ Some of the commands are presented in a different order than the Linux Bridge la
     >
     Just as in the previous lab, we'll illustrate the effect your commands are having on the system.
   
-    ![Alta3 Research OVS Bridge Create](https://alta3.com/labs/images/alta3_sdn_ovsbridge01.png)
+    ![Alta3 Research OVS Bridge Create](https://alta3.com/static/images/alta3_sdn_ovsbridge01.png)
 
 0. Great. Now check out the current state of the Open vSwitch.
 
@@ -225,7 +225,7 @@ Some of the commands are presented in a different order than the Linux Bridge la
     >
     The illustration below shows the current state of our L2 network. An ovs-bridge has been created along with a veth. One veth interface is named veth-luigi, and the other eth0-luigi. By default, both interfaces will be in a DOWN state when they are created.
 
-    ![Alta3 Research OVS veth Pair](https://alta3.com/labs/images/alta3_sdn_ovsbridge02.png)
+    ![Alta3 Research OVS veth Pair](https://alta3.com/static/images/alta3_sdn_ovsbridge02.png)
 
 0. Look at the L2 networking to confirm that you understand the above illustration, and help you with the associated questions.
 
@@ -241,7 +241,7 @@ Some of the commands are presented in a different order than the Linux Bridge la
     >
     The illustration below shows the result of our command above.
 
-    ![Alta3 Research OVS veth Pair2](https://alta3.com/labs/images/alta3_sdn_ovsbridge03.png)
+    ![Alta3 Research OVS veth Pair2](https://alta3.com/static/images/alta3_sdn_ovsbridge03.png)
 
 0. Look at the L2 networking to confirm that you understand the above illustration, and help you with the associated questions.
 
@@ -278,7 +278,7 @@ Some of the commands are presented in a different order than the Linux Bridge la
   
 0. So the reason we executed the last four steps will become clear in a moment. For now, execute an *ip link show* command, and confirm that your veth pair configuration matches the illustration below.
 
-    ![Alta3 Research OVS veth Pair UP](https://alta3.com/labs/images/alta3_sdn_ovsbridge05.png)  
+    ![Alta3 Research OVS veth Pair UP](https://alta3.com/static/images/alta3_sdn_ovsbridge05.png)  
 
 0. Add the veths into the network namespaces. First set the *eth0-luigi* veth into the network namespace *luigi*
 
@@ -299,7 +299,7 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
 0. The illustration below reflects the current state of our network. Make sure you agree with its assessment.
 
-    ![Alta3 Research OVS veth Pair into Namesapces](https://alta3.com/labs/images/alta3_sdn_ovsbridge06.png)
+    ![Alta3 Research OVS veth Pair into Namesapces](https://alta3.com/static/images/alta3_sdn_ovsbridge06.png)
 
 0. Write out the current L2 state to a file called *ovs-link-vethmove*
 
@@ -379,7 +379,7 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
 0. The following illustration is a reflection of how the last two commands changed the nature of our L2 networking.
 
-    ![Alta3 Research OVS veth Pair add-port yoshis-island](https://alta3.com/labs/images/alta3_sdn_ovsbridge07.png)
+    ![Alta3 Research OVS veth Pair add-port yoshis-island](https://alta3.com/static/images/alta3_sdn_ovsbridge07.png)
 
 0. Make a copy of the current Open vSwitch configuration in a file called, *ovs-show-veth*.
 
@@ -454,7 +454,7 @@ Some of the commands are presented in a different order than the Linux Bridge la
   
 0. Once again we've advanced the illustration so that you have can a clear visual on how we're manipulating network interfaces.
 
-    ![Alta3 Research OVS veth Pair UP state in Namespaces](https://alta3.com/labs/images/alta3_sdn_ovsbridge08.png)
+    ![Alta3 Research OVS veth Pair UP state in Namespaces](https://alta3.com/static/images/alta3_sdn_ovsbridge08.png)
 
 0. Add IP addresses to the internal interaces. First apply the IP address to 172.16.2.100 to the dev *eth0-luigi*.
 
@@ -466,7 +466,7 @@ Some of the commands are presented in a different order than the Linux Bridge la
 
 0. The next few commands will confirm the illustration below. Just want you to be aware of what you're confirming!
 
-    ![Alta3 Research OVS veth with IP](https://alta3.com/labs/images/alta3_sdn_ovsbridge09.png)
+    ![Alta3 Research OVS veth with IP](https://alta3.com/static/images/alta3_sdn_ovsbridge09.png)
 
 0. Run the *ip addr* in the *luigi* network namespace to reveal the current L3 (IP) configuration.
 
@@ -586,7 +586,7 @@ Some of the commands are presented in a different order than the Linux Bridge la
     
 0. Again we've updated our illustration. Note that the VLAN tags have appeared, which seperate the *veth-luigi* and *veth-toad* interfaces at L2.
 
-    ![Alta3 Research OVS Bridge Namespaces and VLAN tags](https://alta3.com/labs/images/alta3_sdn_ovsbridge10.png)
+    ![Alta3 Research OVS Bridge Namespaces and VLAN tags](https://alta3.com/static/images/alta3_sdn_ovsbridge10.png)
 
 0. Try pinging the IP address *172.16.2.101*, the IP applied to *eth0-toad*, from within the *luigi* namespace.
   
